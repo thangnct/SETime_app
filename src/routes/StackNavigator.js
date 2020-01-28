@@ -8,7 +8,7 @@ export default AppNavigator = createStackNavigator(
         TabNavigator: { screen: TabNavigator },
         Drawer: { screen: Drawer },
         AddGoal: { screen: AddGoal },
-
+        
     },
     {
         initialRouteName: "TabNavigator"

@@ -65,7 +65,7 @@ export default class Register extends Component {
                             <TouchableOpacity
                                 style={styles.button}
                                 onPress={() => {
-                                    this.props.navigation.navigate("Login");
+                                    this.props.navigation.navigate("App");
                                 }}
                             >
                                 <Text
@@ -87,7 +87,7 @@ export default class Register extends Component {
                             this.props.navigation.navigate("Login");
                         }}
                     >
-                        <Text style={styles.textRegister}>Register now</Text>
+                        <Text style={styles.textRegister}>Login now</Text>
                     </TouchableOpacity>
                 </View>
 

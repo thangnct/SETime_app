@@ -10,13 +10,15 @@ export default class Home extends Component {
     }
     static navigationOptions = {
         headerMode: null,
-    };    
+    };
     render() {
-        
+
         return (
 
             <Container style={styles.container}>
-                <Text>Home</Text>
+                <Text
+                    onPress={() => this.props.navigation.navigate("Auth")}
+                >Đăng xuất</Text>
             </Container>
 
 
