@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "60406441874",
+    "firebase_url": "https://setime-e7775.firebaseio.com",
+    "project_id": "setime-e7775",
+    "storage_bucket": "setime-e7775.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60406441874:android:dbe3a7a3cbded1250ac34b",
+        "android_client_info": {
+          "package_name": "com.planning_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60406441874-ro8i6k2h26cpoqfbr8927u8imd6jffeo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh1jIIyyfkRvCpiCXt3SE3h7__xSXAgWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60406441874-ro8i6k2h26cpoqfbr8927u8imd6jffeo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "60406441874-olkg1p2j858mtlmoantoj43cdngu4ic3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.victordev.SETime"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60406441874:android:46bded40017713ab0ac34b",
+        "android_client_info": {
+          "package_name": "com.victordev.SETime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60406441874-ro8i6k2h26cpoqfbr8927u8imd6jffeo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh1jIIyyfkRvCpiCXt3SE3h7__xSXAgWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60406441874-ro8i6k2h26cpoqfbr8927u8imd6jffeo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "60406441874-olkg1p2j858mtlmoantoj43cdngu4ic3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.victordev.SETime"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
