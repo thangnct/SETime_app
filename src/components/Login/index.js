@@ -17,7 +17,6 @@ export default class Login extends Component {
             message: '',
             codeInput: '',
             phoneNumber: '',
-
         };
 
     }
@@ -32,22 +31,28 @@ export default class Login extends Component {
     }
 
     verifierAuthCode = async (authCode) => {
+        console.log("confirm: ", this.confirmation)
         try {
-            await this.confirmation.confirm(authCode); // User entered code
-            // Successful login - onAuthStateChanged is triggered
+            if (this.confirmation !== null) {
+                await this.confirmation.confirm(authCode); // User entered code
+                // Successful login - onAuthStateChanged is triggered
+            } else {
+                Alert.alert("Thông báo", "Vui lòng lấy mã OTP để xác thực !")
+            }
         } catch (e) {
             console.error(e); // Invalid code
         }
     }
 
     componentDidMount() {
+        //Trigger auth state changed
         this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                console.log("login success =========== : ", user);
                 this.setState({ user: user.toJSON() });
-                console.log("USERhiih", this.state.user)
+                console.log("User have been login !");
+                this.props.navigation.navigate("App")
             } else {
-                // User has been signed out, reset the state
+                console.log("User has been signed out !");
                 this.setState({
                     user: null,
                     message: '',
@@ -161,6 +166,6 @@ export default class Login extends Component {
         this.setState({
             [name]: value
         })
-        console.log("state: ", this.state)
+        // console.log("state: ", this.state)
     }
 }
