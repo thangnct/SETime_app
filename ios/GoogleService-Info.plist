@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>60406441874-olkg1p2j858mtlmoantoj43cdngu4ic3.apps.googleusercontent.com</string>
+	<string>721080840217-cg9fonqhdsqd4245qc8kfubgbr3u02bs.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.60406441874-olkg1p2j858mtlmoantoj43cdngu4ic3</string>
+	<string>com.googleusercontent.apps.721080840217-cg9fonqhdsqd4245qc8kfubgbr3u02bs</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>721080840217-jb56jh5n1srf530ukjsv568lihuki9un.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC9yDjSK9oyeXuFmmnXvjMQmjSp_oSo4GQ</string>
+	<string>AIzaSyDJ2GzSvF_mRWZRMbFXNXAX7ohW9mL9SRI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>60406441874</string>
+	<string>721080840217</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.planning_app</string>
+	<string>com.etruckviconship.cni</string>
 	<key>PROJECT_ID</key>
-	<string>setime-e7775</string>
+	<string>e-truck-a14b5</string>
 	<key>STORAGE_BUCKET</key>
-	<string>setime-e7775.appspot.com</string>
+	<string>e-truck-a14b5.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:60406441874:ios:73144305d0fe26300ac34b</string>
+	<string>1:721080840217:ios:2afa312f6ee05da1f77a88</string>
 	<key>DATABASE_URL</key>
-	<string>https://setime-e7775.firebaseio.com</string>
+	<string>https://e-truck-a14b5.firebaseio.com</string>
 </dict>
 </plist>

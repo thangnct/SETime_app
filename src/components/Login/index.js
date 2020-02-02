@@ -43,9 +43,13 @@ export default class Login extends Component {
             console.error(e); // Invalid code
         }
     }
-
+    test = async () => {
+        const idTokenResult = await firebase.auth().currentUser.getIdTokenResult();
+        console.log('User JWT: ', idTokenResult.token);
+    }
     componentDidMount() {
         //Trigger auth state changed
+        this.test()
         this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.setState({ user: user.toJSON() });
