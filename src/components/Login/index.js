@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, } from "native-base";
 import styles from "./styles";
-import { Text, View, TouchableOpacity, Alert } from "react-native";
+import { Text, View, TouchableOpacity, Alert, AsyncStorage } from "react-native";
 import { Item, Input } from 'native-base';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import auth from '@react-native-firebase/auth';
@@ -42,6 +42,15 @@ export default class Login extends Component {
         } catch (e) {
             console.error(e); // Invalid code
         }
+    }
+    getCurrenToken = async () => {
+        const idTokenResult = await firebase.auth().currentUser.getIdTokenResult();
+        console.log('User JWT: ', idTokenResult.token);
+        return idTokenResult.token;
+    }
+    _storeData = async () => {
+        let token = this.getCurrenToken();
+        await AsyncStorage.setItem("token", token);
     }
 
     componentDidMount() {

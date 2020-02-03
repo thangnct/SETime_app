@@ -15,14 +15,15 @@ export default class Home extends Component {
 
     componentDidMount() {
         const user = firebase.auth().currentUser;
-        console.log("current user: ", user.toJSON())
+        if (user) {
+            // console.log("current user: ", user.toJSON())
+        }
+
 
         // Trigger auth state changed
         this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.setState({ user: user.toJSON() });
-                console.log("User infor login: ", this.state.user)
-
             } else {
                 // User has been signed out, reset the state
                 this.setState({
@@ -49,7 +50,7 @@ export default class Home extends Component {
     }
 
     signOut = async () => {
-        firebase.auth().signOut();Ï
+        firebase.auth().signOut(); Ï
         this.props.navigation.navigate("Auth")
     }
 }
