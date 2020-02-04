@@ -87,35 +87,22 @@ export default class Login extends Component {
                                 />
 
                                 <Input
-                                    placeholder="codeInput"
-                                    value={this.state.codeInput}
+                                    placeholder="Password"
+                                    value={this.state.password}
                                     keyboardType={'numeric'}
                                     onChangeText={value =>
-                                        this.handleChangeInput("codeInput", value)
+                                        this.handleChangeInput("password", value)
                                     }
                                 />
                             </Item>
                         </View>
+                        
                         <View style={styles.coverButton}>
                             <TouchableOpacity
                                 style={styles.button}
                                 onPress={() => {
-                                    // this.props.navigation.navigate("App");
-                                    // this.confirmPhone(this.state.phoneNumber)
-                                }}
-                            >
-                                <Text
-                                    style={styles.text_Button}>
-                                    OTP
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.coverButton}>
-                            <TouchableOpacity
-                                style={styles.button}
-                                onPress={() => {
-                                    // this.props.navigation.navigate("App");
-                                    this.verifierAuthCode(this.state.codeInput)
+                                    this.props.navigation.navigate("App");
+                                    // this.verifierAuthCode(this.state.codeInput)
                                 }}
                             >
                                 <Text

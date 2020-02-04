@@ -140,15 +140,13 @@ export default class Register extends Component {
         return true;
     }
     handleRegister = async () => {
-        console.log(this.validate())
-        if (this.validate() === true) {
-
+        // if (this.validate() === true) {
             this.props.navigation.navigate("PhoneValidate", {
                 fullName: this.state.fullName,
                 phone: this.state.phone,
                 password: this.state.password
             });
-        }
+        // }
     }
 
     confirmPhone = async (phone) => {

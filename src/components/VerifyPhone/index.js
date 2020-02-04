@@ -11,7 +11,7 @@ export default class VerifyPhone extends Component {
     constructor(props) {
         super(props);
         this.unsubscribe = null;
-        this.confirmation = this.props.navigation.getParam("confirmation");
+        this.confirmation = null;
         this.state = {
             OPTcode: "",
         };
@@ -30,8 +30,9 @@ export default class VerifyPhone extends Component {
                     user: user.toJSON(),
                     token: this.getCurrentToken
                 });
-                this.props.navigation.navigate("App")
                 console.log("User have been login !");
+                this.props.navigation.navigate("App")
+                
             } else {
                 console.log("User has been signed out !");
                 this.setState({
@@ -41,6 +42,7 @@ export default class VerifyPhone extends Component {
                     phoneNumber: '',
                     confirmation: null,
                 });
+                this.props.navigation.navigate("Auth")
             }
         });
     }

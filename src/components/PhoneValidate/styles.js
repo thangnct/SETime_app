@@ -1,7 +1,21 @@
 export default {
   container: {
-
+    flex: 1,
+    alignItems: "center",
+    padding: 20,
+    paddingTop: 60
   },
+  info: {
+    // width: 200,
+    borderRadius: 5,
+    backgroundColor: "#f0f0f0",
+    padding: 10,
+    marginTop: 20
+    },
+    button: {
+    marginTop: 20,
+    padding: 10
+    },
   top: {
     flex: 1,
     // backgroundColor: "red",
