@@ -21,60 +21,6 @@ export default class Login extends Component {
 
     }
 
-
-
-    confirmPhone = async (phone) => {
-        this.confirmation = await auth().signInWithPhoneNumber('+84 ' + phone);
-        if (!this.confirmation) {
-            Alert.alert("Thông báo", "Chúng tôi đã chặn tất cả các yêu cầu từ thiết của bạn do phát hiện hoạt động bất thường. Vui lòng thử lại sau.")
-        }
-    }
-
-    verifierAuthCode = async (authCode) => {
-        console.log("confirm: ", this.confirmation)
-        try {
-            if (this.confirmation !== null) {
-                await this.confirmation.confirm(authCode); // User entered code
-                // Successful login - onAuthStateChanged is triggered
-            } else {
-                Alert.alert("Thông báo", "Vui lòng lấy mã OTP để xác thực !")
-            }
-        } catch (e) {
-            console.error(e); // Invalid code
-        }
-    }
-    getCurrenToken = async () => {
-        const idTokenResult = await firebase.auth().currentUser.getIdTokenResult();
-        console.log('User JWT: ', idTokenResult.token);
-        return idTokenResult.token;
-    }
-    _storeData = async () => {
-        let token = this.getCurrenToken();
-        await AsyncStorage.setItem("token", token);
-    }
-
-    componentDidMount() {
-        //Trigger auth state changed
-        this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                this.setState({ user: user.toJSON() });
-                console.log("User have been login !");
-                this.props.navigation.navigate("App")
-            } else {
-                console.log("User has been signed out !");
-                this.setState({
-                    user: null,
-                    message: '',
-                    codeInput: '',
-                    phoneNumber: '',
-                    confirmation: null,
-                });
-            }
-        });
-    }
-    componentWillUnmount() {
-        if (this.unsubscribe) this.unsubscribe();
-    }
     render() {
         return (
 
@@ -124,7 +70,7 @@ export default class Login extends Component {
                                 style={styles.button}
                                 onPress={() => {
                                     // this.props.navigation.navigate("App");
-                                    this.confirmPhone(this.state.phoneNumber)
+                                    // this.confirmPhone(this.state.phoneNumber)
                                 }}
                             >
                                 <Text

@@ -140,24 +140,14 @@ export default class Register extends Component {
         return true;
     }
     handleRegister = async () => {
-        if (this.validate() == true) {
-            try {
-                this.confirmation = await auth().signInWithPhoneNumber('+84 ' + this.state.phone);
-                if (this.confirmation !== null) {
-                    this.props.navigation.navigate("VerifyPhone", {
-                        confirmation: this.confirmation,
-                        fullName: this.state.fullName,
-                        phone: this.state.phone,
-                        password: this.state.password
-                    });
-                } else {
-                    this.refs.toast.show('Có lỗi sảy ra, vui lòng liên hệ nhà phát triển !');
-                }
-            } catch (err) {
-                console.log("Error: ", err)
-                Alert.alert("Thông báo", "Chúng tôi đã chặn tất cả các yêu cầu từ thiết của bạn do phát hiện hoạt động bất thường. Vui lòng thử lại sau.")
-            }
+        console.log(this.validate())
+        if (this.validate() === true) {
 
+            this.props.navigation.navigate("PhoneValidate", {
+                fullName: this.state.fullName,
+                phone: this.state.phone,
+                password: this.state.password
+            });
         }
     }
 

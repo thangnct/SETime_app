@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import VerifyPhone from "../../components/VerifyPhone";
+import PhoneValidate from "../../components/PhoneValidate";
 
-class VerifyPhoneContainer extends Component {
+class PhoneValidateContainer extends Component {
     constructor(props) {
         super(props);
 
@@ -10,7 +10,7 @@ class VerifyPhoneContainer extends Component {
 
     render() {
         return (
-            <VerifyPhone
+            <PhoneValidate
                 navigation={this.props.navigation}
             />
         )
@@ -28,4 +28,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(VerifyPhoneContainer)
+)(PhoneValidateContainer)
