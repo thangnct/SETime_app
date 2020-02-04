@@ -21,6 +21,37 @@ export default class Login extends Component {
 
     }
 
+    getCurrentToken = async () => {
+        const idTokenResult = await firebase.auth().currentUser.getIdTokenResult();
+        // console.log('User JWT: ', idTokenResult.token);
+        return idTokenResult.token;
+    }
+    componentDidMount() {
+        //Trigger auth state changed
+        this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({
+                    user: user.toJSON(),
+                    token: this.getCurrentToken
+                });
+                this.props.navigation.navigate("App")
+                console.log("User have been login !");
+            } else {
+                console.log("User has been signed out !");
+                this.setState({
+                    user: null,
+                    message: '',
+                    codeInput: '',
+                    phoneNumber: '',
+                    confirmation: null,
+                });
+            }
+        });
+    }
+    componentWillUnmount() {
+        if (this.unsubscribe) this.unsubscribe();
+    }
+
     render() {
         return (
 

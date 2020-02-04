@@ -4,7 +4,7 @@ import styles from "./styles";
 import { Text, View, TouchableOpacity } from "react-native";
 import auth from '@react-native-firebase/auth';
 import { firebase } from '@react-native-firebase/auth';
-
+import { getDatetime, getTimeUseTimezone } from "../../commons";
 export default class Home extends Component {
     constructor(props) {
         super(props)
@@ -38,8 +38,15 @@ export default class Home extends Component {
         });
     }
     render() {
+        
         return (
             <Container style={styles.container}>
+                <Text>
+                    Now: {getDatetime()}Ï
+                </Text>
+                <Text>
+                    Timezone + 7: {getTimeUseTimezone(7)}
+                </Text>
                 <Text
                     onPress={() => {
                         this.signOut()
