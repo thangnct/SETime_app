@@ -11,7 +11,7 @@ export default class VerifyPhone extends Component {
     constructor(props) {
         super(props);
         this.unsubscribe = null;
-        this.confirmation = null;
+        this.confirmation = this.props.navigation.getParam("confirmation");
         this.state = {
             OPTcode: "",
         };
@@ -32,7 +32,7 @@ export default class VerifyPhone extends Component {
                 });
                 console.log("User have been login !");
                 this.props.navigation.navigate("App")
-                
+
             } else {
                 console.log("User has been signed out !");
                 this.setState({
@@ -107,8 +107,12 @@ export default class VerifyPhone extends Component {
     verifierAuthCode = async (authCode) => {
         try {
             if (this.confirmation !== null) {
-                await this.confirmation.confirm(authCode); // User entered code
-                // Successful login - onAuthStateChanged is triggered
+                this.confirmation.confirm(authCode).then(result => {
+                    // User entered code
+                    // Successful login - onAuthStateChanged is triggered
+                }).catch(err => {
+                    Alert.alert("Thông báo", "Xác thực không thành công, vui lòng thử lại với mã OTP mới ! ")
+                });
             } else {
                 Alert.alert("Thông báo", "Vui lòng lấy mã OTP để xác thực !")
             }
@@ -120,7 +124,7 @@ export default class VerifyPhone extends Component {
 
     confirmPhone = async (phone) => {
         try {
-            this.confirmation = await auth().signInWithPhoneNumber('+84 ' + phone);
+            this.confirmation = await auth().signInWithPhoneNumber(phone);
         } catch (err) {
             Alert.alert("Thông báo", "Chúng tôi đã chặn tất cả các yêu cầu từ thiết của bạn do phát hiện hoạt động bất thường. Vui lòng thử lại sau.")
         }

@@ -35,7 +35,7 @@ export default class PhoneValidate extends Component {
                         <View style={styles.coverInput}>
                             <Item>
                                 <PhoneInput
-                                    value={"0337896198"}
+                                    value={this.props.navigation.getParam("phone")}
                                     initialCountry="vn"
                                     ref={phone => {
                                         this.phone = phone;
@@ -79,35 +79,34 @@ export default class PhoneValidate extends Component {
             console.error(e); // Invalid code
         }
     }
-    updateInfo = () => {
+    handleConfirm = () => {
         this.setState({
             valid: this.phone.isValidNumber(),
             type: this.phone.getNumberType(),
             phone: this.phone.getValue()
+        }, async () => {
+            console.log("states: ", this.state)
+            if (this.state.valid === true) {
+                try {
+                    this.confirmation = await auth().signInWithPhoneNumber(this.state.phone);
+                    this.props.navigation.navigate("VerifyPhone", {
+                        confirmation: this.confirmation,
+                        fullName: this.props.navigation.getParam("fullName"),
+                        phone: this.state.phone,
+                        password: this.props.navigation.getParam("password")
+                    });
+                } catch (err) {
+                    console.log("Error: ", err)
+                    Alert.alert("Thông báo", "Chúng tôi đã chặn tất cả các yêu cầu từ thiết của bạn do phát hiện hoạt động bất thường. Vui lòng thử lại sau.")
+                }
+            } else {
+                Alert.alert("Thông báo", "Phone is not valid")
+            }
         });
 
     }
     confirmPhone = async (phone) => {
-        this.updateInfo();
-        console.log("states: ", this.state)
-        if (this.state.valid === true) {
-            try {
-                // this.confirmation = await auth().signInWithPhoneNumber('+84 ' + phone);
-                this.props.navigation.navigate("VerifyPhone", {
-                    confirmation: this.confirmation,
-                    fullName: this.props.navigation.getParam("fullName"),
-                    phone: this.props.navigation.getParam("phone"),
-                    password: this.props.navigation.getParam("password")
-                });
-            } catch (err) {
-                console.log("Error: ", err)
-                Alert.alert("Thông báo", "Chúng tôi đã chặn tất cả các yêu cầu từ thiết của bạn do phát hiện hoạt động bất thường. Vui lòng thử lại sau.")
-            }
-        } else {
-            Alert.alert("Thông báo", "Phone is not valid")
-        }
-
-
+        this.handleConfirm();
     }
     handleChangeInput = (name, value) => {
         this.setState({
