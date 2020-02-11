@@ -23,7 +23,7 @@ export default class Login extends Component {
 
     getCurrentToken = async () => {
         const idTokenResult = await firebase.auth().currentUser.getIdTokenResult();
-        // console.log('User JWT: ', idTokenResult.token);
+        console.log('User JWT: ', idTokenResult.token);
         return idTokenResult.token;
     }
     componentDidMount() {

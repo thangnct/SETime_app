@@ -12,18 +12,22 @@ export default class Home extends Component {
     static navigationOptions = {
         headerMode: null,
     };
-
+    getCurrentToken = async () => {
+        const idTokenResult = await firebase.auth().currentUser.getIdTokenResult();
+        console.log('User JWT: ', idTokenResult.token);
+        return idTokenResult.token;
+    }
     componentDidMount() {
         const user = firebase.auth().currentUser;
         if (user) {
             // console.log("current user: ", user.toJSON())
         }
 
-
         // Trigger auth state changed
         this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.setState({ user: user.toJSON() });
+                this.getCurrentToken();
             } else {
                 // User has been signed out, reset the state
                 this.setState({
@@ -38,7 +42,7 @@ export default class Home extends Component {
         });
     }
     render() {
-        
+
         return (
             <Container style={styles.container}>
                 <Text>
