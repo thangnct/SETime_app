@@ -21,8 +21,6 @@ export default class Login extends Component {
         const { isLoading, isSuccess, dataLogin } = nextProps.auth
         if (dataLogin !== this.props.auth.dataLogin && isLoading == false && isSuccess == true) {
             console.log("data login: ", dataLogin)
-            // console.log("data login: ", dataLogin.code)
-            // console.log("data login: ", dataLogin.message)
             if (dataLogin.code == 1) {
                 Alert.alert("Notification", dataLogin.message)
                 this.props.navigation.navigate("App");
@@ -68,9 +66,10 @@ export default class Login extends Component {
                                 />
 
                                 <Input
+                                    // secureTextEntry={true}
+                                    secureTextEntry={true}
                                     placeholder="Password"
                                     value={this.state.password}
-                                    keyboardType={'numeric'}
                                     onChangeText={value =>
                                         this.handleChangeInput("password", value)
                                     }

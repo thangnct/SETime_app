@@ -71,7 +71,6 @@ export default class Home extends Component {
     }
 
     signOut = async () => {
-        firebase.auth().signOut(); Ï
         this.props.navigation.navigate("Auth")
     }
 }

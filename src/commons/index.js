@@ -1,9 +1,20 @@
 export function convertDatatoFormData(data) {
+
     const formData = new FormData();
     Object.keys(data).forEach(item => {
         formData.append([item], data[item]);
     })
     return formData;
+}
+export function convertDataToxUrlencoded(data) {
+    var str = [];
+    for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+            str.push(encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+            console.log(key + " -> " + data[key]);
+        }
+    }
+    return str.join("&");
 }
 
 export function getDatetime() {
@@ -50,7 +61,7 @@ export function getTimeUseTimezone(timezone) {
             d.getMinutes().padLeft(),
                 '00'].join(':');
     return dformat;
-    
+
 }
 
 

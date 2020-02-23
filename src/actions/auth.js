@@ -2,7 +2,7 @@ import * as ACCTION from "../const/action-types";
 import {
     LOGIN
 } from "../const/APIs"
-import { convertDatatoFormData } from "../commons";
+import { convertDatatoFormData , convertDataToxUrlencoded} from "../commons";
 
 export const login = (data) => {
     console.log("Login data: ", data)
@@ -17,7 +17,7 @@ export const login = (data) => {
             request: {
                 method: "POST",
                 url: LOGIN,
-                data: convertDatatoFormData(data)
+                data: convertDataToxUrlencoded(data)
             }
         }
     })

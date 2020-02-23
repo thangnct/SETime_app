@@ -6,7 +6,7 @@ class LoadingContainer extends Component {
     constructor(props){
         super(props);
     }
-    componentWillMount(){
+    componentDidMount(){
         this.props.navigation.navigate("Auth")
     }
     render() {
