@@ -7,7 +7,10 @@ import { firebase } from '@react-native-firebase/auth';
 import { getDatetime, getTimeUseTimezone } from "../../commons";
 export default class Home extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.state = {
+            number: 0
+        }
     }
     static navigationOptions = {
         headerMode: null,
@@ -18,28 +21,32 @@ export default class Home extends Component {
         return idTokenResult.token;
     }
     componentDidMount() {
-        const user = firebase.auth().currentUser;
-        if (user) {
-            // console.log("current user: ", user.toJSON())
-        }
+        // const user = firebase.auth().currentUser;
+        // if (user) {
+        //     // console.log("current user: ", user.toJSON())
+        // }
 
-        // Trigger auth state changed
-        this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                this.setState({ user: user.toJSON() });
-                this.getCurrentToken();
-            } else {
-                // User has been signed out, reset the state
-                this.setState({
-                    user: null,
-                    message: '',
-                    codeInput: '',
-                    phoneNumber: '',
-                    confirmation: null,
-                });
-                this.props.navigation.navigate("Auth")
-            }
-        });
+        // // Trigger auth state changed
+        // this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+        //     if (user) {
+        //         this.setState({ user: user.toJSON() });
+        //         this.getCurrentToken();
+        //     } else {
+        //         // User has been signed out, reset the state
+        //         this.setState({
+        //             user: null,
+        //             message: '',
+        //             codeInput: '',
+        //             phoneNumber: '',
+        //             confirmation: null,
+        //         });
+        //         this.props.navigation.navigate("Auth")
+        //     }
+        // });
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return true
     }
     render() {
 
@@ -56,6 +63,9 @@ export default class Home extends Component {
                         this.signOut()
                     }}
                 >Đăng xuất</Text>
+                <Text>Count: {this.state.number}</Text>
+                <Text onPress={() => this.setState({ number: this.state.number + 1 })}>Add</Text>
+                <Text onPress={() => this.setState({ number: this.state.number - 1 })}>Sub</Text>
             </Container>
         );
     }

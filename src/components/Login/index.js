@@ -4,8 +4,6 @@ import styles from "./styles";
 import { Text, View, TouchableOpacity, Alert, AsyncStorage } from "react-native";
 import { Item, Input } from 'native-base';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import auth from '@react-native-firebase/auth';
-import { firebase } from '@react-native-firebase/auth';
 
 export default class Login extends Component {
     constructor(props) {
@@ -13,48 +11,31 @@ export default class Login extends Component {
         this.unsubscribe = null;
         this.confirmation = null;
         this.state = {
-            user: null,
-            message: '',
-            codeInput: '',
-            phoneNumber: '',
+            phoneNumber: "",
+            password: ""
         };
 
     }
 
-    getCurrentToken = async () => {
-        const idTokenResult = await firebase.auth().currentUser.getIdTokenResult();
-        console.log('User JWT: ', idTokenResult.token);
-        return idTokenResult.token;
-    }
-    componentDidMount() {
-        //Trigger auth state changed
-        this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                this.setState({
-                    user: user.toJSON(),
-                    token: this.getCurrentToken
-                });
-                this.props.navigation.navigate("App")
-                console.log("User have been login !");
+    componentWillReceiveProps(nextProps) {
+        const { isLoading, isSuccess, dataLogin } = nextProps.auth
+        if (dataLogin !== this.props.auth.dataLogin && isLoading == false && isSuccess == true) {
+            console.log("data login: ", dataLogin)
+            // console.log("data login: ", dataLogin.code)
+            // console.log("data login: ", dataLogin.message)
+            if (dataLogin.code == 1) {
+                Alert.alert("Notification", dataLogin.message)
+                this.props.navigation.navigate("App");
+            } else if (dataLogin.code == -99) {
+                Alert.alert("Notification", "There is a trouble, please try again later.")
             } else {
-                console.log("User has been signed out !");
-                this.setState({
-                    user: null,
-                    message: '',
-                    codeInput: '',
-                    phoneNumber: '',
-                    confirmation: null,
-                });
+                console.log(dataLogin)
+                Alert.alert("Notification", dataLogin.message)
             }
-        });
+        }
     }
-    componentWillUnmount() {
-        if (this.unsubscribe) this.unsubscribe();
-    }
-
     render() {
         return (
-
             <Container style={styles.container}>
                 <View style={styles.top}>
 
@@ -96,14 +77,11 @@ export default class Login extends Component {
                                 />
                             </Item>
                         </View>
-                        
+
                         <View style={styles.coverButton}>
                             <TouchableOpacity
                                 style={styles.button}
-                                onPress={() => {
-                                    this.props.navigation.navigate("App");
-                                    // this.verifierAuthCode(this.state.codeInput)
-                                }}
+                                onPress={this.handleLogin}
                             >
                                 <Text
                                     style={styles.text_Button}>
@@ -127,18 +105,19 @@ export default class Login extends Component {
                         <Text style={styles.textRegister}>Register now</Text>
                     </TouchableOpacity>
                 </View>
-
             </Container>
-
-
         );
-
     }
 
+    handleLogin = () => {
+        this.props.dispatchLogin({
+            account: this.state.phoneNumber,
+            password: this.state.password
+        })
+    }
     handleChangeInput = (name, value) => {
         this.setState({
             [name]: value
         })
-        // console.log("state: ", this.state)
     }
 }

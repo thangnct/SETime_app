@@ -5,14 +5,22 @@ import {
 } from "../const/APIs"
 
 const baseClient = (baseUrl) => {
-    const instance = axios.create({
-        baseURL: baseUrl,
-        transformRequest: [
-            data => humps.camelizeKeys(JSON.parse(data))
-        ]
-    })
 
-    return instance
+    try {
+        const instance = axios.create({
+            baseURL: baseUrl,
+            transformResponse: [
+                data => {
+                    return JSON.parse(data)
+                    // return humps.camelizeKeys(JSON.parse(data))
+                }
+            ]
+        })
+        return instance
+    } catch (error) {
+        console.log("Loi roi:", error)
+    }
+
 }
 
 export default clients = {
