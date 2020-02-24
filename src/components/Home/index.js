@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Container, } from "native-base";
 import styles from "./styles";
-import { Text, View, TouchableOpacity } from "react-native";
-import auth from '@react-native-firebase/auth';
-import { firebase } from '@react-native-firebase/auth';
+import { Text, View, TouchableOpacity, SafeAreaView } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { getDatetime, getTimeUseTimezone } from "../../commons";
 export default class Home extends Component {
     constructor(props) {
@@ -51,26 +51,20 @@ export default class Home extends Component {
     render() {
 
         return (
-            <Container style={styles.container}>
-                <Text>
-                    Now: {getDatetime()}Ï
-                </Text>
-                <Text>
-                    Timezone + 7: {getTimeUseTimezone(7)}
-                </Text>
+            <SafeAreaView style={styles.container}>
                 <Text
                     onPress={() => {
                         this.signOut()
                     }}
                 >Đăng xuất</Text>
-                <Text>Count: {this.state.number}</Text>
-                <Text onPress={() => this.setState({ number: this.state.number + 1 })}>Add</Text>
-                <Text onPress={() => this.setState({ number: this.state.number - 1 })}>Sub</Text>
-            </Container>
+
+            </SafeAreaView>
+            
         );
-    }
+    }   
 
     signOut = async () => {
+        await AsyncStorage.removeItem("token");
         this.props.navigation.navigate("Auth")
     }
 }

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Container, } from "native-base";
 import styles from "./styles";
-import { Text, View, TouchableOpacity, Alert, AsyncStorage } from "react-native";
+import { Text, View, TouchableOpacity, Alert } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
 import { Item, Input } from 'native-base';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
@@ -17,17 +18,16 @@ export default class Login extends Component {
 
     }
 
-    componentWillReceiveProps(nextProps) {
+    async componentWillReceiveProps(nextProps) {
         const { isLoading, isSuccess, dataLogin } = nextProps.auth
         if (dataLogin !== this.props.auth.dataLogin && isLoading == false && isSuccess == true) {
             console.log("data login: ", dataLogin)
             if (dataLogin.code == 1) {
-                Alert.alert("Notification", dataLogin.message)
-                this.props.navigation.navigate("App");
+                await AsyncStorage.setItem("token", dataLogin.token);
+                this.props.navigation.navigate("Loading");
             } else if (dataLogin.code == -99) {
                 Alert.alert("Notification", "There is a trouble, please try again later.")
             } else {
-                console.log(dataLogin)
                 Alert.alert("Notification", dataLogin.message)
             }
         }

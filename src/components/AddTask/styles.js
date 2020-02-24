@@ -53,14 +53,16 @@ export default {
 
   },
   top: {
-    flex: 1.5,
-    // backgroundColor: "red",
+    backgroundColor: "red",
+    height: 50,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    
 
   },
   body: {
     flex: 1,
-    
-    // backgroundColor: "blue"
+    backgroundColor: "blue"
   },
   footer: {
     flex: 1,

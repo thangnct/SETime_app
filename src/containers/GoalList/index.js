@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Home from "../../components/Home";
+import GoalList from "../../components/GoalList";
 
-class HomeContainer extends Component {
+class GoalListContainer extends Component {
     constructor(props) {
         super(props);
     }
     render() {
         return (
-            <Home
+            <GoalList
                 navigation={this.props.navigation}
             />
         )
@@ -16,9 +16,7 @@ class HomeContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth,
-    goals: state.goal,
-    tasks: state.task
+
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -28,4 +26,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(HomeContainer)
+)(GoalListContainer)

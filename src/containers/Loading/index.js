@@ -1,13 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Loading from "../../components/Loading";
-
+import AsyncStorage from '@react-native-community/async-storage';
 class LoadingContainer extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
     }
-    componentDidMount(){
-        this.props.navigation.navigate("Auth")
+    async componentDidMount() {
+
+        try {
+            const token = await AsyncStorage.getItem("token");
+            if (token) {
+                this.props.navigation.navigate("App")
+            } else {
+                this.props.navigation.navigate("Auth")
+            }
+        } catch (error) {
+            console.log("dadasdas", error)
+            this.props.navigation.navigate("Auth")
+        }
+
+
     }
     render() {
         return (
@@ -19,7 +32,7 @@ class LoadingContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-
+    auth: state.auth
 });
 
 const mapDispatchToProps = dispatch => ({
