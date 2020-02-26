@@ -10,7 +10,7 @@ export default SwitchNavigation = createSwitchNavigator(
         Auth: Auth
     },
     {
-        initialRouteName: "Loading",
+        initialRouteName: "App",
         
     }
 )
