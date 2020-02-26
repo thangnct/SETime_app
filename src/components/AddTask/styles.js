@@ -5,6 +5,11 @@ export default {
     marginLeft: 10,
     // backgroundColor: "red"
   },
+  allDay: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
   top: {
     height: 72,
     flexDirection: "row",
@@ -12,6 +17,7 @@ export default {
     justifyContent: "space-between",
     alignItems: "center"
   },
+
   backButton: {
     width: 60, height: 50,
     flexDirection: "row",
@@ -75,20 +81,12 @@ export default {
     // backgroundColor: "red",
     flex: 5
   },
-  itemsInput: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    backgroundColor: "red",
-    flex: 6
-  },
-
   picker: {
     height: 50,
-    width: 150,
+    width: 50,
     borderBottomColor: "#C4C4C4",
     borderBottomWidth: 5,
-    // backgroundColor: "green"
+    backgroundColor: "green"
   },
   icon_label: {
     flex: 2,
@@ -104,12 +102,35 @@ export default {
     justifyContent: "flex-start",
     alignItems: "center"
   },
+  timeStartEnd: {
+    flex: 1,
+    flexDirection: "row",
+    // backgroundColor: "red",
+    justifyContent: "flex-end",
+    alignItems: "center"
+  },
   itemsInput: {
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
     // backgroundColor: "blue",
     flex: 5
+  },
+  timeStartEndInput: {
+    flex: 1,
+    borderBottomColor: '#AAAAAA',
+    borderBottomWidth: 1,
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#3E3D3D"
+  },
+  timeStartEndContainer: {
+    height: 50,
+    flexDirection: "column",
+    flex: 1,
+    // justifyContent: "flex-start",
+    // alignItems: "space-around"
+    // backgroundColor: "red"
   },
   taskTitle: {
     multiline: true,

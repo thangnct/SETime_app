@@ -102,14 +102,14 @@ export default {
     // textAlign: "left",
     marginBottom: 12
   },
-
+  
   name: {
     fontSize: 18,
     fontWeight: "bold"
   },
   phone: {
     fontSize: 14,
-    fontWeight: "60"
+    fontWeight: "600"
   },
   broad: {
     flexDirection: "row",
