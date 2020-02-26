@@ -66,7 +66,7 @@ export default class Home extends Component {
         <View style={styles.header} >
           <View style={styles.top} >
             <TouchableOpacity style={styles.option}
-              onPress={this.changeAddButtonState}
+              // onPress={() => { this.props.navigation.openDrawer() }}
             >
               <Icon name="cog" color="#C4C4C4" size={28} />
             </TouchableOpacity>

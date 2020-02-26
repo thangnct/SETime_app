@@ -6,9 +6,11 @@ export default {
     // backgroundColor: "red"
   },
   top: {
-    height: 50,
+    height: 72,
     flexDirection: "row",
+    // backgroundColor: "pink",
     justifyContent: "space-between",
+    alignItems: "center"
   },
   backButton: {
     width: 60, height: 50,
@@ -33,49 +35,81 @@ export default {
   },
   saveText: {
     color: "#F2994A",
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "700"
   },
   cancelText: {
     color: "#AAAAAA",
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "700"
   },
   body: {
-    marginTop: 10,
+
     flex: 1,
+    marginLeft: 10,
+    marginRight: 10,
     // backgroundColor: "blue"
   },
   taskTitleContainer: {
 
   },
-  goalSupportContainer: {
+  items: {
     marginTop: 20,
-    flexDirection:"row",
+    flexDirection: "row",
     justifyContent: "space-between",
-    
+    alignItems: "center",
     // backgroundColor: "pink"
 
   },
-  goalSupportText: {
-    fontSize: 14,
+  itemLabelText: {
+    fontSize: 16,
     // fontWeight: "600",
-    color: "#3E3D3D",
-    marginLeft: 5
+    // backgroundColor: "red",
+    color: "#000000",
+    // marginLeft: 10
   },
-  goalSupportLabel:{
+  itemsLabel: {
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    // backgroundColor:"red",
-    flex:4
+    // backgroundColor: "red",
+    flex: 5
   },
-  goalSupportInput:{
+  itemsInput: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: "red",
+    flex: 6
+  },
+
+  picker: {
+    height: 50,
+    width: 150,
+    borderBottomColor: "#C4C4C4",
+    borderBottomWidth: 5,
+    // backgroundColor: "green"
+  },
+  icon_label: {
+    flex: 2,
+    // backgroundColor: "green",
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center"
+  },
+  text_label: {
+    flex: 8,
+    // backgroundColor: "red",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center"
+  },
+  itemsInput: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
     alignItems: "center",
-    // backgroundColor:"blue",
-    flex:6
+    // backgroundColor: "blue",
+    flex: 5
   },
   taskTitle: {
     multiline: true,
