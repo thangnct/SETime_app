@@ -1,137 +1,89 @@
 export default {
   container: {
     flex: 1,
+    marginRight: 10,
+    marginLeft: 10,
     // backgroundColor: "red"
   },
-  addButton: {
-    position: "absolute",
-    bottom: "5%",
-    right: 25,
-    width: 50,
-    height: 50,
-    backgroundColor: "#F2994A",
-    borderRadius: 50,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    flexDirection: 'row',
-    justifyContent: "center",
-    alignItems: "center"
-
-  },
-  addGoalButton: {
-    position: "absolute",
-    bottom: "13%",
-    right: 25,
-    
-    width: 50,
-    height: 50,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 50,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    flexDirection: 'row',
-    justifyContent: "center",
-    alignItems: "center"
-
-  },
-  addTaskButton: {
-    position: "absolute",
-    bottom: "21%",
-    right: 25,
-    width: 50,
-    height: 50,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 50,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    flexDirection: 'row',
-    justifyContent: "center",
-    alignItems: "center"
-
-  },
-  addButtonContainer: {
-
-  },
   top: {
-    backgroundColor: "red",
     height: 50,
     flexDirection: "row",
     justifyContent: "space-between",
-    
-
   },
-  body: {
-    flex: 1,
-    backgroundColor: "blue"
-  },
-  footer: {
-    flex: 1,
-    // backgroundColor: "green",
+  backButton: {
+    width: 60, height: 50,
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
-  formLogin: {
+  taskOption: {
+    width: 150,
     // backgroundColor: "white",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center"
+
+  },
+  backButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    width: 50
+  },
+  saveText: {
+    color: "#F2994A",
+    fontSize: 18,
+    fontWeight: "700"
+  },
+  cancelText: {
+    color: "#AAAAAA",
+    fontSize: 18,
+    fontWeight: "700"
+  },
+  body: {
+    marginTop: 10,
     flex: 1,
-    marginLeft: 20,
-    marginRight: 20,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
+    // backgroundColor: "blue"
   },
-  button: {
-    flexDirection: "column",
-    justifyContent: 'center',
-    backgroundColor: '#FFA200',
-    borderRadius: 30,
-    height: 48,
-    width: 110
-  },
-  text_Button: {
-    fontFamily: "Lato-Bold",
-    fontSize: 17,
-    color: "#FFFFFF",
-    fontWeight: "bold",
-    textAlign: 'center'
-  },
-  coverButton: {
-    justifyContent: 'flex-end',
-    flexDirection: 'row',
-  },
-  coverTile: {
+  taskTitleContainer: {
 
   },
-  loginText: {
-    fontWeight: "bold",
-    fontSize: 33,
-    color: "#162947"
-  },
-  loginTextUnder: {
-    fontSize: 15,
-    color: "#666666"
-  },
-  touch_Footer: {
-    justifyContent: 'center',
-    backgroundColor: '#FFA200',
-    borderRadius: 15,
-    height: 47,
-    width: 110
-  },
-  coverInput: {
+  goalSupportContainer: {
     marginTop: 20,
-    marginBottom: 15,
+    flexDirection:"row",
+    justifyContent: "space-between",
+    
+    // backgroundColor: "pink"
 
   },
-  input: {
-    fontSize: 15,
+  goalSupportText: {
+    fontSize: 14,
+    // fontWeight: "600",
+    color: "#3E3D3D",
+    marginLeft: 5
   },
-  textFooter: {
-    color: "#162947",
-    fontSize: 15,
+  goalSupportLabel:{
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    // backgroundColor:"red",
+    flex:4
   },
-  textRegister: {
-    color: "#FFA200",
-    fontSize: 15,
-    fontWeight: "bold"
+  goalSupportInput:{
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    // backgroundColor:"blue",
+    flex:6
+  },
+  taskTitle: {
+    multiline: true,
+    height: 50,
+    borderBottomColor: '#AAAAAA',
+    borderBottomWidth: 1,
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#3E3D3D"
   }
 };
