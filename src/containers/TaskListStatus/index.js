@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import WokingOnTasks from "../../../components/TaskList/WorkingOn";
+import TaskListStatus from "../../components/TaskListStatus";
 
-class WokingOnTaskContainer extends Component {
+class TaskListStatusContainer extends Component {
     constructor(props) {
         super(props);
     }
     render() {
         return (
-            <WokingOnTasks
+            <TaskListStatus
                 navigation={this.props.navigation}
+                taskList ={this.props.taskList}
             />
         )
     }
@@ -26,4 +27,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(WokingOnTaskContainer)
+)(TaskListStatusContainer)

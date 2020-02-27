@@ -10,6 +10,7 @@ import {
     Picker,
 
 } from "native-base";
+import moment from "moment";
 import DatePicker from 'react-native-datepicker'
 import Icon from 'react-native-vector-icons/FontAwesome';
 const task = <Icon name="tasks" size={25} color={"#AAAAAA"} />;
@@ -114,7 +115,7 @@ export default class AddTask extends Component {
                                                 marginBottom: 0
                                             },
                                         }}
-                                        onDateChange={(date) => { this.handleChangeInput("startTime", date) }}
+                                        onDateChange={(date) => { console.log(date); this.handleChangeInput("startTime", date) }}
                                     />
                                 </View>
 

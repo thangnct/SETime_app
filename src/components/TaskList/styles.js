@@ -105,7 +105,7 @@ export default {
   },
   
   name: {
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: "bold"
   },
   phone: {

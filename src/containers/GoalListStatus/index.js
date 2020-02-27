@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import WokingOnTasks from "../../../components/TaskList/WorkingOn";
+import GoalListStatus from "../../components/GoalListStatus";
 
-class WokingOnTaskContainer extends Component {
+class GoalListStatusContainer extends Component {
     constructor(props) {
         super(props);
     }
     render() {
         return (
-            <WokingOnTasks
+            <GoalListStatus
                 navigation={this.props.navigation}
+                goalList={this.props.goalList}
             />
         )
     }
@@ -26,4 +27,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(WokingOnTaskContainer)
+)(GoalListStatusContainer)

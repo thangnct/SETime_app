@@ -95,7 +95,7 @@ export default class Home extends Component {
                           <Text style={styles.goalTitle}>{item.title}</Text>
                         </View>
                         <View style={styles.goalColor}>
-                          <Icon name="bullseye" color={item.color} size={20} />
+                          <Icon name="circle" color={item.color} size={20} />
                         </View>
                       </View>}
                     />
@@ -144,7 +144,7 @@ export default class Home extends Component {
                   marginRight: 5, flexDirection: "row", justifyContent: "flex-start",
                   alignItems: "center", marginTop: 5
                 }}>
-                  <Icon name="bullseye" color={item.color} size={20} />
+                  <Icon name="circle" color={item.color} size={20} />
                   <View style={styles.task}>
                     <Text style={styles.weekday}>{item.taskTitle}</Text>
                     <Text style={styles.timeBound}>{item.timeBound}</Text>
@@ -157,7 +157,7 @@ export default class Home extends Component {
 
         <ActionButton buttonColor="#F2994A">
           <ActionButton.Item buttonColor='#FFFFFF' title="Add goal" onPress={() => this.props.navigation.navigate("AddGoal")}>
-            <Icon name="bullseye" color="#F2994A" size={20} />
+            <Icon name="circle" color="#F2994A" size={20} />
           </ActionButton.Item>
           <ActionButton.Item buttonColor='#FFFFFF' title="Add task" onPress={() => { this.props.navigation.navigate("AddTask") }}>
             <Icon name="tasks" color="#F2994A" size={20} />
