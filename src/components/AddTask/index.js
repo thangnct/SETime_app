@@ -6,8 +6,11 @@ import {
     TextInput,
     Switch
 } from "react-native";
-import { Picker,  } from "native-base";
+import {
+    Picker,
 
+} from "native-base";
+import DatePicker from 'react-native-datepicker'
 import Icon from 'react-native-vector-icons/FontAwesome';
 const task = <Icon name="tasks" size={25} color={"#AAAAAA"} />;
 export default class AddTask extends Component {
@@ -23,7 +26,11 @@ export default class AddTask extends Component {
                 { goalId: 1, goalTitle: "Get Link" },
                 { goalId: 3, goalTitle: "Stronger" },
                 { goalId: 4, goalTitle: "Getup early" },
-            ]
+            ],
+            isAllDay: true,
+            startTime: "",
+            endTime: ""
+
         }
     }
     static navigationOptions = {
@@ -42,8 +49,14 @@ export default class AddTask extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.taskOption}>
-                        <Text style={styles.saveText}>Save</Text>
-                        <Text style={styles.cancelText}>Cancel</Text>
+                        <TouchableOpacity onPress={() => { }}>
+                            <Text style={styles.saveText}>Save</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => { }}
+                        >
+                            <Text style={styles.cancelText}>Cancel</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.body}>
@@ -152,27 +165,75 @@ export default class AddTask extends Component {
                 <View style={styles.itemsInput}>
                     <View style={styles.timeStartEndContainer}>
                         <View style={styles.timeStartEnd}>
-                            <Text>Start time: </Text>
-                            <TextInput
-                                style={styles.timeStartEndInput}
-                                onChangeText={text => this.handleChangeInput("taskTitle", text)}
-                                value={this.state.taskTitle}
-                            // placeholder="Task tile"
-                            />
+                            <View style={styles.labelStartEndTime}>
+                                <Text>Start: </Text>
+                            </View>
+                            <View style={styles.pickerStartEndTime}>
+                                <DatePicker
+                                    style={styles.textinput_Date}
+                                    date={this.state.startTime}
+                                    mode="datetime"
+                                    confirmBtnText="OK"
+                                    cancelBtnText="Cancel"
+                                    // minDate={this.state.startTime || ""}
+                                    // maxDate={this.state.endTime || ""}
+                                    placeholder="Pick time"
+                                    format="YYYY-MM-DD HH:mm"
+                                    showIcon={false}
+                                    customStyles={{
+                                        dateInput: {
+                                            height: 20,
+                                            borderTopWidth: 0,
+                                            borderLeftWidth: 0,
+                                            borderRightWidth: 0,
+                                            borderBottomWidth: 0,
+                                            marginBottom: 0
+                                        },
+                                    }}
+                                    onDateChange={(date) => { this.handleChangeInput("startTime", date) }}
+                                />
+                            </View>
+
                         </View>
                         <View style={styles.timeStartEnd}>
-                            <Text>End time: </Text>
-                            <TextInput
-                                style={styles.timeStartEndInput}
-                                onChangeText={text => this.handleChangeInput("taskTitle", text)}
-                                value={this.state.taskTitle}
-                            // placeholder="Task tile"
-                            />
+                            <View style={styles.labelStartEndTime}>
+                                <Text>Finish: </Text>
+                            </View>
+                            <View style={styles.pickerStartEndTime}>
+                                <DatePicker
+                                    style={styles.textinput_Date}
+                                    date={this.state.endTime}
+                                    mode="datetime"
+                                    confirmBtnText="OK"
+                                    cancelBtnText="Cancel"
+                                    placeholder="Pick time"
+                                    // minDate={this.state.startTime || ""}
+                                    // maxDate={this.state.endTime || ""}
+                                    format="YYYY-MM-DD HH:mm"
+                                    showIcon={false}
+                                    customStyles={{
+                                        dateInput: {
+                                            height: 20,
+                                            borderTopWidth: 0,
+                                            borderLeftWidth: 0,
+                                            borderRightWidth: 0,
+                                            borderBottomWidth: 0,
+                                            marginBottom: 0
+                                        },
+                                    }}
+                                    onDateChange={(date) => { this.handleChangeInput("endTime", date) }}
+                                />
+                            </View>
+
                         </View>
+
                     </View>
                 </View>
             </View>
         </View>
+    }
+    checkStartEndTime = () => {
+        return this.state.endTime > this.state.startTime
     }
     handleChangeInput = (name, value) => {
         this.setState({

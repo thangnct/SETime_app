@@ -84,10 +84,11 @@ export default {
     flex: 5.5,
     marginLeft: 10,
     // backgroundColor: "#555777",
-    marginBottom: 15
+    marginBottom: 15,
+    height: 120
   },
   goalBroadRatioCompleted: {
-    flex: 2.5,
+    flex: 3.5,
     // backgroundColor: "#999111",
     flexDirection: "column",
     justifyContent: "flex-end",
@@ -109,7 +110,7 @@ export default {
   },
   phone: {
     fontSize: 14,
-    fontWeight: "600"
+    // fontWeight: "600"
   },
   broad: {
     flexDirection: "row",

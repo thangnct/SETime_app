@@ -1,85 +1,189 @@
 export default {
-    container: {
-  
-    },
-    top: {
-      flex: 1.5,
-      // backgroundColor: "red",
-  
-    },
-    body: {
-      flex: 4,
-      // backgroundColor: "blue"
-    },
-    footer: {
-      flex: 1,
-      // backgroundColor: "green",
-      flexDirection:"row",
-      justifyContent: "center",
-      alignItems: "center"
-    },
-    formLogin: {
-      // backgroundColor: "white",
-      flex: 1,
-      marginLeft: 20,
-      marginRight: 20,
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-    },
-    button: {
-      flexDirection: "column",
-      justifyContent: 'center',
-      backgroundColor: '#FFA200',
-      borderRadius: 30,
-      height: 48,
-      width: 110
-    },
-    text_Button: {
-      fontFamily: "Lato-Bold",
-      fontSize: 17,
-      color: "#FFFFFF",
-      fontWeight: "bold",
-      textAlign: 'center'
-    },
-    coverButton: {
-      justifyContent: 'flex-end',
-      flexDirection: 'row',
-    },
-    coverTile: {
-  
-    },
-    loginText: {
-      fontWeight: "bold",
-      fontSize: 33,
-      color: "#162947"
-    },
-    loginTextUnder: {
-      fontSize: 15,
-      color: "#666666"
-    },
-    touch_Footer: {
-      justifyContent: 'center',
-      backgroundColor: '#FFA200',
-      borderRadius: 15,
-      height: 47,
-      width: 110
-    },
-    coverInput: {
-      marginTop: 20,
-      marginBottom: 15,
-      
-    },
-    input: {
-      fontSize: 15,
-    },
-    textFooter:{
-      color: "#162947",
-      fontSize: 15,
-    },
-    textRegister:{
-      color: "#FFA200",
-      fontSize: 15,
-      fontWeight: "bold"
-    }
-  };
-  
+  container: {
+    flex: 1,
+    marginRight: 10,
+    marginLeft: 10,
+    // backgroundColor: "red"
+  },
+  allDay: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  top: {
+    height: 72,
+    flexDirection: "row",
+    // backgroundColor: "pink",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+
+  backButton: {
+    width: 60, height: 50,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  taskOption: {
+    width: 150,
+    // backgroundColor: "white",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center"
+
+  },
+  backButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    width: 50
+  },
+  saveText: {
+    color: "#F2994A",
+    fontSize: 20,
+    fontWeight: "700"
+  },
+  cancelText: {
+    color: "#AAAAAA",
+    fontSize: 20,
+    fontWeight: "700"
+  },
+  body: {
+
+    flex: 1,
+    marginLeft: 10,
+    marginRight: 10,
+    // backgroundColor: "blue"
+  },
+  taskTitleContainer: {
+
+  },
+  items: {
+    marginTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    // backgroundColor: "pink"
+
+  },
+  itemLabelText: {
+    fontSize: 16,
+    // fontWeight: "600",
+    // backgroundColor: "red",
+    color: "#000000",
+    // marginLeft: 10
+  },
+  itemsLabel: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    // backgroundColor: "red",
+    flex: 5
+  },
+  picker: {
+    height: 50,
+    width: 50,
+    borderBottomColor: "#C4C4C4",
+    borderBottomWidth: 5,
+    backgroundColor: "green"
+  },
+  icon_label: {
+    flex: 2,
+    // backgroundColor: "green",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  text_label: {
+    flex: 8,
+    // backgroundColor: "red",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center"
+  },
+  timeStartEnd: {
+    flex: 1,
+    flexDirection: "row",
+    // backgroundColor: "green",
+    justifyContent: "flex-end",
+    alignItems: "center"
+  },
+  itemsInput: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    // backgroundColor: "blue",
+    flex: 5
+  },
+  timeStartEndInput: {
+    flex: 1,
+    borderBottomColor: '#AAAAAA',
+    borderBottomWidth: 1,
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#3E3D3D"
+  },
+  thingsTodo: {
+    // backgroundColor: "red",
+    // flex: 1,
+    height: 120,
+    // marginBottom: 20,
+    marginLeft: 40,
+    marginRight: 10
+  },
+  taskTodo:{
+
+  },
+  weekday: {
+    fontSize: 14,
+    fontWeight: "bold"
+  },
+  dailyTaskTime: {
+    fontSize: 14,
+  },
+  timeStartEndContainer: {
+    height: 50,
+    flexDirection: "column",
+    flex: 1,
+    // justifyContent: "flex-start",
+    // alignItems: "space-around"
+    // backgroundColor: "black"
+  },
+  labelStartEndTime: {
+    width: 50,
+    // backgroundColor: "red"
+  },
+  pickerStartEndTime: {
+    flex: 1,
+    // justifyContent: "flex-end",
+    // backgroundColor: "blue"
+  },
+  addTaskText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "white"
+  },
+  addButton: {
+
+    right: 10,
+    width: 90,
+    height: 45,
+    backgroundColor: "#F2994A",
+    borderRadius: 5,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
+    flexDirection: 'row',
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  taskTitle: {
+    multiline: true,
+    height: 50,
+    borderBottomColor: '#AAAAAA',
+    borderBottomWidth: 1,
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#3E3D3D"
+  }
+};

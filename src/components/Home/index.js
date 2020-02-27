@@ -40,7 +40,7 @@ export default class Home extends Component {
         { id: 1, title: "Đọc xong cuốn Amazon phát triển thần tốc.", status: "completed", color: "#123456" },
         { id: 1, title: "Dậy sớm lúc 5:30", status: "completed", color: "#123456" },
       ],
-      DATA: [
+      monthGoal: [
         {
           id: '1',
           title: 'First Item',
@@ -66,7 +66,7 @@ export default class Home extends Component {
         <View style={styles.header} >
           <View style={styles.top} >
             <TouchableOpacity style={styles.option}
-              // onPress={() => { this.props.navigation.openDrawer() }}
+            // onPress={() => { this.props.navigation.openDrawer() }}
             >
               <Icon name="cog" color="#C4C4C4" size={28} />
             </TouchableOpacity>
@@ -78,7 +78,7 @@ export default class Home extends Component {
           <View style={styles.broad}>
             <FlatList
               horizontal={true}
-              data={this.state.DATA}
+              data={this.state.monthGoal}
               renderItem={({ item }) => <View style={styles.goalBroad} >
                 <View style={styles.goalBroadTitle}><Text style={styles.TileGoalBroad}>January, 2020</Text></View>
                 <View style={styles.goalBroadBody}>
@@ -134,7 +134,7 @@ export default class Home extends Component {
               <FlatList
                 data={this.state.taskListInDay}
                 renderItem={({ item }) => <View style={{
-                  height: 60, borderRadius: 5, marginLeft: 15,
+                  height: 50, borderRadius: 5, marginLeft: 15,
                   marginRight: 5, flexDirection: "row", justifyContent: "flex-start",
                   alignItems: "center", marginTop: 5
                 }}>
@@ -178,7 +178,7 @@ export default class Home extends Component {
       onPress={() => {
         this.setState({
           openAddButton: !this.state.openAddButton
-        }, () => { })
+        }, () => { this.props.navigation.navigate("AddGoal") })
       }}
     >
       <Icon name="bullseye" color="#C4C4C4" size={20} />

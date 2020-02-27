@@ -105,7 +105,7 @@ export default {
   timeStartEnd: {
     flex: 1,
     flexDirection: "row",
-    // backgroundColor: "red",
+    // backgroundColor: "green",
     justifyContent: "flex-end",
     alignItems: "center"
   },
@@ -130,7 +130,15 @@ export default {
     flex: 1,
     // justifyContent: "flex-start",
     // alignItems: "space-around"
+    // backgroundColor: "black"
+  },
+  labelStartEndTime: {
+    width: 50,
     // backgroundColor: "red"
+  },
+  pickerStartEndTime: {
+    flex: 1,
+    // backgroundColor: "blue"
   },
   taskTitle: {
     multiline: true,
