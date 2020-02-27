@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Home from "../containers/Home"
 import TaskList from "../containers/TaskList"
 import GoalList from "../containers/GoalList"
-// import Drawer from "../containers/SlideBar"
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 const task = <Icon name="tasks" size={25} color={"#AAAAAA"} />;
 const home = <Icon name="home" size={25} color="#AAAAAA" />;
 const goal = <Icon name="bullseye" size={25} color="#AAAAAA" />;

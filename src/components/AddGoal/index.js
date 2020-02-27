@@ -258,7 +258,7 @@ export default class AddTask extends Component {
                             </View>
                             <View style={styles.itemsInput}>
                                 <TouchableOpacity style={[styles.addButton]}
-                                    onPress={this.changeAddButtonState}
+                                    onPress={() => this.props.navigation.navigate("AddTask")}
                                 >
                                     <Text style={styles.addTaskText} >Add task</Text>
                                 </TouchableOpacity>
