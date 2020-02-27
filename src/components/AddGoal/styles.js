@@ -60,7 +60,7 @@ export default {
 
   },
   items: {
-    marginTop: 20,
+    marginTop: 15,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -126,13 +126,13 @@ export default {
   },
   thingsTodo: {
     // backgroundColor: "red",
-    // flex: 1,
-    height: 120,
+    flex: 1,
+    // height: 120,
     // marginBottom: 20,
     marginLeft: 40,
     marginRight: 10
   },
-  taskTodo:{
+  taskTodo: {
 
   },
   weekday: {
@@ -165,7 +165,7 @@ export default {
     color: "white"
   },
   addButton: {
-
+    marginBottom: 40,
     right: 10,
     width: 90,
     height: 45,

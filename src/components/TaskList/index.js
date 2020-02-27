@@ -1,136 +1,60 @@
 import React, { Component } from "react";
+import { Container, } from "native-base";
 import styles from "./styles";
 import {
     Text, View, TouchableOpacity, SafeAreaView,
-    ScrollView
+    ScrollView,
+    FlatList
 } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { getDatetime, getTimeUseTimezone } from "../../commons";
+import ActionButton from 'react-native-action-button';
+import DatePicker from 'react-native-datepicker'
+
+
 
 export default class TaskList extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            openAddButton: false
+            number: 0,
+
         }
+
     }
-    static navigationOptions = {
-        headerMode: null,
-    };
+
     render() {
 
         return (
             <SafeAreaView style={styles.container}>
-                <ScrollView style={styles.body}>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                    <Text>TaskList</Text>
-                </ScrollView>
 
-                {this.state.openAddButton ? this.renderAddTaskButton() : null}
-                {this.state.openAddButton ? this.renderAddGoalButton() : null}
-                <TouchableOpacity style={[styles.addButton]}
-                    onPress={this.changeAddButtonState}
-                >
-                    <Icon name="plus" color="#FFFFFF" size={28} />
-                </TouchableOpacity>
+                <View style={styles.header} >
+                    <View style={styles.top} >
+                        {/* <TouchableOpacity style={styles.option}
+                        // onPress={() => { this.props.navigation.openDrawer() }}
+                        >
+                            <Icon name="cog" color="#C4C4C4" size={28} />
+                        </TouchableOpacity> */}
+                        <View style={styles.info}>
+                            <Text style={styles.name}>Tasks</Text>
+                        </View>
+                    </View>
+                </View>
+                <View style={styles.body}>
+                    
+                </View>
+
             </SafeAreaView>
+
         );
     }
-    changeAddButtonState = () => {
-        this.setState({
-            openAddButton: !this.state.openAddButton
-        })
-    }
-    renderAddGoalButton = () => {
-        return <TouchableOpacity style={[styles.addGoalButton]}
-            onPress={() => {
-                this.setState({
-                    openAddButton: !this.state.openAddButton
-                }, () => { })
-            }}
-        >
-            <Icon name="bullseye" color="#C4C4C4" size={20} />
-        </TouchableOpacity>
-    }
 
-    renderAddTaskButton = () => {
-        return <TouchableOpacity style={[styles.addTaskButton]}
-            onPress={() => {
-                this.setState({
-                    openAddButton: !this.state.openAddButton
-                }, () => {
-                    this.props.navigation.navigate("AddTask")
-                })
-            }}
-        >
-            <Icon name="tasks" color="#C4C4C4" size={20} />
-        </TouchableOpacity>
+    renderBroad = () => {
+        return <View style={styles.square} />
+    }
+    signOut = async () => {
+        await AsyncStorage.removeItem("token");
+        this.props.navigation.navigate("Auth")
     }
 }

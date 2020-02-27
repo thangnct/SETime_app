@@ -9,6 +9,8 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getDatetime, getTimeUseTimezone } from "../../commons";
+import ActionButton from 'react-native-action-button';
+
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -77,6 +79,7 @@ export default class Home extends Component {
           </View>
           <View style={styles.broad}>
             <FlatList
+              showsVerticalScrollIndicator={false}
               horizontal={true}
               data={this.state.monthGoal}
               renderItem={({ item }) => <View style={styles.goalBroad} >
@@ -84,6 +87,7 @@ export default class Home extends Component {
                 <View style={styles.goalBroadBody}>
                   <View style={styles.goalList}>
                     <FlatList
+                      showsVerticalScrollIndicator={false}
                       data={this.state.goalInMonth}
                       renderItem={({ item }) => <View style={styles.goal}>
                         <View style={styles.leftGoalBroad}>
@@ -112,6 +116,7 @@ export default class Home extends Component {
           <View style={styles.daylist} >
             <View style={styles.dayListContainer}>
               <FlatList horizontal={true}
+                showsVerticalScrollIndicator={false}
                 data={this.state.dayList}
                 renderItem={({ item }) => <View style={{ width: 60, height: 60, borderRadius: 5, borderColor: "#F2994A", borderWidth: 3, backgroundColor: "#FFFFFF", marginRight: 5, flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
                   <Text style={styles.weekday}>{item.weekday}</Text>
@@ -132,6 +137,7 @@ export default class Home extends Component {
             </View>
             <View style={styles.taskList} >
               <FlatList
+                showsVerticalScrollIndicator={false}
                 data={this.state.taskListInDay}
                 renderItem={({ item }) => <View style={{
                   height: 50, borderRadius: 5, marginLeft: 15,
@@ -148,13 +154,16 @@ export default class Home extends Component {
             </View>
           </View>
         </View>
-        {this.state.openAddButton ? this.renderAddTaskButton() : null}
-        {this.state.openAddButton ? this.renderAddGoalButton() : null}
-        <TouchableOpacity style={[styles.addButton]}
-          onPress={this.changeAddButtonState}
-        >
-          <Icon name="plus" color="#FFFFFF" size={28} />
-        </TouchableOpacity>
+
+        <ActionButton buttonColor="#F2994A">
+          <ActionButton.Item buttonColor='#FFFFFF' title="Add goal" onPress={() => this.props.navigation.navigate("AddGoal")}>
+            <Icon name="bullseye" color="#F2994A" size={20} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#FFFFFF' title="Add task" onPress={() => { this.props.navigation.navigate("AddTask") }}>
+            <Icon name="tasks" color="#F2994A" size={20} />
+          </ActionButton.Item>
+        </ActionButton>
+
         {/* <Text
           onPress={() => {
             this.signOut()
@@ -167,36 +176,6 @@ export default class Home extends Component {
 
   renderBroad = () => {
     return <View style={styles.square} />
-  }
-  changeAddButtonState = () => {
-    this.setState({
-      openAddButton: !this.state.openAddButton
-    })
-  }
-  renderAddGoalButton = () => {
-    return <TouchableOpacity style={[styles.addGoalButton]}
-      onPress={() => {
-        this.setState({
-          openAddButton: !this.state.openAddButton
-        }, () => { this.props.navigation.navigate("AddGoal") })
-      }}
-    >
-      <Icon name="bullseye" color="#C4C4C4" size={20} />
-    </TouchableOpacity>
-  }
-
-  renderAddTaskButton = () => {
-    return <TouchableOpacity style={[styles.addTaskButton]}
-      onPress={() => {
-        this.setState({
-          openAddButton: !this.state.openAddButton
-        }, () => {
-          this.props.navigation.navigate("AddTask")
-        })
-      }}
-    >
-      <Icon name="tasks" color="#C4C4C4" size={20} />
-    </TouchableOpacity>
   }
   signOut = async () => {
     await AsyncStorage.removeItem("token");

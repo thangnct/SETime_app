@@ -68,86 +68,88 @@ export default class AddTask extends Component {
                             placeholder="Task tile"
                         />
                     </View>
-                    <View style={styles.items}>
-                        <View style={styles.itemsLabel}>
-                            <View style={styles.icon_label}>
-                                <Icon name="bullseye" size={25} color={"#AAAAAA"} />
+                    <ScrollView style={{ flex: 1 }}>
+                        <View style={styles.items}>
+                            <View style={styles.itemsLabel}>
+                                <View style={styles.icon_label}>
+                                    <Icon name="bullseye" size={25} color={"#AAAAAA"} />
+                                </View>
+                                <View style={styles.text_label}>
+                                    <Text style={styles.itemLabelText}>Support for goal </Text>
+                                </View>
                             </View>
-                            <View style={styles.text_label}>
-                                <Text style={styles.itemLabelText}>Support for goal </Text>
+                            <View style={styles.itemsInput}>
+                                <Picker
+                                    mode="dropdown"
+                                    placeholder="Pick goal"
+                                    style={{ width: undefined, fontWeight: "bold" }}
+                                    selectedValue={this.state.goalSupport}
+                                    onValueChange={(value) => { this.setState({ goalSupport: value }) }}
+                                >
+                                    {this.state.goalAvailable.map(goal => {
+                                        return <Picker.Item label={goal.goalTitle} value={goal.goalId} />
+                                    })}
+                                </Picker>
                             </View>
                         </View>
-                        <View style={styles.itemsInput}>
-                            <Picker
-                                mode="dropdown"
-                                placeholder="Pick goal"
-                                style={{ width: undefined, fontWeight: "bold" }}
-                                selectedValue={this.state.goalSupport}
-                                onValueChange={(value) => { this.setState({ goalSupport: value }) }}
-                            >
-                                {this.state.goalAvailable.map(goal => {
-                                    return <Picker.Item label={goal.goalTitle} value={goal.goalId} />
-                                })}
-                            </Picker>
-                        </View>
-                    </View>
 
-                    <View style={styles.items}>
-                        <View style={styles.itemsLabel}>
-                            <View style={styles.icon_label}>
-                                <Icon name="calendar" size={25} color={"#AAAAAA"} />
+                        <View style={styles.items}>
+                            <View style={styles.itemsLabel}>
+                                <View style={styles.icon_label}>
+                                    <Icon name="calendar" size={25} color={"#AAAAAA"} />
+                                </View>
+                                <View style={styles.text_label}>
+                                    <Text style={styles.itemLabelText}>Time-bound</Text>
+                                </View>
                             </View>
-                            <View style={styles.text_label}>
-                                <Text style={styles.itemLabelText}>Time-bound</Text>
+                            <View style={styles.itemsInput}>
+                                <View style={styles.allDay}>
+                                    <Text style={{ marginRight: 15 }} >All day</Text>
+                                    <Switch
+                                        value={this.state.isAllDay}
+                                        onValueChange={value => {
+                                            this.setState({ isAllDay: value }, () => {
+                                                console.log(this.state.isAllDay)
+                                            })
+                                        }}
+                                    />
+                                </View>
                             </View>
                         </View>
-                        <View style={styles.itemsInput}>
-                            <View style={styles.allDay}>
-                                <Text style={{ marginRight: 15 }} >All day</Text>
-                                <Switch
-                                    value={this.state.isAllDay}
-                                    onValueChange={value => {
-                                        this.setState({ isAllDay: value }, () => {
-                                            console.log(this.state.isAllDay)
-                                        })
-                                    }}
-                                />
-                            </View>
-                        </View>
-                    </View>
-                    {!this.state.isAllDay ? this.renderTimeBound() : null}
+                        {!this.state.isAllDay ? this.renderTimeBound() : null}
 
-                    <View style={styles.items}>
-                        <View style={styles.itemsLabel}>
-                            <View style={styles.icon_label}>
-                                <Icon name="sticky-note" size={25} color={"#AAAAAA"} />
+                        <View style={styles.items}>
+                            <View style={styles.itemsLabel}>
+                                <View style={styles.icon_label}>
+                                    <Icon name="sticky-note" size={25} color={"#AAAAAA"} />
+                                </View>
+                                <View style={styles.text_label}>
+                                    <Text style={styles.itemLabelText}>Note </Text>
+                                </View>
                             </View>
-                            <View style={styles.text_label}>
-                                <Text style={styles.itemLabelText}>Note </Text>
-                            </View>
-                        </View>
-                        <View style={styles.itemsInput}>
+                            <View style={styles.itemsInput}>
 
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.items}>
-                        <TextInput
-                            style={{
-                                multiline: true,
-                                height: 100,
-                                marginLeft: 10,
-                                marginRight: 10,
-                                borderColor: '#AAAAAA',
-                                borderWidth: 1,
-                                fontSize: 18,
-                                fontWeight: "600",
-                                color: "#3E3D3D",
-                                flex: 1
-                            }}
-                            multiline={true}
-                            numberOfLines={5}
-                        />
-                    </View>
+                        <View style={styles.items}>
+                            <TextInput
+                                style={{
+                                    // multiline: true,
+                                    height: 100,
+                                    marginLeft: 10,
+                                    marginRight: 10,
+                                    borderColor: '#AAAAAA',
+                                    borderWidth: 1,
+                                    fontSize: 16,
+                                    color: "#3E3D3D",
+                                    flex: 1
+                                }}
+                                multiline={true}
+                                numberOfLines={5}
+                            />
+                        </View>
+                    </ScrollView>
+
 
 
                 </View>

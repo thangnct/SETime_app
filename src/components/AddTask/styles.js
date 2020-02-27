@@ -60,7 +60,7 @@ export default {
 
   },
   items: {
-    marginTop: 20,
+    marginTop: 15,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

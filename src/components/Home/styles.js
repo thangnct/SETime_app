@@ -85,7 +85,7 @@ export default {
     marginLeft: 10,
     // backgroundColor: "#555777",
     marginBottom: 15,
-    height: 120
+    // height: 120
   },
   goalBroadRatioCompleted: {
     flex: 3.5,
