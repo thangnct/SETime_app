@@ -68,9 +68,9 @@ export default class Home extends Component {
         <View style={styles.header} >
           <View style={styles.top} >
             <TouchableOpacity style={styles.option}
-            // onPress={() => { this.props.navigation.openDrawer() }}
+              onPress={() => { this.props.navigation.openDrawer() }}
             >
-              <Icon name="cog" color="#C4C4C4" size={28} />
+              <Icon name="align-justify" color="#3E3D3D" size={20} />
             </TouchableOpacity>
             <View style={styles.info}>
               <Text style={styles.name}>Victor Nguyen</Text>

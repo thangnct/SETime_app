@@ -93,7 +93,7 @@ export default class AddTask extends Component {
                                 </View>
                             </View>
                             <View style={styles.itemsInput}>
-                                <View style={styles.pickerStartEndTime}>
+                                {/* <View style={styles.pickerStartEndTime}>
                                     <DatePicker
                                         style={styles.textinput_Date}
                                         date={this.state.startTime}
@@ -117,11 +117,77 @@ export default class AddTask extends Component {
                                         }}
                                         onDateChange={(date) => { console.log(date); this.handleChangeInput("startTime", date) }}
                                     />
+                                </View> */}
+
+                            </View>
+                        </View>
+                        <View style={styles.items}>
+                            <View style={styles.timeStartEndContainer}>
+                                <View style={styles.timeStartEnd}>
+                                    <View style={styles.labelStartEndTime}>
+                                        <Text>Start: </Text>
+                                    </View>
+                                    <View style={styles.pickerStartEndTime}>
+                                        <DatePicker
+                                            style={styles.textinput_Date}
+                                            date={this.state.startTime}
+                                            mode="datetime"
+                                            confirmBtnText="OK"
+                                            cancelBtnText="Cancel"
+                                            // minDate={this.state.startTime || ""}
+                                            // maxDate={this.state.endTime || ""}
+                                            placeholder="Pick time"
+                                            format="YYYY-MM-DD HH:mm"
+                                            showIcon={false}
+                                            customStyles={{
+                                                dateInput: {
+                                                    height: 20,
+                                                    borderTopWidth: 0,
+                                                    borderLeftWidth: 0,
+                                                    borderRightWidth: 0,
+                                                    borderBottomWidth: 0,
+                                                    marginBottom: 0
+                                                },
+                                            }}
+                                            onDateChange={(date) => { this.handleChangeInput("startTime", date) }}
+                                        />
+                                    </View>
+
+                                </View>
+                                <View style={styles.timeStartEnd}>
+                                    <View style={styles.labelStartEndTime}>
+                                        <Text>Finish: </Text>
+                                    </View>
+                                    <View style={styles.pickerStartEndTime}>
+                                        <DatePicker
+                                            style={styles.textinput_Date}
+                                            date={this.state.endTime}
+                                            mode="datetime"
+                                            confirmBtnText="OK"
+                                            cancelBtnText="Cancel"
+                                            placeholder="Pick time"
+                                            // minDate={this.state.startTime || ""}
+                                            // maxDate={this.state.endTime || ""}
+                                            format="YYYY-MM-DD HH:mm"
+                                            showIcon={false}
+                                            customStyles={{
+                                                dateInput: {
+                                                    height: 20,
+                                                    borderTopWidth: 0,
+                                                    borderLeftWidth: 0,
+                                                    borderRightWidth: 0,
+                                                    borderBottomWidth: 0,
+                                                    marginBottom: 0
+                                                },
+                                            }}
+                                            onDateChange={(date) => { this.handleChangeInput("endTime", date) }}
+                                        />
+                                    </View>
+
                                 </View>
 
                             </View>
                         </View>
-
                         <View style={styles.items}>
                             <View style={styles.itemsLabel}>
                                 <View style={styles.icon_label}>

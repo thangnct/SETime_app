@@ -181,12 +181,12 @@ export default {
   option: {
     marginLeft: 5,
     marginRight: 5,
-    width: 45,
-    height: 45,
+    width: 40,
+    height: 40,
     backgroundColor: "#FFFFFF",
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: '#d6d7da',
+    borderColor: '#3E3D3D',
     flexDirection: 'row',
     justifyContent: "center",
     alignItems: "center"

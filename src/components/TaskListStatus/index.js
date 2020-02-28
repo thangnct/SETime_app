@@ -34,7 +34,7 @@ export default class TaskListStatus extends Component {
                     }}>
                         <View style={styles.checkBox}>
                             <CheckBox
-                                checked={true}
+                                checked={item.taskStatus=="completed"}
                                 checkedColor="#F2994A"
                             />
                         </View>

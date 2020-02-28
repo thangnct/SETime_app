@@ -86,7 +86,7 @@ export default {
     width: 50,
     borderBottomColor: "#C4C4C4",
     borderBottomWidth: 5,
-    backgroundColor: "green"
+    // backgroundColor: "green"
   },
   icon_label: {
     flex: 2,
@@ -104,6 +104,7 @@ export default {
   },
   timeStartEnd: {
     flex: 1,
+    marginLeft:10,
     flexDirection: "row",
     // backgroundColor: "green",
     justifyContent: "flex-end",
@@ -143,8 +144,8 @@ export default {
     fontSize: 14,
   },
   timeStartEndContainer: {
-    height: 50,
-    flexDirection: "column",
+    // height: 50,
+    // flexDirection: "column",
     flex: 1,
     // justifyContent: "flex-start",
     // alignItems: "space-around"
@@ -156,7 +157,7 @@ export default {
   },
   pickerStartEndTime: {
     flex: 1,
-    // justifyContent: "flex-end",
+    justifyContent: "flex-end",
     // backgroundColor: "blue"
   },
   addTaskText: {
