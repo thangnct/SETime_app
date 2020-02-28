@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Container, } from "native-base";
 import styles from "./styles";
-import { Text, View, TouchableOpacity, Alert } from "react-native";
+import {
+    Text, View, TouchableOpacity, Alert,
+    ActivityIndicator
+} from "react-native";
 import { Item, Input } from 'native-base';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import Toast, { DURATION } from 'react-native-easy-toast';
@@ -19,99 +22,128 @@ export default class Register extends Component {
             rePassword: ""
         }
     }
+    componentWillReceiveProps(nextProps) {
+        const { isLoading, isSuccess, dataRegister } = nextProps.auth
+        console.log("next props: ", nextProps.auth)
+        if (dataRegister && dataRegister !== this.props.auth.dataRegister && isLoading == false && isSuccess == true) {
+            console.log("data register: ", dataRegister)
+            if (dataRegister.code == 1) {
+                this.props.navigation.navigate("PhoneValidate", {
+                    fullName: this.state.fullName,
+                    phoneOrEmail: this.state.phone,
+                    password: this.state.password
+                });
+            } else if (dataRegister.code == -99) {
+                Alert.alert("Notification", "There is a trouble, please try again later.")
+            } else {
+                console.log("dataRegister.message: ", dataRegister.message)
+                Alert.alert("Notification", dataRegister.message)
+            }
+        }
+
+    }
     render() {
+        const { isLoading, isSuccess } = this.props.auth;
+        console.log("Isload: ", isLoading)
         return (
 
             <Container style={styles.container}>
-                <Toast
-                    ref="toast"
-                    position='bottom'
-                    positionValue={200}
-                    fadeInDuration={750}
-                    fadeOutDuration={1000}
-                    opacity={0.8}
-                />
-                <View style={styles.top}>
 
-                </View>
-                <View style={styles.body}>
+                {isLoading == true ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}><ActivityIndicator size="large" color="#C4C4C4" /></View> :
+                    <View style={{ flex: 1 }}>
+                        <Toast
+                            ref="toast"
+                            position='bottom'
+                            positionValue={200}
+                            fadeInDuration={750}
+                            fadeOutDuration={1000}
+                            opacity={0.8}
+                        />
+                        <View style={styles.top}>
 
-                    <View style={styles.formLogin}>
-                        <View style={styles.coverTile}>
-                            <Text style={styles.loginText}>Register</Text>
-                            <Text style={styles.loginTextUnder}>Create an new account</Text>
                         </View>
-                        <View style={styles.coverInput}>
-                            <Item>
-                                <Icon
-                                    name="user"
-                                />
-                                <Input
-                                    style={styles.input}
-                                    placeholder="Full Name"
-                                    onChangeText={value => this.handleInput("fullName", value)}
-                                />
-                            </Item>
-                            <Item>
-                                <Icon
-                                    name="envelope"
-                                />
-                                <Input
-                                    style={styles.input}
-                                    placeholder="Phone"
-                                    onChangeText={value => this.handleInput("phone", value)}
-                                />
-                            </Item>
-                            <Item>
-                                <Icon
-                                    name="key"
-                                />
-                                <Input
-                                    style={styles.input}
-                                    placeholder="Password"
-                                    onChangeText={value => this.handleInput("password", value)}
-                                />
-                            </Item>
-                            <Item>
-                                <Icon
-                                    name="unlock-alt"
-                                />
-                                <Input
-                                    style={styles.input}
-                                    placeholder="Comfirm Password"
-                                    onChangeText={value => this.handleInput("rePassword", value)}
-                                />
-                            </Item>
+                        <View style={styles.body}>
+
+                            <View style={styles.formLogin}>
+                                <View style={styles.coverTile}>
+                                    <Text style={styles.loginText}>Register</Text>
+                                    <Text style={styles.loginTextUnder}>Create an new account</Text>
+                                </View>
+                                <View style={styles.coverInput}>
+                                    <Item>
+                                        <Icon
+                                            name="user"
+                                        />
+                                        <Input
+                                            style={styles.input}
+                                            placeholder="Full Name"
+                                            onChangeText={value => this.handleInput("fullName", value)}
+                                        />
+                                    </Item>
+                                    <Item>
+                                        <Icon
+                                            name="phone"
+                                        />
+                                        <Input
+                                            style={styles.input}
+                                            placeholder="Phone"
+                                            onChangeText={value => this.handleInput("phone", value)}
+                                        />
+                                    </Item>
+                                    <Item>
+                                        <Icon
+                                            name="key"
+                                        />
+                                        <Input
+                                            style={styles.input}
+                                            secureTextEntry={true}
+                                            placeholder="Password"
+                                            onChangeText={value => this.handleInput("password", value)}
+                                        />
+                                    </Item>
+                                    <Item>
+                                        <Icon
+                                            name="unlock-alt"
+                                        />
+                                        <Input
+                                            style={styles.input}
+                                            secureTextEntry={true}
+                                            placeholder="Comfirm Password"
+                                            onChangeText={value => this.handleInput("rePassword", value)}
+                                        />
+                                    </Item>
+                                </View>
+                                <View style={styles.coverButton}>
+                                    <TouchableOpacity
+                                        style={styles.button}
+                                        onPress={() => {
+                                            this.handleRegister()
+                                        }}
+                                    >
+                                        <Text
+                                            style={styles.text_Button}>
+                                            Register
+                            </Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                            </View>
                         </View>
-                        <View style={styles.coverButton}>
+                        <View style={styles.footer}>
+                            <Text style={styles.textFooter}>
+                                Have a account ?{" "}
+                            </Text>
                             <TouchableOpacity
-                                style={styles.button}
+                                activeOpacity={0.7}
                                 onPress={() => {
-                                    this.handleRegister()
+                                    this.props.navigation.navigate("Login");
                                 }}
                             >
-                                <Text
-                                    style={styles.text_Button}>
-                                    Register
-                                </Text>
+                                <Text style={styles.textRegister}>Login now</Text>
                             </TouchableOpacity>
                         </View>
-
                     </View>
-                </View>
-                <View style={styles.footer}>
-                    <Text style={styles.textFooter}>
-                        Have a account ?{" "}
-                    </Text>
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        onPress={() => {
-                            this.props.navigation.navigate("Login");
-                        }}
-                    >
-                        <Text style={styles.textRegister}>Login now</Text>
-                    </TouchableOpacity>
-                </View>
+                }
 
             </Container>
 
@@ -141,11 +173,11 @@ export default class Register extends Component {
     }
     handleRegister = async () => {
         // if (this.validate() === true) {
-            this.props.navigation.navigate("PhoneValidate", {
+            this.props.dispatchRegister({
                 fullName: this.state.fullName,
-                phone: this.state.phone,
+                phoneOrEmail: this.state.phone,
                 password: this.state.password
-            });
+            })
         // }
     }
 

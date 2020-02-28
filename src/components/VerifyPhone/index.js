@@ -26,10 +26,11 @@ export default class VerifyPhone extends Component {
         //Trigger auth state changed
         this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                this.setState({
-                    user: user.toJSON(),
-                    token: this.getCurrentToken
-                });
+
+                var idToken = this.getCurrentToken;
+                var account = this.props.navigation.getParam("account")
+                
+
                 console.log("User have been login !");
                 this.props.navigation.navigate("App")
 

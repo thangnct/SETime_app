@@ -20,7 +20,7 @@ export default class Login extends Component {
 
     async componentWillReceiveProps(nextProps) {
         const { isLoading, isSuccess, dataLogin } = nextProps.auth
-        if (dataLogin !== this.props.auth.dataLogin && isLoading == false && isSuccess == true) {
+        if (dataLogin && dataLogin !== this.props.auth.dataLogin && isLoading == false && isSuccess == true) {
             console.log("data login: ", dataLogin)
             if (dataLogin.code == 1) {
                 await AsyncStorage.setItem("token", dataLogin.token);

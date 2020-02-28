@@ -1,8 +1,8 @@
 import * as ACCTION from "../const/action-types";
 import {
-    LOGIN
+    LOGIN, REGISTER
 } from "../const/APIs"
-import { convertDatatoFormData , convertDataToxUrlencoded} from "../commons";
+import { convertDatatoFormData, convertDataToxUrlencoded } from "../commons";
 
 export const login = (data) => {
     console.log("Login data: ", data)
@@ -17,6 +17,24 @@ export const login = (data) => {
             request: {
                 method: "POST",
                 url: LOGIN,
+                data: convertDataToxUrlencoded(data)
+            }
+        }
+    })
+}
+export const register = (data) => {
+    console.log("register data: ", data)
+    return ({
+        types: [
+            ACCTION.REGISTER,
+            ACCTION.REGISTER_SUCCESS,
+            ACCTION.REGISTER_FALSE
+        ],
+        payload: {
+            client: "default",
+            request: {
+                method: "POST",
+                url: REGISTER,
                 data: convertDataToxUrlencoded(data)
             }
         }

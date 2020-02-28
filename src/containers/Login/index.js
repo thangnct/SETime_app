@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     dispatchLogin: (data) => dispatch(login(data))
+    
 });
 
 export default connect(

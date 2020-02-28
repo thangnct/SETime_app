@@ -5,7 +5,7 @@ import { ImageBackground, Image, ScrollView, Platform, StatusBar, Alert } from "
 import styles from "./styles";
 import Toast, { DURATION } from 'react-native-easy-toast';
 import { CheckBox, Header } from 'react-native-elements'
-
+import AsyncStorage from '@react-native-community/async-storage';
 import { SafeAreaView } from "react-navigation"
 import { TouchableHighlight } from 'react-native-gesture-handler';
 const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 40 : StatusBar.currentHeight;
@@ -58,13 +58,16 @@ export default class Account extends Component {
           </View>
         </View>
         <View style={styles.copyrightContainer}>
-          <Text style= {styles.copyrightText}> Copyright: Nguyễn Công Thắng</Text>
-          <Text style= {styles.copyrightText}> Version: 1.0.0 </Text> 
+          <Text style={styles.copyrightText}> Copyright: Nguyễn Công Thắng</Text>
+          <Text style={styles.copyrightText}> Version: 1.0.0 </Text>
         </View>
       </View >
     )
   }
-  handleSignout = () => {
+  handleSignout = async () => {
+    const token = await AsyncStorage.getItem("token");
+    console.log(token)
+    await AsyncStorage.removeItem("token");
     this.props.navigation.navigate("Auth")
   }
 }

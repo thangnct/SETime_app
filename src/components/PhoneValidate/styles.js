@@ -1,7 +1,6 @@
 export default {
   container: {
     flex: 1,
-    alignItems: "center",
     padding: 20,
     paddingTop: 60
   },
@@ -17,9 +16,7 @@ export default {
     padding: 10
     },
   top: {
-    flex: 1,
-    // backgroundColor: "red",
-
+    height:72,
   },
   body: {
     flex: 5.5,

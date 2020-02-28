@@ -22,9 +22,17 @@ export default class PhoneValidate extends Component {
         return (
 
             <Container style={styles.container}>
-                <View style={styles.top}>
+                
+                    <View style={styles.top}>
+                        
+                            <TouchableOpacity style={styles.backButton}
+                                onPress={() => { this.props.navigation.goBack() }}
+                            >
+                                <Icon name="chevron-left" size={25} color={"#AAAAAA"} />
+                            </TouchableOpacity>
+                        
+                    </View>
 
-                </View>
                 <View style={styles.body}>
 
                     <View style={styles.formLogin}>

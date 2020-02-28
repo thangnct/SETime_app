@@ -7,12 +7,13 @@ const initState = {
     name: undefined,
     phone: undefined,
     token: undefined,
-    dataLogin:{}
+    dataLogin: {},
+    dataRegister: {},
 };
 
 export default (state = initState, action) => {
     const { type, payload, err } = action;
-    
+
     switch (type) {
         //LOGIN
         case ACCTION.LOGIN:
@@ -29,6 +30,30 @@ export default (state = initState, action) => {
                 dataLogin: payload.data.data
             }
         case ACCTION.LOGIN_FALSE:
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: false,
+                error: err
+            }
+        //REGISTER
+        case ACCTION.REGISTER:
+            return {
+                ...state,
+                isLoading: true,
+                isSuccess: false,
+                dataLogin: {}
+            };
+        case ACCTION.REGISTER_SUCCESS:
+            console.log("???: ", payload.data)
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: true,
+                dataRegister: payload.data.data,
+                
+            }
+        case ACCTION.REGISTER_FALSE:
             return {
                 ...state,
                 isLoading: false,

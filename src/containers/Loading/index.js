@@ -16,10 +16,8 @@ class LoadingContainer extends Component {
                 this.props.navigation.navigate("Auth")
             }
         } catch (error) {
-            console.log("dadasdas", error)
             this.props.navigation.navigate("Auth")
         }
-
 
     }
     render() {
