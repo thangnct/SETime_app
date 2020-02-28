@@ -9,12 +9,36 @@ const initState = {
     token: undefined,
     dataLogin: {},
     dataRegister: {},
+    dataCheckAccountExists: {}
 };
 
 export default (state = initState, action) => {
     const { type, payload, err } = action;
 
     switch (type) {
+        //CHECK_ACCOUNT_EXISTS
+        case ACCTION.CHECK_ACCOUNT_EXISTS:
+            return {
+                ...state,
+                isLoading: true,
+                isSuccess: false,
+                dataLogin: {},
+                dataRegister: {}
+            };
+        case ACCTION.CHECK_ACCOUNT_EXISTS_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: true,
+                dataCheckAccountExists: payload.data.data
+            }
+        case ACCTION.CHECK_ACCOUNT_EXISTS_FALSE:
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: false,
+                error: err
+            }
         //LOGIN
         case ACCTION.LOGIN:
             return {
@@ -51,7 +75,7 @@ export default (state = initState, action) => {
                 isLoading: false,
                 isSuccess: true,
                 dataRegister: payload.data.data,
-                
+
             }
         case ACCTION.REGISTER_FALSE:
             return {

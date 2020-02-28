@@ -89,7 +89,7 @@ class MedialContainer extends Component {
     * */
     this.notificationListener = firebase.notifications().onNotification((notification) => {
       const { title, body, data } = notification;
-      // console.log("notification ???: ", notification)
+      
       this.props.handleGetData(data)
       const localNotification = new firebase.notifications.Notification({
         // sound: 'sampleaudio',
@@ -119,7 +119,7 @@ class MedialContainer extends Component {
     * */
     this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
       const { title, body, data } = notificationOpen.notification;
-      
+
       this.props.navigation.navigate("Home");
       // this.props.handleGetData(data)
       setTimeout(() => { this.props.Show() }, 100)
@@ -147,7 +147,11 @@ class MedialContainer extends Component {
   render() {
     // console.log('tu',this.props.auth)
     return (
-      <Medial navigation={this.props.navigation} />
+      <Medial
+        navigation={this.props.navigation}
+        auth={this.props.auth}
+        login={this.props.login}
+      />
     );
   }
 }

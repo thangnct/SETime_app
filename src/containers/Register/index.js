@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Register from "../../components/Register";
-import { register } from "../../actions";
+import { register, check_account_exists } from "../../actions";
 class RegisterContainer extends Component {
     constructor(props) {
         super(props);
@@ -12,6 +12,7 @@ class RegisterContainer extends Component {
             <Register
                 navigation={this.props.navigation}
                 dispatchRegister={this.props.dispatchRegister}
+                dispatchCheck_account_exists={this.props.dispatchCheck_account_exists}
                 auth={this.props.auth}
             />
         )
@@ -23,7 +24,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    dispatchRegister: (data) => dispatch(register(data))
+    dispatchRegister: (data) => dispatch(register(data)),
+    dispatchCheck_account_exists: (data) => dispatch(check_account_exists(data))
 });
 
 export default connect(

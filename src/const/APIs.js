@@ -7,6 +7,7 @@ export const LOGIN = "user/signin";
 export const REGISTER = "user/signup";
 export const ACTIVE_ACCOUNT = "user/activeAccount";
 export const AUTH = "user/auth";
+export const CHECK_ACCOUNT_EXISTS = "user/check_account_exists";
 
 //GOAL
 export const GET_GOAL = "goal/all_goal";

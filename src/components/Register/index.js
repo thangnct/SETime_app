@@ -23,21 +23,20 @@ export default class Register extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        const { isLoading, isSuccess, dataRegister } = nextProps.auth
+        const { isLoading, isSuccess, dataCheckAccountExists } = nextProps.auth
         console.log("next props: ", nextProps.auth)
-        if (dataRegister && dataRegister !== this.props.auth.dataRegister && isLoading == false && isSuccess == true) {
-            console.log("data register: ", dataRegister)
-            if (dataRegister.code == 1) {
+        if (dataCheckAccountExists && dataCheckAccountExists !== this.props.auth.dataCheckAccountExists && isLoading == false && isSuccess == true) {
+            console.log("data register: ", dataCheckAccountExists)
+            if (dataCheckAccountExists.code == 0) {
                 this.props.navigation.navigate("PhoneValidate", {
                     fullName: this.state.fullName,
-                    phoneOrEmail: this.state.phone,
+                    phone: this.state.phone,
                     password: this.state.password
                 });
-            } else if (dataRegister.code == -99) {
+            } else if (dataCheckAccountExists.code == -99) {
                 Alert.alert("Notification", "There is a trouble, please try again later.")
             } else {
-                console.log("dataRegister.message: ", dataRegister.message)
-                Alert.alert("Notification", dataRegister.message)
+                Alert.alert("Notification", dataCheckAccountExists.message)
             }
         }
 
@@ -172,11 +171,10 @@ export default class Register extends Component {
         return true;
     }
     handleRegister = async () => {
+        // console.log("Poneee: ", this.state.phone)
         // if (this.validate() === true) {
-            this.props.dispatchRegister({
-                fullName: this.state.fullName,
-                phoneOrEmail: this.state.phone,
-                password: this.state.password
+            this.props.dispatchCheck_account_exists({
+                account: this.state.phone
             })
         // }
     }

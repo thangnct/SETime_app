@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Container, } from "native-base";
 import styles from "./styles";
-import { Text, View, TouchableOpacity, Alert } from "react-native";
+import {
+    Text, View, TouchableOpacity, Alert,
+    ActivityIndicator
+} from "react-native";
 import { Item, Input } from 'native-base';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import auth from '@react-native-firebase/auth';
@@ -14,7 +17,25 @@ export default class VerifyPhone extends Component {
         this.confirmation = this.props.navigation.getParam("confirmation");
         this.state = {
             OPTcode: "",
+            user: null
         };
+
+    }
+    componentWillReceiveProps(nextProps) {
+
+        const { isLoading, isSuccess, dataRegister } = nextProps.auth
+        console.log("next props: ", nextProps.auth)
+        if (dataRegister && dataRegister !== this.props.auth.dataRegister && isLoading == false && isSuccess == true) {
+            console.log("data register: ", dataRegister)
+            if (dataRegister.code == 1) {
+                Alert.alert("Notification", dataRegister.message);
+                this.props.navigation.navigate("Login");
+            } else if (dataRegister.code == -99) {
+                Alert.alert("Notification", "There is a trouble, please try again later.")
+            } else {
+                Alert.alert("Notification", dataRegister.message)
+            }
+        }
 
     }
     getCurrentToken = async () => {
@@ -24,26 +45,25 @@ export default class VerifyPhone extends Component {
     }
     componentDidMount() {
         //Trigger auth state changed
-        this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+        console.log("componentDidMount working")
+
+        this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
 
-                var idToken = this.getCurrentToken;
-                var account = this.props.navigation.getParam("account")
-                
+                var phone = "+84" + this.props.navigation.getParam("phone").slice(1, this.props.navigation.getParam("phone").length);
+                if (user.toJSON().phoneNumber == phone) {
+                    this.props.dispatchRegister({
+                        fullName: this.props.navigation.getParam("fullName"),
+                        phoneOrEmail: this.props.navigation.getParam("phone"),
+                        password: this.props.navigation.getParam("password")
 
-                console.log("User have been login !");
-                this.props.navigation.navigate("App")
+                    })
+                    //Signout current user
+                    await firebase.auth().signOut();
+                }
 
             } else {
-                console.log("User has been signed out !");
-                this.setState({
-                    user: null,
-                    message: '',
-                    codeInput: '',
-                    phoneNumber: '',
-                    confirmation: null,
-                });
-                this.props.navigation.navigate("Auth")
+                console.log("user has been logout.")
             }
         });
     }
@@ -53,56 +73,63 @@ export default class VerifyPhone extends Component {
     render() {
         return (
 
-            <Container style={styles.container}>
-                <View style={styles.top}>
+            <View style={styles.container}>
+                {this.props.auth.isLoading == true ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                    <ActivityIndicator size="large" color="#C4C4C4" />
+                </View> :
+                    <View style={{ flex: 1 }}>
+                        <View style={styles.top}>
 
-                </View>
-                <View style={styles.body}>
-
-                    <View style={styles.formLogin}>
-                        <View style={styles.coverTile}>
-                            <Text style={styles.loginText}>Verify Phone</Text>
-                            <Text style={styles.loginTextUnder}>Send a verification code to verify your phone number: {this.props.navigation.getParam("phone")}</Text>
                         </View>
-                        <View style={styles.coverInput}>
-                            <Item>
+                        <View style={styles.body}>
 
-                                <Input
-                                    placeholder="OTP code"
-                                    keyboardType={'numeric'}
-                                    onChangeText={value =>
-                                        this.handleChangeInput("OPTcode", value)
-                                    }
-                                />
-                            </Item>
+                            <View style={styles.formLogin}>
+                                <View style={styles.coverTile}>
+                                    <Text style={styles.loginText}>Verify Phone</Text>
+                                    <Text style={styles.loginTextUnder}>Send a verification code to verify your phone number: {this.props.navigation.getParam("phone")}</Text>
+                                </View>
+                                <View style={styles.coverInput}>
+                                    <Item>
+
+                                        <Input
+                                            placeholder="OTP code"
+                                            keyboardType={'numeric'}
+                                            onChangeText={value =>
+                                                this.handleChangeInput("OPTcode", value)
+                                            }
+                                        />
+                                    </Item>
+                                </View>
+                                <TouchableOpacity
+                                    activeOpacity={0.7}
+                                    onPress={() => {
+                                        this.confirmPhone(this.props.navigation.getParam("phone"));
+                                    }}
+                                >
+                                    <Text style={styles.textRegister}>Resend OTP</Text>
+                                </TouchableOpacity>
+                                <View style={styles.coverButton}>
+                                    <TouchableOpacity
+                                        style={styles.button}
+                                        onPress={() => {
+                                            this.verifierAuthCode(this.state.OPTcode)
+                                        }}
+                                    >
+                                        <Text
+                                            style={styles.text_Button}>
+                                            Verify
+                </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
                         </View>
-                        <TouchableOpacity
-                            activeOpacity={0.7}
-                            onPress={() => {
-                                this.confirmPhone(this.props.navigation.getParam("phone"));
-                            }}
-                        >
-                            <Text style={styles.textRegister}>Resend OTP</Text>
-                        </TouchableOpacity>
-                        <View style={styles.coverButton}>
-                            <TouchableOpacity
-                                style={styles.button}
-                                onPress={() => {
-                                    this.verifierAuthCode(this.state.OPTcode)
-                                }}
-                            >
-                                <Text
-                                    style={styles.text_Button}>
-                                    Verify
-                                </Text>
-                            </TouchableOpacity>
+                        <View style={styles.footer}>
+
                         </View>
                     </View>
-                </View>
-                <View style={styles.footer}>
+                }
 
-                </View>
-            </Container>
+            </View>
         );
     }
     verifierAuthCode = async (authCode) => {

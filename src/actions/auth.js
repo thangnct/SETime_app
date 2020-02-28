@@ -1,8 +1,27 @@
 import * as ACCTION from "../const/action-types";
 import {
-    LOGIN, REGISTER
+    LOGIN, REGISTER, CHECK_ACCOUNT_EXISTS
 } from "../const/APIs"
-import { convertDatatoFormData, convertDataToxUrlencoded } from "../commons";
+import { convertDataToxUrlencoded } from "../commons";
+
+export const check_account_exists = (data) => {
+    // console.log("Login data: ", data)
+    return ({
+        types: [
+            ACCTION.CHECK_ACCOUNT_EXISTS,
+            ACCTION.CHECK_ACCOUNT_EXISTS_SUCCESS,
+            ACCTION.CHECK_ACCOUNT_EXISTS_FALSE
+        ],
+        payload: {
+            client: "default",
+            request: {
+                method: "POST",
+                url: CHECK_ACCOUNT_EXISTS,
+                data: convertDataToxUrlencoded(data)
+            }
+        }
+    })
+}
 
 export const login = (data) => {
     console.log("Login data: ", data)
