@@ -12,6 +12,7 @@ export default AuthNavigator = createStackNavigator(
         VerifyPhone: { screen: VerifyPhone },
     },
     {
-        initialRouteName: "Login"
+        initialRouteName: "Login",
+        headerMode: 'none',
     }
 )

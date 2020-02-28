@@ -6,6 +6,7 @@ import {
   ScrollView,
   FlatList
 } from "react-native";
+import { CheckBox } from 'react-native-elements'
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getDatetime, getTimeUseTimezone } from "../../commons";
@@ -91,7 +92,11 @@ export default class Home extends Component {
                       data={this.state.goalInMonth}
                       renderItem={({ item }) => <View style={styles.goal}>
                         <View style={styles.leftGoalBroad}>
-                          <Icon style={styles.goalStatus} name="check-square" color="#5277FF" size={18} />
+                          <Icon style={styles.goalStatus} name="check-square" color="#5277FF"  size={18} />
+                          {/* <CheckBox
+                                checked={item.taskStatus=="completed"}
+                                checkedColor="#F2994A"
+                            /> */}
                           <Text style={styles.goalTitle}>{item.title}</Text>
                         </View>
                         <View style={styles.goalColor}>

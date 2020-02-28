@@ -1,6 +1,6 @@
 export default {
   container: {
-
+    flex: 1
   },
   top: {
     flex: 1.5,
@@ -14,7 +14,7 @@ export default {
   footer: {
     flex: 1,
     // backgroundColor: "green",
-    flexDirection:"row",
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center"
   },
@@ -67,16 +67,16 @@ export default {
   coverInput: {
     marginTop: 20,
     marginBottom: 15,
-    
+
   },
   input: {
     fontSize: 15,
   },
-  textFooter:{
+  textFooter: {
     color: "#162947",
     fontSize: 15,
   },
-  textRegister:{
+  textRegister: {
     color: "#FFA200",
     fontSize: 15,
     fontWeight: "bold"

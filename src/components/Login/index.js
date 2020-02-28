@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, } from "native-base";
 import styles from "./styles";
-import { Text, View, TouchableOpacity, Alert } from "react-native";
+import { Text, View, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
 import AsyncStorage from '@react-native-community/async-storage';
 import { Item, Input } from 'native-base';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
@@ -34,7 +34,7 @@ export default class Login extends Component {
     }
     render() {
         return (
-            <Container style={styles.container}>
+            <KeyboardAvoidingView behavior="height" enabled style={styles.container}>
                 <View style={styles.top}>
 
                 </View>
@@ -104,7 +104,7 @@ export default class Login extends Component {
                         <Text style={styles.textRegister}>Register now</Text>
                     </TouchableOpacity>
                 </View>
-            </Container>
+            </KeyboardAvoidingView>
         );
     }
 

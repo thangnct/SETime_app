@@ -38,7 +38,13 @@ export default {
     marginLeft: 5
   },
   leftGoalBroad:
-    { flex: 8.5, flexDirection: "row", justifyContent: "flex-start", alignItems: "center", marginRight: 15 }
+  {
+    flex: 8.5,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginRight: 15
+  }
   ,
   golaColor: {
     flex: 1.5, justifyContent: "center", alignItems: "center"
@@ -104,7 +110,7 @@ export default {
     // textAlign: "left",
     marginBottom: 12
   },
-  
+
   name: {
     fontSize: 18,
     fontWeight: "bold"
@@ -142,7 +148,7 @@ export default {
     fontSize: 30,
     fontWeight: "bold"
   },
-  dailyTaskStatusCompleted:{
+  dailyTaskStatusCompleted: {
     fontSize: 14,
     // fontWeight: "bold"
   },
@@ -161,7 +167,7 @@ export default {
     alignItems: "center"
   },
   timeBound: {
-    
+
   },
   task: {
     marginLeft: 12
@@ -169,14 +175,14 @@ export default {
   dailyTaskHeader: {
     // backgroundColor: "#999999",
     marginLeft: 5,
-    marginRight:5,
+    marginRight: 5,
     height: 60
   },
   taskList: {
     flex: 1,
     // backgroundColor: "blue",
     marginRight: 20,
-    marginLeft:20
+    marginLeft: 20
   },
   option: {
     marginLeft: 5,
