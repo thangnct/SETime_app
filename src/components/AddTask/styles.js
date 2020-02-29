@@ -141,7 +141,6 @@ export default {
     // backgroundColor: "blue"
   },
   taskTitle: {
-    multiline: true,
     height: 50,
     borderBottomColor: '#AAAAAA',
     borderBottomWidth: 1,

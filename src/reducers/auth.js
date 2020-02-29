@@ -51,7 +51,8 @@ export default (state = initState, action) => {
                 ...state,
                 isLoading: false,
                 isSuccess: true,
-                dataLogin: payload.data.data
+                dataLogin: payload.data.data,
+                token: payload.data.data.token
             }
         case ACCTION.LOGIN_FALSE:
             return {

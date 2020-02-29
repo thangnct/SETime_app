@@ -17,13 +17,13 @@ export default class Login extends Component {
         };
 
     }
-
+    checkObjectEmpty(obj) {
+        return Object.getOwnPropertyNames(obj).length > 0
+    }
     async componentWillReceiveProps(nextProps) {
         const { isLoading, isSuccess, dataLogin } = nextProps.auth
-        if (dataLogin && dataLogin !== this.props.auth.dataLogin && isLoading == false && isSuccess == true) {
-            console.log("data login: ", dataLogin)
+        if (this.checkObjectEmpty(dataLogin) && dataLogin !== this.props.auth.dataLogin && isLoading == false && isSuccess == true) {
             if (dataLogin.code == 1) {
-                await AsyncStorage.setItem("token", dataLogin.token);
                 this.props.navigation.navigate("Loading");
             } else if (dataLogin.code == -99) {
                 Alert.alert("Notification", "There is a trouble, please try again later.")

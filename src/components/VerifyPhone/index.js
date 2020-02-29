@@ -21,11 +21,14 @@ export default class VerifyPhone extends Component {
         };
 
     }
+    checkObjectEmpty(obj) {
+        return Object.getOwnPropertyNames(obj).length > 0
+    }
     componentWillReceiveProps(nextProps) {
 
         const { isLoading, isSuccess, dataRegister } = nextProps.auth
         console.log("next props: ", nextProps.auth)
-        if (dataRegister && dataRegister !== this.props.auth.dataRegister && isLoading == false && isSuccess == true) {
+        if (this.checkObjectEmpty(dataRegister) && dataRegister !== this.props.auth.dataRegister && isLoading == false && isSuccess == true) {
             console.log("data register: ", dataRegister)
             if (dataRegister.code == 1) {
                 Alert.alert("Notification", dataRegister.message);

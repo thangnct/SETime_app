@@ -22,10 +22,13 @@ export default class Register extends Component {
             rePassword: ""
         }
     }
+    checkObjectEmpty(obj) {
+        return Object.getOwnPropertyNames(obj).length > 0
+    }
     componentWillReceiveProps(nextProps) {
         const { isLoading, isSuccess, dataCheckAccountExists } = nextProps.auth
         console.log("next props: ", nextProps.auth)
-        if (dataCheckAccountExists && dataCheckAccountExists !== this.props.auth.dataCheckAccountExists && isLoading == false && isSuccess == true) {
+        if (this.checkObjectEmpty(dataCheckAccountExists) && dataCheckAccountExists !== this.props.auth.dataCheckAccountExists && isLoading == false && isSuccess == true) {
             console.log("data register: ", dataCheckAccountExists)
             if (dataCheckAccountExists.code == 0) {
                 this.props.navigation.navigate("PhoneValidate", {
@@ -43,7 +46,6 @@ export default class Register extends Component {
     }
     render() {
         const { isLoading, isSuccess } = this.props.auth;
-        console.log("Isload: ", isLoading)
         return (
 
             <Container style={styles.container}>
@@ -173,9 +175,9 @@ export default class Register extends Component {
     handleRegister = async () => {
         // console.log("Poneee: ", this.state.phone)
         // if (this.validate() === true) {
-            this.props.dispatchCheck_account_exists({
-                account: this.state.phone
-            })
+        this.props.dispatchCheck_account_exists({
+            account: this.state.phone
+        })
         // }
     }
 

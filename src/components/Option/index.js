@@ -65,9 +65,7 @@ export default class Account extends Component {
     )
   }
   handleSignout = async () => {
-    const token = await AsyncStorage.getItem("token");
-    console.log(token)
-    await AsyncStorage.removeItem("token");
+    this.props.logoutSystem();
     this.props.navigation.navigate("Auth")
   }
 }

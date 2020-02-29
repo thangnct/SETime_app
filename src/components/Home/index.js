@@ -4,7 +4,7 @@ import styles from "./styles";
 import {
   Text, View, TouchableOpacity, SafeAreaView,
   ScrollView,
-  FlatList, Image
+  FlatList, Image, ImageBackground
 
 } from "react-native";
 import { CheckBox } from 'react-native-elements'
@@ -19,30 +19,30 @@ export default class Home extends Component {
     this.state = {
       number: 0,
       dayList: [
-        { id: 1, dayTitle: "06", weekday: "Mon", day: "monent" },
-        { id: 2, dayTitle: "07", weekday: "Tue", day: "monent" },
-        { id: 3, dayTitle: "08", weekday: "Wed", day: "monent" },
-        { id: 4, dayTitle: "09", weekday: "Thur", day: "monent" },
-        { id: 5, dayTitle: "10", weekday: "Fri", day: "monent" },
-        { id: 6, dayTitle: "11", weekday: "Sat", day: "monent" },
-        { id: 7, dayTitle: "12", weekday: "Sun", day: "monent" },
+        { id: "1", dayTitle: "06", weekday: "Mon", day: "monent" },
+        { id: "2", dayTitle: "07", weekday: "Tue", day: "monent" },
+        { id: "3", dayTitle: "08", weekday: "Wed", day: "monent" },
+        { id: "4", dayTitle: "09", weekday: "Thur", day: "monent" },
+        { id: "5", dayTitle: "10", weekday: "Fri", day: "monent" },
+        { id: "6", dayTitle: "11", weekday: "Sat", day: "monent" },
+        { id: "7", dayTitle: "12", weekday: "Sun", day: "monent" },
       ],
       taskListInDay: [
-        { id: 1, taskTitle: "Làm báo cáo TTTN", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#3AD713" },
-        { id: 2, taskTitle: "Đọc cuốn Amazon phát triển thần tốc.", timeBound: "17h30 - 20h30", taskStatus: "woking-on", color: "#D7134E" },
-        { id: 3, taskTitle: "Tập thể dục, chạy 3km", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#D7A013" },
-        { id: 4, taskTitle: "Làm báo cáo TTTN", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#3AD713" },
-        { id: 5, taskTitle: "Đọc cuốn Amazon phát triển thần tốc.", timeBound: "17h30 - 20h30", taskStatus: "woking-on", color: "#D7134E" },
-        { id: 6, taskTitle: "Tập thể dục, chạy 3km", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#D7A013" },
+        { id: "1", taskTitle: "Làm báo cáo TTTN", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#3AD713" },
+        { id: "2", taskTitle: "Đọc cuốn Amazon phát triển thần tốc.", timeBound: "17h30 - 20h30", taskStatus: "woking-on", color: "#D7134E" },
+        { id: "3", taskTitle: "Tập thể dục, chạy 3km", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#D7A013" },
+        { id: "4", taskTitle: "Làm báo cáo TTTN", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#3AD713" },
+        { id: "5", taskTitle: "Đọc cuốn Amazon phát triển thần tốc.", timeBound: "17h30 - 20h30", taskStatus: "woking-on", color: "#D7134E" },
+        { id: "6", taskTitle: "Tập thể dục, chạy 3km", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#D7A013" },
 
       ],
       goalInMonth: [
-        { id: 2, title: "Get Link", status: "completed", color: "#D25656" },
-        { id: 3, title: "Đọc xong cuốn Amazon phát triển thần tốc.", status: "completed", color: "#123456" },
-        { id: 4, title: "Dậy sớm lúc 5:30", status: "completed", color: "#5277FF" },
-        { id: 5, title: "Get Link", status: "completed", color: "#3AD713" },
-        { id: 6, title: "Đọc xong cuốn Amazon phát triển thần tốc.", status: "completed", color: "#123456" },
-        { id: 17, title: "Dậy sớm lúc 5:30", status: "completed", color: "#123456" },
+        { id: "2", title: "Get Link", status: "completed", color: "#D25656" },
+        { id: "3", title: "Đọc xong cuốn Amazon phát triển thần tốc.", status: "completed", color: "#123456" },
+        { id: "4", title: "Dậy sớm lúc 5:30", status: "completed", color: "#5277FF" },
+        { id: "5", title: "Get Link", status: "completed", color: "#3AD713" },
+        { id: "6", title: "Đọc xong cuốn Amazon phát triển thần tốc.", status: "completed", color: "#123456" },
+        { id: "17", title: "Dậy sớm lúc 5:30", status: "completed", color: "#123456" },
       ],
       monthGoal: [
         {
@@ -81,36 +81,42 @@ export default class Home extends Component {
             </View>
           </View>
           <View style={styles.broad}>
+
             <FlatList
               showsVerticalScrollIndicator={false}
               horizontal={true}
               data={this.state.monthGoal}
               renderItem={({ item }) => <View style={styles.goalBroad} >
-                <View style={styles.goalBroadTitle}><Text style={styles.TileGoalBroad}>January, 2020</Text></View>
-                <View style={styles.goalBroadBody}>
-                  <View style={styles.goalList}>
-                    <FlatList
-                      showsVerticalScrollIndicator={false}
-                      data={this.state.goalInMonth}
-                      renderItem={({ item }) => <View style={styles.goal}>
-                        <View style={styles.leftGoalBroad}>
-                          <Icon style={styles.goalStatus} name="check-square" color="#5277FF" size={18} />
-                          {/* <CheckBox
+                <ImageBackground style={{ flex: 1, width: "100%" }}
+                  source={require("../../../assets/img/gradient.png")}
+                >
+                  <View style={styles.goalBroadTitle}><Text style={styles.TileGoalBroad}>January, 2020</Text></View>
+                  <View style={styles.goalBroadBody}>
+                    <View style={styles.goalList}>
+                      <FlatList
+                        showsVerticalScrollIndicator={false}
+                        data={this.state.goalInMonth}
+                        renderItem={({ item }) => <View style={styles.goal}>
+                          <View style={styles.leftGoalBroad}>
+                            <Icon style={styles.goalStatus} name="check-square" color="#5277FF" size={18} />
+                            {/* <CheckBox
                                 checked={item.taskStatus=="completed"}
                                 checkedColor="#F2994A"
                             /> */}
-                          <Text style={styles.goalTitle}>{item.title}</Text>
-                        </View>
-                        <View style={styles.goalColor}>
-                          <Icon name="circle" color={item.color} size={20} />
-                        </View>
-                      </View>}
-                    />
+                            <Text style={styles.goalTitle}>{item.title}</Text>
+                          </View>
+                          <View style={styles.goalColor}>
+                            <Icon name="circle" color={item.color} size={20} />
+                          </View>
+                        </View>}
+                      />
+                    </View>
+                    <View style={styles.goalBroadRatioCompleted}>
+                      <Text style={styles.ratioCompletedText}>30%</Text>
+                    </View>
                   </View>
-                  <View style={styles.goalBroadRatioCompleted}>
-                    <Text style={styles.ratioCompletedText}>30%</Text>
-                  </View>
-                </View>
+
+                </ImageBackground>
               </View>
               }
               keyExtractor={item => {
@@ -176,7 +182,7 @@ export default class Home extends Component {
             this.signOut()
           }}
         >Đăng xuất</Text> */}
-      </SafeAreaView>
+      </SafeAreaView >
 
     );
   }

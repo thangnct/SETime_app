@@ -9,16 +9,12 @@ export const ACTIVE_ACCOUNT = "user/activeAccount";
 export const AUTH = "user/auth";
 export const CHECK_ACCOUNT_EXISTS = "user/check_account_exists";
 
-//GOAL
-export const GET_GOAL = "goal/all_goal";
-export const GET_GOAL_BY_ID = "goal";
-export const ADD_GOAL = "add_goal";
-
 //TASK
-export const ADD_TASK = "add_task";
-// export const ADD_TASK = "delete_task";
-// export const ADD_TASK = "edit_task";
-// export const ADD_TASK = "get_task_by_goalId";
-// export const ADD_TASK = "get_task_by_id";
-// export const ADD_TASK = "add_task";
+export const ADD_TASK = "task/add_task";
+export const DELETE_TASK = "task/delete_task";
+export const EDIT_TASK = "task/edit_task";
+export const GET_TASK_BY_GOALID = "task/get_task_by_goalId";
+export const GET_TASK_BY_ID = "task/get_task_by_id";
 
+//GOAL
+export const GET_GOAL = "goal/get_goal"; //GET ALL - ONE - SKIP

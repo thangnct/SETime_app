@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Option from "../../components/Option";
+import { logoutSystem } from "../../actions";
 
 class OptionContainer extends Component {
     constructor(props) {
@@ -10,6 +11,8 @@ class OptionContainer extends Component {
         return (
             <Option
                 navigation={this.props.navigation}
+                logoutSystem={this.props.logoutSystem}
+                auth={this.props.auth}
             />
         )
     }
@@ -20,7 +23,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-
+    logoutSystem: () => dispatch(logoutSystem())
 });
 
 export default connect(

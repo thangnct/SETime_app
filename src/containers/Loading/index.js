@@ -9,7 +9,7 @@ class LoadingContainer extends Component {
     async componentDidMount() {
 
         try {
-            const token = await AsyncStorage.getItem("token");
+            const { token } = this.props.auth;
             if (token) {
                 this.props.navigation.navigate("App")
             } else {

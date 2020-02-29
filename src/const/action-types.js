@@ -1,3 +1,4 @@
+//AUTH
 export const LOGOUT_SYSTEM = "LOGOUT_SYSTEM";
 
 export const LOGIN = "LOGIN";
@@ -20,4 +21,19 @@ export const CHECK_ACCOUNT_EXISTS = "CHECK_ACCOUNT_EXISTS";
 export const CHECK_ACCOUNT_EXISTS_SUCCESS = "CHECK_ACCOUNT_EXISTS_SUCCESS";
 export const CHECK_ACCOUNT_EXISTS_FALSE = "CHECK_ACCOUNT_EXISTS_FALSE";
 
+//TASK
+export const ADD_TASK = "ADD_TASK";
+export const ADD_TASK_SUCCESS = "ADD_TASK_SUCCESS";
+export const ADD_TASK_FALSE = "ADD_TASK_FALSE"; 
 
+export const GET_TASK_BY_ID = "GET_TASK_BY_ID";
+export const GET_TASK_BY_ID_SUCCESS = "GET_TASK_BY_ID_SUCCESS";
+export const GET_TASK_BY_ID_FALSE = "GET_TASK_BY_ID_FALSE"; 
+
+//GOAL
+export const GET_GOAL = "GET_GOAL";
+export const GET_GOAL_SUCCESS = "GET_GOAL_SUCCESS";
+export const GET_GOAL_FALSE = "GET_GOAL_FALSE"; 
+
+
+export const RESET = "RESET";
