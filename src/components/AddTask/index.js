@@ -28,9 +28,7 @@ export default class AddTask extends Component {
 
         }
     }
-    componentWillMount() {
-        // this.props.dispatchReset(); 
-    }
+    
     checkObjectEmpty(obj) {
         return Object.getOwnPropertyNames(obj).length > 0
     }

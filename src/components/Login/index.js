@@ -24,6 +24,7 @@ export default class Login extends Component {
         const { isLoading, isSuccess, dataLogin } = nextProps.auth
         if (this.checkObjectEmpty(dataLogin) && dataLogin !== this.props.auth.dataLogin && isLoading == false && isSuccess == true) {
             if (dataLogin.code == 1) {
+                Alert.alert("Notification", dataLogin.message)
                 this.props.navigation.navigate("Loading");
             } else if (dataLogin.code == -99) {
                 Alert.alert("Notification", "There is a trouble, please try again later.")

@@ -35,5 +35,9 @@ export const GET_GOAL = "GET_GOAL";
 export const GET_GOAL_SUCCESS = "GET_GOAL_SUCCESS";
 export const GET_GOAL_FALSE = "GET_GOAL_FALSE"; 
 
+export const ADD_GOAL = "ADD_GOAL";
+export const ADD_GOAL_SUCCESS = "ADD_GOAL_SUCCESS";
+export const ADD_GOAL_FALSE = "ADD_GOAL_FALSE"; 
+
 
 export const RESET = "RESET";

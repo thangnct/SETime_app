@@ -22,6 +22,23 @@ export const add_task = (data) => {
         }
     })
 }
+export const add_goal = (data) => {
+    return ({
+        types: [
+            ACCTION.ADD_GOAL,
+            ACCTION.ADD_GOAL_SUCCESS,
+            ACCTION.ADD_GOAL_FALSE
+        ],
+        payload: {
+            client: "default",
+            request: {
+                method: "POST",
+                url: ADD_GOAL,
+                data: convertDataToxUrlencoded(data)
+            }
+        }
+    })
+}
 
 export const get_goal = (data) => {
     console.log("action: ", data)

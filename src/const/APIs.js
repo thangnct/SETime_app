@@ -18,3 +18,4 @@ export const GET_TASK_BY_ID = "task/get_task_by_id";
 
 //GOAL
 export const GET_GOAL = "goal/get_goal"; //GET ALL - ONE - SKIP
+export const ADD_GOAL = "goal/add_goal"; 

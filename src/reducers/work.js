@@ -38,6 +38,27 @@ export default (state = initState, action) => {
                 isSuccess: false,
                 error: err
             }
+        //ADD_GOAL
+        case ACCTION.ADD_GOAL:
+            return {
+                ...state,
+                isLoading: true,
+                isSuccess: false,
+            };
+        case ACCTION.ADD_GOAL_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: true,
+                dataAddGoal: payload.data.data
+            }
+        case ACCTION.ADD_GOAL_FALSE:
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: false,
+                error: err
+            }
 
         //GET_GOAL
         case ACCTION.GET_GOAL:
