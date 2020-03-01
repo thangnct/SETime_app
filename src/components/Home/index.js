@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Container, } from "native-base";
 import styles from "./styles";
 import {
   Text, View, TouchableOpacity, SafeAreaView,
@@ -12,12 +11,32 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getDatetime, getTimeUseTimezone } from "../../commons";
 import ActionButton from 'react-native-action-button';
+import {
+  Picker,
+} from "native-base";
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       number: 0,
+      months: [
+        { value: 1, label: "January" },
+        { value: 2, label: "February" },
+        { value: 3, label: "March" },
+        { value: 4, label: "April" },
+        { value: 5, label: "May" },
+        { value: 6, label: "June" },
+        { value: 7, label: "July" },
+        { value: 8, label: "August" },
+        { value: 9, label: "September" },
+        { value: 10, label: "October" },
+        { value: 11, label: "November" },
+        { value: 12, label: "December" },
+      ],
+      years: [],
+      currentMonth: "",
+      currentYear: "",
       dayList: [
         { id: "1", dayTitle: "06", weekday: "Mon", day: "monent" },
         { id: "2", dayTitle: "07", weekday: "Tue", day: "monent" },
@@ -37,7 +56,7 @@ export default class Home extends Component {
 
       ],
       goalInMonth: [
-        { id: "2", title: "Get Link", status: "completed", color: "#D25656" },
+        { id: "2", title: "Get Link", status: "working-on", color: "#D25656" },
         { id: "3", title: "Đọc xong cuốn Amazon phát triển thần tốc.", status: "completed", color: "#123456" },
         { id: "4", title: "Dậy sớm lúc 5:30", status: "completed", color: "#5277FF" },
         { id: "5", title: "Get Link", status: "completed", color: "#3AD713" },
@@ -61,7 +80,23 @@ export default class Home extends Component {
     }
 
   }
+  componentWillMount() {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    console.log("hahah", currentYear, currentMonth)
+    var years = [];
+    for (let i = currentYear; i < currentYear + 50; i++) {
+      console.log("aaaaaaa: ", year)
+      let year = { label: i, value: i }
 
+      years.push(year);
+    }
+    this.state.years = years;
+    console.log("dkalsjdalsd: ", this.state.months[currentMonth - 1])
+    this.state.currentMonth = this.state.months[currentMonth - 1].value;
+    this.state.currentYear = currentYear
+    console.log("full year: ", years)
+  }
   render() {
 
     return (
@@ -82,47 +117,75 @@ export default class Home extends Component {
           </View>
           <View style={styles.broad}>
 
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              horizontal={true}
-              data={this.state.monthGoal}
-              renderItem={({ item }) => <View style={styles.goalBroad} >
-                <ImageBackground style={{ flex: 1, width: "100%" }}
-                  source={require("../../../assets/img/gradient.png")}
-                >
-                  <View style={styles.goalBroadTitle}><Text style={styles.TileGoalBroad}>January, 2020</Text></View>
-                  <View style={styles.goalBroadBody}>
-                    <View style={styles.goalList}>
-                      <FlatList
-                        showsVerticalScrollIndicator={false}
-                        data={this.state.goalInMonth}
-                        renderItem={({ item }) => <View style={styles.goal}>
+            <View style={styles.goalBroad} >
+              <ImageBackground style={{ flex: 1, width: "100%" }}
+                source={require("../../../assets/img/gradient.png")}
+              >
+                <View style={styles.goalBroadTitle}>
+                  {/* <Text style={styles.TileGoalBroad}>January,</Text> */}
+                  
+                  <Picker
+                    mode="dropdown"
+                    placeholder="Pick Month"
+                    style={{ color: "red" }}
+                    color="red"
+                    selectedValue={this.state.currentMonth}
+                    onValueChange={(value) => {
+                      this.setState({
+                        currentMonth: value,
+                      })
+                    }}
+                  >
+                    {this.state.months.map(item => {
+                      return <Picker.Item label={item.label} value={item.value} />
+                    })}
+                  </Picker>
+                  <Picker
+                    mode="dropdown"
+                    placeholder="Pick Year"
+                    style={{ colorText: "red", backgroundColor: "red", fontSize: 20 }}
+                    selectedValue={this.state.currentYear}
+                    onValueChange={(value) => {
+                      this.setState({
+                        currentYear: value,
+                      })
+                    }}
+                  >
+                    {this.state.years.map(item => {
+                      return <Picker.Item label={item.label} value={item.value} />
+                    })}
+                  </Picker>
+                </View>
+                <View style={styles.goalBroadBody}>
+                  <View style={styles.goalList}>
+                    <FlatList
+                      showsVerticalScrollIndicator={false}
+                      data={this.state.goalInMonth}
+                      renderItem={({ item }) => <TouchableOpacity>
+                        <View style={styles.goal}>
                           <View style={styles.leftGoalBroad}>
-                            <Icon style={styles.goalStatus} name="check-square" color="#5277FF" size={18} />
-                            {/* <CheckBox
-                                checked={item.taskStatus=="completed"}
-                                checkedColor="#F2994A"
-                            /> */}
-                            <Text style={styles.goalTitle}>{item.title}</Text>
+                            <View style={{ width: 25 }}>
+                              <Icon style={styles.goalStatus} name={item.status == "completed" ? "check-square" : "spinner"} color={item.status == "completed" ? "#5277FF" : "white"} size={18} />
+                            </View>
+                            <View>
+                              <Text style={styles.goalTitle}>{item.title}</Text>
+                            </View>
                           </View>
                           <View style={styles.goalColor}>
                             <Icon name="circle" color={item.color} size={20} />
                           </View>
-                        </View>}
-                      />
-                    </View>
-                    <View style={styles.goalBroadRatioCompleted}>
-                      <Text style={styles.ratioCompletedText}>30%</Text>
-                    </View>
+                        </View>
+                      </TouchableOpacity>
+                      }
+                    />
                   </View>
+                  <View style={styles.goalBroadRatioCompleted}>
+                    <Text style={styles.ratioCompletedText}>30%</Text>
+                  </View>
+                </View>
 
-                </ImageBackground>
-              </View>
-              }
-              keyExtractor={item => {
-                // console.log("xxx: ", item.id)
-              }}
-            />
+              </ImageBackground>
+            </View>
           </View>
         </View>
         <View style={styles.body} >

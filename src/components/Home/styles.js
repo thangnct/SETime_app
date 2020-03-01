@@ -64,16 +64,19 @@ export default {
     alignItems: "center"
   },
   goalBroad: {
-    width: width - 40,
+    // width: width - 40,
+    flex: 1,
     height: height * 0.25,
     borderRadius: 5,
     backgroundColor: "#F2994A",
-    marginLeft: 5
+    // marginLeft: 5
   },
   goalBroadTitle: {
-    // backgroundColor: "#333333",
+    // backgroundColor: "#F2994A",
+    flexDirection: "row",
     height: 60,
-    justifyContent: "center"
+    // justifyContent: "center",
+    alignItems: "center"
   },
   goalBroadBody: {
     // backgroundColor: "#AAAEEE",
