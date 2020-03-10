@@ -41,7 +41,7 @@ export const add_goal = (data) => {
 }
 
 export const get_goal = (data) => {
-    console.log("action: ", data)
+    // console.log("action: ", data)
     return ({
         types: [
             ACCTION.GET_GOAL,

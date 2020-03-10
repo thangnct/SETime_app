@@ -111,8 +111,8 @@ export default class Home extends Component {
             </TouchableOpacity> */}
             <Image source={require("../../../assets/img/man.png")} style={{ width: 45, height: 45 }} />
             <View style={styles.info}>
-              <Text style={styles.name}>Victor Nguyen</Text>
-              <Text style={styles.phone}>0337896198</Text>
+              <Text style={styles.name}>{this.props.auth.fullName}</Text>
+              <Text style={styles.phone}>{this.props.auth.phone}</Text>
             </View>
           </View>
           <View style={styles.broad}>
@@ -123,7 +123,7 @@ export default class Home extends Component {
               >
                 <View style={styles.goalBroadTitle}>
                   {/* <Text style={styles.TileGoalBroad}>January,</Text> */}
-                  
+
                   <Picker
                     mode="dropdown"
                     placeholder="Pick Month"
@@ -143,7 +143,7 @@ export default class Home extends Component {
                   <Picker
                     mode="dropdown"
                     placeholder="Pick Year"
-                    style={{ colorText: "red", backgroundColor: "red", fontSize: 20 }}
+                    style={{ colorText: "red", fontSize: 20 }}
                     selectedValue={this.state.currentYear}
                     onValueChange={(value) => {
                       this.setState({

@@ -19,13 +19,14 @@ export default class GoalListStatus extends Component {
     }
 
     render() {
-
+        console.log("4321: ", this.props.goalList,)
+        console.log("19191: ", this.state.goalList,)
         return (
             <SafeAreaView style={styles.container}>
                 <FlatList
                     showsVerticalScrollIndicator={false}
-                    data={this.state.goalList}
-                    renderItem={({ item }) => <View style={{
+                    data={this.props.goalList}
+                    renderItem={({ item }) => <TouchableOpacity style={{
                         height: 100, borderRadius: 5, flexDirection: "row", justifyContent: "flex-start",
                         alignItems: "center",
                         marginTop: 15,
@@ -40,27 +41,21 @@ export default class GoalListStatus extends Component {
                         flex: 1,
                         // backgroundColor: "green"
                     }}>
-                        {/* <View style={styles.checkBox}>
-                            <CheckBox
-                                checked={true}
-                                checkedColor="#F2994A"
-                            />
-                            <Icon name="circle" color={item.color} size={25} />
-                        </View> */}
+                        
                         <View style={styles.goal}>
                             <Text style={styles.goalTitle}>{item.goalTitle}</Text>
                             <Text style={styles.timeBound}>{item.startTime} - {item.endTime}</Text>
                             <Text style={styles.ratioStatus}>2 Completed - 1 working on</Text>
                         </View>
-                        <View style={styles.ratioCompleted}>
+                        {/* <View style={styles.ratioCompleted}>
                             <TouchableOpacity style={[styles.ratioButton]}
                                 onPress={() => this.props.navigation.navigate("AddTask")}
                             >
-                                <Text style={styles.ratioText} >50%</Text>
+                                <Text style={styles.ratioText} >{item.completedRatio}%</Text>
                             </TouchableOpacity>
 
-                        </View>
-                    </View>}
+                        </View> */}
+                    </TouchableOpacity>}
                 />
                 <ActionButton buttonColor="#F2994A">
                     <ActionButton.Item buttonColor='#FFFFFF' title="Add goal" onPress={() => this.props.navigation.navigate("AddGoal")}>

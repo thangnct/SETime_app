@@ -4,7 +4,7 @@ const initState = {
     isLoading: false,
     isSuccess: false,
     email: undefined,
-    name: undefined,
+    fullName: undefined,
     phone: undefined,
     token: undefined,
     dataLogin: {},
@@ -52,7 +52,10 @@ export default (state = initState, action) => {
                 isLoading: false,
                 isSuccess: true,
                 dataLogin: payload.data.data,
-                token: payload.data.data.token
+                token: payload.data.data.token,
+
+                fullName:payload.data.data.user.fullName,
+                phone:payload.data.data.user.phone,
             }
         case ACCTION.LOGIN_FALSE:
             return {

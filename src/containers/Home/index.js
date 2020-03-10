@@ -10,6 +10,9 @@ class HomeContainer extends Component {
         return (
             <Home
                 navigation={this.props.navigation}
+                auth={this.props.auth}
+                goals={this.props.goals}
+                tasks={this.props.tasks}
             />
         )
     }

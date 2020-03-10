@@ -24,6 +24,7 @@ class LoadingContainer extends Component {
         return (
             <Loading
                 navigator={this.props.navigation}
+                auth={this.props.auth}
             />
         )
     }

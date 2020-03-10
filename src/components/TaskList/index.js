@@ -7,15 +7,10 @@ import {
     FlatList, Dimensions
 } from "react-native";
 import AsyncStorage from '@react-native-community/async-storage';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { getDatetime, getTimeUseTimezone } from "../../commons";
-import ActionButton from 'react-native-action-button';
-import DatePicker from 'react-native-datepicker';
 import {
     Tabs,
     Tab,
 } from "native-base";
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import TaskListStatus from "../../containers/TaskListStatus"
 
 
@@ -26,11 +21,18 @@ export default class TaskList extends Component {
         this.state = {
             number: 0,
             taskList: [
-                { id: "1", taskTitle: "Làm báo cáo TTTN", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#3AD713" },
+                // { id: "1", taskTitle: "Làm báo cáo TTTN", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#3AD713" },
                 { id: "2", taskTitle: "Đọc cuốn Amazon phát triển thần tốc.", timeBound: "17h30 - 20h30", taskStatus: "woking-on", color: "#D7134E" },
+                // { id: "3", taskTitle: "Tập thể dục, chạy 3km", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#D7A013" },
+                // { id: "4", taskTitle: "Làm báo cáo TTTN", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#3AD713" },
+                // { id: "5", taskTitle: "Đọc cuốn Amazon phát triển thần tốc.", timeBound: "17h30 - 20h30", taskStatus: "woking-on", color: "#D7134E" },
+                { id: "6", taskTitle: "Tập thể dục, chạy 3km", timeBound: "17h30 - 20h30", taskStatus: "working-on", color: "#D7A013" },
+            ],
+            taskListCompleted: [
+                { id: "1", taskTitle: "Làm báo cáo TTTN", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#3AD713" },
+                
                 { id: "3", taskTitle: "Tập thể dục, chạy 3km", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#D7A013" },
                 { id: "4", taskTitle: "Làm báo cáo TTTN", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#3AD713" },
-                { id: "5", taskTitle: "Đọc cuốn Amazon phát triển thần tốc.", timeBound: "17h30 - 20h30", taskStatus: "woking-on", color: "#D7134E" },
                 { id: "6", taskTitle: "Tập thể dục, chạy 3km", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#D7A013" },
             ],
         }
@@ -80,7 +82,7 @@ export default class TaskList extends Component {
                             textStyle={{ color: "#979797", textAlign: "center", fontWeight: "bold" }}
                         >
                             <TaskListStatus
-                                data={this.state.taskList}
+                                taskList={this.state.taskListCompleted}
                                 navigation={this.props.navigation}
                             //loading={loading}
                             />

@@ -5,10 +5,13 @@ import styles from "./styles";
 
 export default class Loading extends Component {
     render() {
+        const { isLoading } = this.props.auth;
         return (
+
             <Container style={styles.container}>
-                <ActivityIndicator size="large" color="#C4C4C4" />
+                {isLoading == true ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                    <ActivityIndicator size="large" color="#C4C4C4" />
+                </View> : null}
             </Container>
         );
-    }
-}
+    }}
