@@ -53,9 +53,8 @@ export default (state = initState, action) => {
                 isSuccess: true,
                 dataLogin: payload.data.data,
                 token: payload.data.data.token,
-
-                fullName:payload.data.data.user.fullName,
-                phone:payload.data.data.user.phone,
+                fullName: payload.data.data.code == 1 ? payload.data.data.user.fullName : null,
+                phone: payload.data.data.code == 1 ? payload.data.data.user.phone : null,
             }
         case ACCTION.LOGIN_FALSE:
             return {

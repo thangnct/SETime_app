@@ -81,21 +81,21 @@ export default class Home extends Component {
 
   }
   componentWillMount() {
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth();
-    console.log("hahah", currentYear, currentMonth)
-    var years = [];
-    for (let i = currentYear; i < currentYear + 50; i++) {
-      console.log("aaaaaaa: ", year)
-      let year = { label: i, value: i }
+    // const currentYear = new Date().getFullYear();
+    // const currentMonth = new Date().getMonth();
+    
+    // var years = [];
+    // for (let i = currentYear; i < currentYear + 50; i++) {
+      
+    //   let year = { label: i, value: i }
 
-      years.push(year);
-    }
-    this.state.years = years;
-    console.log("dkalsjdalsd: ", this.state.months[currentMonth - 1])
-    this.state.currentMonth = this.state.months[currentMonth - 1].value;
-    this.state.currentYear = currentYear
-    console.log("full year: ", years)
+    //   years.push(year);
+    // }
+    // this.state.years = years;
+    // console.log("dkalsjdalsd: ", this.state.months[currentMonth - 1])
+    // this.state.currentMonth = this.state.months[currentMonth - 1].value;
+    // this.state.currentYear = currentYear
+    // console.log("full year: ", years)
   }
   render() {
 

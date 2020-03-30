@@ -4,7 +4,8 @@ import styles from "./styles";
 import {
     Text, View, TouchableOpacity, SafeAreaView,
     ScrollView,
-    FlatList, Dimensions
+    FlatList, Dimensions,
+    ActivityIndicator
 } from "react-native";
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -38,7 +39,7 @@ export default class GoalList extends Component {
                 //     goalStatus: "completed",
                 //     createdAt: "2020-03-05T03:13:33.487Z",
                 //     updatedAt: "2020-03-05T03:13:33.487Z",
-                    
+
                 // }
             ],
             goalListCompleted: [
@@ -83,10 +84,11 @@ export default class GoalList extends Component {
         // })
     }
     render() {
-
+        const { isLoading } = this.props;
+        console.log("????: ", isLoading)
         return (
             <SafeAreaView style={styles.container}>
-
+                
                 <View style={styles.header} >
                     <View style={styles.top} >
                         <View style={styles.info}>
@@ -113,7 +115,7 @@ export default class GoalList extends Component {
                             <GoalListStatus
                                 goalList={this.state.goalListWorkingOn}
                                 navigation={this.props.navigation}
-                            //loading={loading}
+                                isLoading={isLoading}
                             />
                             {/* <Paid //data={dataListOrder} navigation={this.props.navigation} /> */}
                         </Tab>
@@ -127,13 +129,15 @@ export default class GoalList extends Component {
                             <GoalListStatus
                                 goalList={this.state.goalListCompleted}
                                 navigation={this.props.navigation}
-                            //loading={loading}
+                                isLoading={isLoading}
                             />
                         </Tab>
 
                     </Tabs>
 
                 </View>
+
+                {/* </View>} */}
 
             </SafeAreaView>
 

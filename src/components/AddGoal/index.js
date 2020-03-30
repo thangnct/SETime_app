@@ -272,7 +272,7 @@ export default class AddTask extends Component {
                                         numberOfLines={5}
                                     />
                                 </View>
-
+{/* 
                                 <View style={styles.items}>
                                     <View style={styles.itemsLabel}>
                                         <View style={styles.icon_label}>
@@ -316,7 +316,7 @@ export default class AddTask extends Component {
                                             <Text style={styles.addTaskText} >Add task</Text>
                                         </TouchableOpacity>
                                     </View>
-                                </View>
+                                </View> */}
                             </ScrollView>
                         </View>
                     </View>}

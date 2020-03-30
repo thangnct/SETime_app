@@ -10,7 +10,8 @@ class GoalListStatusContainer extends Component {
         return (
             <GoalListStatus
                 navigation={this.props.navigation}
-                goalList={this.props.goalList}
+                goalList={this.props.goalList}         
+                isLoading = {this.props.isLoading}       
             />
         )
     }

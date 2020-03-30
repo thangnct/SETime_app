@@ -13,6 +13,7 @@ class GoalListContainer extends Component {
                 dispatchGetGoal={this.props.dispatchGetGoal}
                 auth={this.props.auth}
                 work={this.props.work}
+                isLoading={this.props.work.isLoading || false}
             />
         )
     }

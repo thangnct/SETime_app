@@ -24,11 +24,11 @@ export default class AddTask extends Component {
             goalSupport: "",
             isAllDay: true,
             startTime: "",
-            endTime: ""
-
+            endTime: "",
+            previousScreen: ""
         }
     }
-    
+
     checkObjectEmpty(obj) {
         return Object.getOwnPropertyNames(obj).length > 0
     }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, } from "native-base";
-import { Text, ActivityIndicator } from "react-native"
+import { Text, ActivityIndicator, View } from "react-native"
 import styles from "./styles";
 
 export default class Loading extends Component {
@@ -14,4 +14,5 @@ export default class Loading extends Component {
                 </View> : null}
             </Container>
         );
-    }}
+    }
+}

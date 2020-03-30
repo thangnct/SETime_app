@@ -37,11 +37,11 @@ export default class Login extends Component {
         }
     }
     render() {
-        const { isLoading } = this.props.auth;
+        const { isLoading, isSuccess } = this.props.auth;
         return (
 
             <KeyboardAvoidingView behavior="height" enabled style={styles.container}>
-                {isLoading == true ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                {isLoading == true && isSuccess == true ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                     <ActivityIndicator size="large" color="#C4C4C4" />
                 </View> : <View style={{ flex: 1 }}>
                         <View style={styles.top}>
