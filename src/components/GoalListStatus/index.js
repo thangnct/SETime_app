@@ -19,10 +19,9 @@ export default class GoalListStatus extends Component {
     }
 
     render() {
-        console.log("4321: ", this.props.goalList)
         const { isLoading } = this.props
 
-        
+
         return (
             <SafeAreaView style={styles.container}>
                 {isLoading == true ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}><ActivityIndicator size="large" color="#C4C4C4" /></View> : <View style={{ flex: 1 }}>

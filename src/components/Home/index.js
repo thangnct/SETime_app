@@ -6,14 +6,10 @@ import {
   FlatList, Image, ImageBackground
 
 } from "react-native";
-import { CheckBox } from 'react-native-elements'
-import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getDatetime, getTimeUseTimezone } from "../../commons";
 import ActionButton from 'react-native-action-button';
-import {
-  Picker,
-} from "native-base";
+import { openDatabase } from 'react-native-sqlite-storage';
+var db = openDatabase({ name: 'timesheetApp.db' });
 
 export default class Home extends Component {
   constructor(props) {
@@ -83,10 +79,10 @@ export default class Home extends Component {
   componentWillMount() {
     // const currentYear = new Date().getFullYear();
     // const currentMonth = new Date().getMonth();
-    
+
     // var years = [];
     // for (let i = currentYear; i < currentYear + 50; i++) {
-      
+
     //   let year = { label: i, value: i }
 
     //   years.push(year);
@@ -122,39 +118,8 @@ export default class Home extends Component {
                 source={require("../../../assets/img/gradient.png")}
               >
                 <View style={styles.goalBroadTitle}>
-                  {/* <Text style={styles.TileGoalBroad}>January,</Text> */}
+                  <Text style={styles.TileGoalBroad}>Workingon Goals</Text>
 
-                  <Picker
-                    mode="dropdown"
-                    placeholder="Pick Month"
-                    style={{ color: "red" }}
-                    color="red"
-                    selectedValue={this.state.currentMonth}
-                    onValueChange={(value) => {
-                      this.setState({
-                        currentMonth: value,
-                      })
-                    }}
-                  >
-                    {this.state.months.map(item => {
-                      return <Picker.Item label={item.label} value={item.value} />
-                    })}
-                  </Picker>
-                  <Picker
-                    mode="dropdown"
-                    placeholder="Pick Year"
-                    style={{ colorText: "red", fontSize: 20 }}
-                    selectedValue={this.state.currentYear}
-                    onValueChange={(value) => {
-                      this.setState({
-                        currentYear: value,
-                      })
-                    }}
-                  >
-                    {this.state.years.map(item => {
-                      return <Picker.Item label={item.label} value={item.value} />
-                    })}
-                  </Picker>
                 </View>
                 <View style={styles.goalBroadBody}>
                   <View style={styles.goalList}>
@@ -250,11 +215,74 @@ export default class Home extends Component {
     );
   }
 
-  renderBroad = () => {
-    return <View style={styles.square} />
+  createGoalTable = () => {
+    db.transaction(function (txn) {
+      txn.executeSql(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='table_goal'",
+        [],
+        function (tx, res) {
+          console.log('item:', res.rows.length);
+          if (res.rows.length == 0) {
+            txn.executeSql('DROP TABLE IF EXISTS table_goal', [], function (tx, res) {
+              // Alert.alert(res);
+            });
+            txn.executeSql(
+              'CREATE TABLE IF NOT EXISTS table_goal(id INTEGER PRIMARY KEY AUTOINCREMENT, goalTitle VARCHAR(255), exprirationDate VARCHAR(255), color VARCHAR(255), describe TEXT(100), reward VARCHAR(255), goalStatus VARCHAR(255))',
+              [], (tx, res) => {
+                console.log(res, "create table goal success")
+              }, (tx, err) => { console.log(tx) }
+            );
+          }
+        }
+      );
+    });
   }
-  signOut = async () => {
-    await AsyncStorage.removeItem("token");
-    this.props.navigation.navigate("Auth")
+
+  insertGoal = (goal) => {
+    db.transaction(async tx => {
+      await tx.executeSql('INSERT INTO table_goal (goalTitle, exprirationDate, color, describe, reward, goalStatus) VALUES (?, ?, ?, ?, ?, ?)',
+        [goal.goalTitle, goal.exprirationDate, goal.color, goal.describe, goal.reward, goal.goalStatus], (tx, res) => {
+          console.log(res, "insert goal success")
+        },
+        (tx, err) => { console.log(tx) })
+    })
+  }
+  updateGoal = (goal) => {
+    db.transaction(async tx => {
+      await tx.executeSql('update table_goal set goalTitle = ?, exprirationDate=?, color=? describe=? reward=? goalStatus=? where id = ?',
+        [goal.goalTitle, goal.exprirationDate, goal.color, goal.describe, goal.reward, goal.goalStatus, goal.id], (tx, res) => {
+          console.log(res, "update goal success")
+        },
+        (tx, err) => { console.log(tx) })
+    })
+  }
+
+  deleteGoal = (goalId) => {
+    db.transaction(async tx => {
+      await tx.executeSql('delete from table_goal where id=?',
+        [goalId], (tx, res) => {
+          console.log(res, "delete goal success")
+        },
+        (tx, err) => { console.log(tx) })
+    })
+  }
+  findGoal = (goalId) => {
+    db.transaction(async tx => {
+      await tx.executeSql('select * from table_goal where id=?',
+        [goalId], (tx, res) => {
+          console.log(rres.rows.item(0), "goal ")
+        },
+        (tx, err) => { console.log(tx) })
+    })
+  }
+
+  getAllGoal = () => {
+    db.transaction(async tx => {
+      await tx.executeSql('INSERT INTO table_goal (goalTitle, exprirationDate, color, describe, reward, goalStatus) VALUES (?, ?, ?, ?, ?, ?)',
+        [goal.goalTitle, goal.exprirationDate, goal.color, goal.describe, goal.reward, goal.goalStatus], (tx, res) => {
+          console.log(res, "insert goal success")
+        },
+        (tx, err) => { console.log(tx) })
+    })
   }
 }

@@ -1,3 +1,5 @@
+import { openDatabase } from 'react-native-sqlite-storage';
+var db = openDatabase({ name: 'timesheetApp.db' });
 import React, { Component } from "react";
 import styles from "./styles";
 import {
@@ -32,11 +34,17 @@ export default class AddTask extends Component {
             endTime: "",
 
             colorAvaiable: [
-                { name: "red", code: "#123456" },
-                { name: "blue", code: "#999999" }
+                { name: "Blue", code: "#007bff" },
+                { name: "Gray", code: "#6c757d" },
+                { name: "Green", code: "#28a745" },
+                { name: "Red", code: "#dc3545" },
+                { name: "Orange", code: "#ffc107" },
+                { name: "Black", code: "#343a40" },                
             ],
             reward: "",
-            tasks: []
+            tasks: [],
+            isLoading: false,
+            isSuccess: false
 
         }
     }
@@ -272,51 +280,8 @@ export default class AddTask extends Component {
                                         numberOfLines={5}
                                     />
                                 </View>
-{/* 
-                                <View style={styles.items}>
-                                    <View style={styles.itemsLabel}>
-                                        <View style={styles.icon_label}>
-                                            <Icon name="tasks" size={25} color={"#AAAAAA"} />
-                                        </View>
-                                        <View style={styles.text_label}>
-                                            <Text style={styles.itemLabelText}>Task </Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.itemsInput}>
-
-                                    </View>
-                                </View>
-                                <View style={styles.thingsTodo}>
-
-                                    <FlatList
-                                        data={this.state.tasks}
-                                        renderItem={({ item, key }) => <View style={{
-                                            height: 50,
-                                            borderRadius: 5, marginLeft: 15,
-                                            marginRight: 5, flexDirection: "row",
-                                            justifyContent: "flex-start",
-                                            alignItems: "center", marginTop: 3
-                                        }}>
-                                            <View style={styles.taskTodo}>
-                                                <Text style={styles.weekday}>{item.taskTitle}</Text>
-                                                <Text style={styles.timeBound}>{item.timeBound}</Text>
-                                            </View>
-                                        </View>}
-                                    />
-
-                                </View>
-                                <View style={styles.items}>
-                                    <View style={styles.itemsLabel}>
-
-                                    </View>
-                                    <View style={styles.itemsInput}>
-                                        <TouchableOpacity style={[styles.addButton]}
-                                            onPress={() => this.props.navigation.navigate("AddTask", { previousScreen: "AddGoal" })}
-                                        >
-                                            <Text style={styles.addTaskText} >Add task</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View> */}
+                                <Text onPress={() => { this.dropGoalTable() }}> drop</Text>
+                                <Text onPress={() => { this.createGoalTable() }}> createGoalTable</Text>
                             </ScrollView>
                         </View>
                     </View>}
@@ -342,17 +307,17 @@ export default class AddTask extends Component {
     }
     handleSaveGoal = () => {
         if (this.validate() === true) {
-            this.props.dispatchAddGoal({
-                token: this.props.auth.token,
+            let goal = {
                 goalTitle: this.state.goalTitle,
                 color: this.state.color,
                 startTime: this.state.startTime,
                 endTime: this.state.endTime,
                 describe: this.state.describe,
                 reward: this.state.reward,
+                goalStatus: "workingon",
                 tasks: this.state.tasks,
-
-            })
+            }
+            this.insertGoal(goal);
         }
 
     }
@@ -363,5 +328,133 @@ export default class AddTask extends Component {
         this.setState({
             [name]: value
         })
+    }
+
+    createGoalTable = () => {
+        db.transaction(function (txn) {
+            txn.executeSql(
+                "SELECT name FROM sqlite_master WHERE type='table' AND name='table_goal'",
+                [],
+                function (tx, res) {
+                    console.log('item:', res.rows.length);
+                    if (res.rows.length == 0) {
+                        txn.executeSql('DROP TABLE IF EXISTS table_goal', [], function (tx, res) {
+                            // Alert.alert(res);
+                        });
+                        txn.executeSql(
+                            'CREATE TABLE IF NOT EXISTS table_goal(id INTEGER PRIMARY KEY AUTOINCREMENT, goalTitle VARCHAR(255), startTime VARCHAR(255), endTime VARCHAR(255),color VARCHAR(255), describe TEXT(100), reward VARCHAR(255), goalStatus VARCHAR(255))',
+                            [], (tx, res) => {
+                                console.log(res, "create table goal success")
+                            }, (tx, err) => { console.log(tx) }
+                        );
+                    }
+                }
+            );
+        });
+    }
+    dropGoalTable = () => {
+        db.transaction(async (txn) => {
+            await txn.executeSql('DROP TABLE IF EXISTS table_goal', [], function (tx, res) {
+                console.log(res, "drop table")
+            }, (tx, err) => {
+                console.log(tx)
+            }
+            );
+        });
+    }
+
+    insertGoal = (goal) => {
+        db.transaction(async tx => {
+            await tx.executeSql('INSERT INTO table_goal (goalTitle, startTime, endTime, color, describe, reward, goalStatus) VALUES (?, ?, ?, ?, ?, ?,?)',
+                [goal.goalTitle, goal.startTime, goal.endTime, goal.color, goal.describe, goal.reward, goal.goalStatus], (tx, res) => {
+                    console.log(res, "insert goal success"),
+                        Alert.alert("Success")
+                    this.props.navigation.navigate("GoalList")
+                    this.getAllGoal("all");
+                },
+                (tx, err) => { console.log(tx) })
+        })
+    }
+    updateGoal = (goal) => {
+        db.transaction(async tx => {
+            await tx.executeSql('update table_goal set goalTitle = ?, exprirationDate=?, color=? describe=? reward=? goalStatus=? where id = ?',
+                [goal.goalTitle, goal.exprirationDate, goal.color, goal.describe, goal.reward, goal.goalStatus, goal.id], (tx, res) => {
+                    console.log(res, "update goal success")
+                },
+                (tx, err) => { console.log(tx) })
+        })
+    }
+
+    deleteGoal = (goalId) => {
+        db.transaction(async tx => {
+            await tx.executeSql('delete from table_goal where id=?',
+                [goalId], (tx, res) => {
+                    console.log(res, "delete goal success")
+                },
+                (tx, err) => { console.log(tx) })
+        })
+    }
+    findGoal = (goalId) => {
+        db.transaction(async tx => {
+            await tx.executeSql('select * from table_goal where id=?',
+                [goalId], (tx, res) => {
+                    console.log(rres.rows.item(0), "goal ")
+                },
+                (tx, err) => { console.log(tx) })
+        })
+    }
+
+    getAllGoal = (goalStatus) => {
+        this.setState({ isLoading: true, isSuccess: false })
+        if (goalStatus == "") {
+            db.transaction(async tx => {
+                await tx.executeSql(
+                    'select * from table_goal where goalStatus = ?', [goalStatus], (tx, res) => {
+                        let temp = [];
+                        for (let i = 0; i < res.rows.length; ++i) {
+                            temp.push(res.rows.item(i));
+                        }
+                        console.log(temp, "all goals")
+
+                    }, (tx, err) => {
+                        console.log(tx, "err")
+                        this.setState({
+                            isLoading: false, isSuccess: false
+                        });
+                    }
+                );
+            })
+        } else {
+            db.transaction(async tx => {
+                await tx.executeSql(
+                    'select * from table_goal where goalStatus = ?', [goalStatus], (tx, res) => {
+                        let temp = [];
+                        for (let i = 0; i < res.rows.length; ++i) {
+                            temp.push(res.rows.item(i));
+                        }
+                        console.log(temp, "all goals")
+                        if (goalStatus == "working on") {
+                            console.log("????")
+                            this.setState({
+                                isLoading: false, isSuccess: true,
+                                goalListWorkingOn: temp
+                            })
+                        } else if (goalStatus == "completed") {
+                            console.log("????111")
+                            this.setState({
+                                isLoading: false, isSuccess: true,
+                                goalListCompleted: temp
+                            })
+                        }
+                    }, (tx, err) => {
+                        console.log(tx, "err")
+                        this.setState({
+                            isLoading: false, isSuccess: false
+                        });
+                    }
+                );
+            })
+        }
+
     }
 }
