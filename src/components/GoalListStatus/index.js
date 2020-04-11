@@ -29,21 +29,25 @@ export default class GoalListStatus extends Component {
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         data={this.props.goalList}
-                        renderItem={({ item }) => <TouchableOpacity style={{
-                            height: 100, borderRadius: 5, flexDirection: "row", justifyContent: "flex-start",
-                            alignItems: "center",
-                            marginTop: 15,
-                            borderWidth: 0.5,
-                            borderLeftColor: item.color,
-                            borderLeftWidth: 5,
-                            borderTopColor: "#AAAAAA",
-                            borderRightColor: "#AAAAAA",
-                            borderBottomColor: "#AAAAAA",
-                            marginRight: 20,
-                            marginLeft: 20,
-                            flex: 1,
-                            // backgroundColor: "green"
-                        }}>
+                        renderItem={({ item }) => <TouchableOpacity
+                            onPress={() => {
+                                this.props.navigation.navigate("")
+                            }}
+                            style={{
+                                height: 100, borderRadius: 5, flexDirection: "row", justifyContent: "flex-start",
+                                alignItems: "center",
+                                marginTop: 15,
+                                borderWidth: 0.5,
+                                borderLeftColor: item.color,
+                                borderLeftWidth: 5,
+                                borderTopColor: "#AAAAAA",
+                                borderRightColor: "#AAAAAA",
+                                borderBottomColor: "#AAAAAA",
+                                marginRight: 20,
+                                marginLeft: 20,
+                                flex: 1,
+                                // backgroundColor: "green"
+                            }}>
 
                             <View style={styles.goal}>
                                 <Text style={styles.goalTitle}>{item.goalTitle}</Text>

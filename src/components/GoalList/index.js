@@ -65,7 +65,7 @@ export default class GoalList extends Component {
                     </View>
                 </View>
                 <View style={styles.body}>
-                    {/* <Text onPress={() => { this.createGoalTable() }}>create table</Text>
+                    <Text onPress={() => { this.createGoalTable() }}>create table</Text>
                     <Text onPress={() => {
                         let goal = {
                             goalTitle: "Đạt 60kg",
@@ -78,9 +78,11 @@ export default class GoalList extends Component {
                         console.log(goal, "xxx")
                         this.insertGoal(goal)
                     }}>insertGoal</Text>
-                    <Text onPress={() => { this.updateGoal() }}>updateGoal</Text>
+
+                    <Text onPress={() => { this.deleteGoal(3) }}>deleteGoal</Text>
+                    <Text onPress={() => { this.updateGoal(7) }}>updateGoal</Text>
                     <Text onPress={() => { this.findGoal() }}>findGoal</Text>
-                    <Text onPress={() => { this.getAllGoal("all") }}>getAllGoal</Text> */}
+                    <Text onPress={() => { this.getAllGoal("all") }}>getAllGoal</Text>
                     <Tabs
                         tabBarUnderlineStyle={{ backgroundColor: "#F2994A" }}
                         locked
@@ -168,10 +170,12 @@ export default class GoalList extends Component {
                 (tx, err) => { console.log(tx) })
         })
     }
-    updateGoal = (goal) => {
+    updateGoal = (id) => {
         db.transaction(async tx => {
-            await tx.executeSql('update table_goal set goalTitle = ?, exprirationDate=?, color=? describe=? reward=? goalStatus=? where id = ?',
-                [goal.goalTitle, goal.exprirationDate, goal.color, goal.describe, goal.reward, goal.goalStatus, goal.id], (tx, res) => {
+            // await tx.executeSql('update table_goal set goalTitle = ?, exprirationDate=?, color=? describe=? reward=? goalStatus=? where id = ?',
+            //     [goal.goalTitle, goal.exprirationDate, goal.color, goal.describe, goal.reward, goal.goalStatus, goal.id], (tx, res) => {
+            await tx.executeSql('update table_goal set goalStatus=? where id = ?',
+                ["completed", id], (tx, res) => {
                     console.log(res, "update goal success")
                 },
                 (tx, err) => { console.log(tx) })

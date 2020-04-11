@@ -406,7 +406,7 @@ export default class AddTask extends Component {
 
     getAllGoal = (goalStatus) => {
         this.setState({ isLoading: true, isSuccess: false })
-        if (goalStatus == "") {
+        if (goalStatus == "all") {
             db.transaction(async tx => {
                 await tx.executeSql(
                     'select * from table_goal where goalStatus = ?', [goalStatus], (tx, res) => {
