@@ -163,9 +163,9 @@ export default class AddTask extends Component {
                                         numberOfLines={5}
                                     />
                                 </View>
-                                <Text onPress={() => { this.createTaskTable() }}>createTaskTable</Text>
+                                {/* <Text onPress={() => { this.createTaskTable() }}>createTaskTable</Text>
                                 <Text onPress={() => { this.getAllGoal("workingon") }}>getAllGoal</Text>
-                                <Text onPress={() => { this.dropTaskTable() }}>drop</Text>
+                                <Text onPress={() => { this.dropTaskTable() }}>drop</Text> */}
                             </ScrollView>
 
 
@@ -246,9 +246,10 @@ export default class AddTask extends Component {
                                             marginBottom: 0
                                         },
                                     }}
-                                    onDateChange={(time) => {     
-                                        console.log(time,"time2")                                    
-                                        this.handleChangeInput("startTime", time) }}
+                                    onDateChange={(time) => {
+                                        console.log(time, "time2")
+                                        this.handleChangeInput("startTime", time)
+                                    }}
                                 />
                             </View>
 
@@ -279,9 +280,10 @@ export default class AddTask extends Component {
                                             marginBottom: 0
                                         },
                                     }}
-                                    onDateChange={(time) => { 
+                                    onDateChange={(time) => {
                                         console.log(time, "time")
-                                        this.handleChangeInput("endTime", time) }}
+                                        this.handleChangeInput("endTime", time)
+                                    }}
                                 />
                             </View>
 

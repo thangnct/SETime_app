@@ -67,19 +67,20 @@ export default {
     // backgroundColor: "pink"
 
   },
-  itemLabelText: {
+  contentItem: {
     fontSize: 13,
     // fontWeight: "600",
     // backgroundColor: "red",
     color: "#000000",
-    // marginLeft: 10
+    // marginLeft: 10,
+    marginBottom: 5
   },
   itemsLabel: {
     flexDirection: "row",
-    justifyContent: "flex-start",
+    // justifyContent: "flex-start",
     // alignItems: "center",
-    // backgroundColor: "red",
-    flex: 5
+    // backgroundColor: "blue",
+    // flex: 5
   },
   picker: {
     height: 50,
@@ -93,15 +94,15 @@ export default {
     // backgroundColor: "green",
     flexDirection: "row",
     justifyContent: "center",
-    // alignItems: "center"
+    // alignItems: "center", 
+    marginRight: 10
   },
   text_label: {
-    flex: 1,
+    // flex: 1,
     // backgroundColor: "red",
-    marginLeft: 8,
     flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center"
+    // justifyContent: "flex-start",
+    // alignItems: "center"
   },
   timeStartEnd: {
     flex: 1,
@@ -145,7 +146,7 @@ export default {
     // height: 50,
     borderBottomColor: '#AAAAAA',
     borderBottomWidth: 1,
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "600",
     color: "#3E3D3D"
   }

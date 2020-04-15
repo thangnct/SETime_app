@@ -31,7 +31,17 @@ export default class GoalListStatus extends Component {
                         data={this.props.goalList}
                         renderItem={({ item }) => <TouchableOpacity
                             onPress={() => {
-                                this.props.navigation.navigate("")
+                                console.log(item, "itemgoal")
+                                this.props.navigation.navigate("GoalDetail", {
+                                    goalId: item.id,
+                                    reward: item.reward,
+                                    color: item.color,
+                                    endTime: item.endTime,
+                                    describe: item.describe,
+                                    goalTitle: item.goalTitle,
+                                    goalStatus: item.goalStatus,
+                                    startTime: item.startTime,                                   
+                                })
                             }}
                             style={{
                                 height: 100, borderRadius: 5, flexDirection: "row", justifyContent: "flex-start",

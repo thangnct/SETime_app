@@ -43,20 +43,21 @@ export default class Home extends Component {
         { id: "7", dayTitle: "12", weekday: "Sun", day: "monent" },
       ],
       taskListInDay: [
-        { id: "1", taskTitle: "Làm báo cáo TTTN", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#3AD713" },
-        { id: "2", taskTitle: "Đọc cuốn Amazon phát triển thần tốc.", timeBound: "17h30 - 20h30", taskStatus: "woking-on", color: "#D7134E" },
-        { id: "3", taskTitle: "Tập thể dục, chạy 3km", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#D7A013" },
-        { id: "4", taskTitle: "Làm báo cáo TTTN", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#3AD713" },
-        { id: "5", taskTitle: "Đọc cuốn Amazon phát triển thần tốc.", timeBound: "17h30 - 20h30", taskStatus: "woking-on", color: "#D7134E" },
-        { id: "6", taskTitle: "Tập thể dục, chạy 3km", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#D7A013" },
+        { id: "1", taskTitle: "Báo cáo TTTN", timeBound: "09h00 - 12h00", taskStatus: "completed", color: "#3AD713" },
+        { id: "2", taskTitle: "Tổng kết tuần, lên kế hoạch cho tuần mới.", timeBound: "14h00 - 16h30", taskStatus: "woking-on", color: "blue" },
+        { id: "3", taskTitle: "Tập thể dục, chạy 5km", timeBound: "17h30 - 18h00", taskStatus: "completed", color: "#D7A013" },
+        { id: "2", taskTitle: "Đọc cuốn Amazon phát triển thần tốc.", timeBound: "21h30 - 22h30", taskStatus: "woking-on", color: "#D7134E" },
+        // { id: "4", taskTitle: "Làm báo cáo TTTN", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#3AD713" },
+        // { id: "5", taskTitle: "Đọc cuốn Amazon phát triển thần tốc.", timeBound: "17h30 - 20h30", taskStatus: "woking-on", color: "#D7134E" },
+        // { id: "6", taskTitle: "Tập thể dục, chạy 3km", timeBound: "17h30 - 20h30", taskStatus: "completed", color: "#D7A013" },
 
       ],
       goalInMonth: [
-        { id: "2", title: "Get Link", status: "working-on", color: "#D25656" },
+        // { id: "2", title: "Get Link", status: "working-on", color: "#D25656" },
         { id: "3", title: "Đọc xong cuốn Amazon phát triển thần tốc.", status: "completed", color: "#123456" },
         { id: "4", title: "Dậy sớm lúc 5:30", status: "completed", color: "#5277FF" },
+        { id: "6", title: "Học nấu ăn.", status: "completed", color: "#123456" },
         { id: "5", title: "Get Link", status: "completed", color: "#3AD713" },
-        { id: "6", title: "Đọc xong cuốn Amazon phát triển thần tốc.", status: "completed", color: "#123456" },
         { id: "17", title: "Dậy sớm lúc 5:30", status: "completed", color: "#123456" },
       ],
       monthGoal: [
@@ -114,7 +115,7 @@ export default class Home extends Component {
           <View style={styles.broad}>
 
             <View style={styles.goalBroad} >
-              <ImageBackground style={{ flex: 1, width: "100%" }}
+              <ImageBackground style={{ flex: 1, width: "100%", }}
                 source={require("../../../assets/img/gradient.png")}
               >
                 <View style={styles.goalBroadTitle}>
@@ -129,9 +130,9 @@ export default class Home extends Component {
                       renderItem={({ item }) => <TouchableOpacity>
                         <View style={styles.goal}>
                           <View style={styles.leftGoalBroad}>
-                            <View style={{ width: 25 }}>
+                            {/* <View style={{ width: 25 }}>
                               <Icon style={styles.goalStatus} name={item.status == "completed" ? "check-square" : "spinner"} color={item.status == "completed" ? "#5277FF" : "white"} size={18} />
-                            </View>
+                            </View> */}
                             <View>
                               <Text style={styles.goalTitle}>{item.title}</Text>
                             </View>
@@ -145,7 +146,19 @@ export default class Home extends Component {
                     />
                   </View>
                   <View style={styles.goalBroadRatioCompleted}>
-                    <Text style={styles.ratioCompletedText}>30%</Text>
+                    <View style={{ flexDirection: "row", justifyContent:"center", alignItems:"center" }}>
+                      <Text style={styles.ratioCompletedText}>30</Text>
+                      <Text style={{
+                        color: "#FFFFFF",
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        // marginLeft: 20,
+                        // textAlign: "left",
+                        // marginBottom: 12
+
+                      }}>%</Text>
+                    </View>
+
                   </View>
                 </View>
 
@@ -170,7 +183,7 @@ export default class Home extends Component {
           </View>
           <View style={styles.dailyTask} >
             <View style={styles.dailyTaskHeader} >
-              <Text style={styles.dailyTaskTime}>06 Mon, 2020</Text>
+              <Text style={styles.dailyTaskTime}>April, 12, 2020</Text>
               <View style={styles.dailyTaskStatus}>
                 <Text style={styles.dailyTaskLabel}>Daily Task</Text>
                 <Text style={styles.dailyTaskStatusCompleted}>2 completed - 1 woking on</Text>

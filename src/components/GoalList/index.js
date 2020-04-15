@@ -27,21 +27,21 @@ export default class GoalList extends Component {
         this.state = {
             number: 0,
             goalListWorkingOn: [
-                {
-                    tasks: [],
-                    _id: "5e606e5d38409702596ca907",
-                    userId: "5e5ff70098d84103f8acab2f",
-                    goalTitle: "Đọc xong cuốn Amazon phát triển thần tốc.",
-                    startTime: "2020-03-05 10:13",
-                    endTime: "2020-03-20 10:13",
-                    color: "blue",
-                    describe: "",
-                    reward: "Đọc ",
-                    goalStatus: "completed",
-                    createdAt: "2020-03-05T03:13:33.487Z",
-                    updatedAt: "2020-03-05T03:13:33.487Z",
+                // {
+                //     tasks: [],
+                //     _id: "5e606e5d38409702596ca907",
+                //     userId: "5e5ff70098d84103f8acab2f",
+                //     goalTitle: "Đọc xong cuốn Amazon phát triển thần tốc.",
+                //     startTime: "2020-03-05 10:13",
+                //     endTime: "2020-03-20 10:13",
+                //     color: "blue",
+                //     describe: "",
+                //     reward: "Đọc ",
+                //     goalStatus: "completed",
+                //     createdAt: "2020-03-05T03:13:33.487Z",
+                //     updatedAt: "2020-03-05T03:13:33.487Z",
 
-                }
+                // }
             ],
             goalListCompleted: [
 
@@ -65,7 +65,7 @@ export default class GoalList extends Component {
                     </View>
                 </View>
                 <View style={styles.body}>
-                    <Text onPress={() => { this.createGoalTable() }}>create table</Text>
+                    {/* <Text onPress={() => { this.createGoalTable() }}>create table</Text>
                     <Text onPress={() => {
                         let goal = {
                             goalTitle: "Đạt 60kg",
@@ -82,7 +82,7 @@ export default class GoalList extends Component {
                     <Text onPress={() => { this.deleteGoal(3) }}>deleteGoal</Text>
                     <Text onPress={() => { this.updateGoal(7) }}>updateGoal</Text>
                     <Text onPress={() => { this.findGoal() }}>findGoal</Text>
-                    <Text onPress={() => { this.getAllGoal("all") }}>getAllGoal</Text>
+                    <Text onPress={() => { this.getAllGoal("all") }}>getAllGoal</Text> */}
                     <Tabs
                         tabBarUnderlineStyle={{ backgroundColor: "#F2994A" }}
                         locked

@@ -43,11 +43,14 @@ export default {
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    marginRight: 15
+    // marginRight: 15,
+    // backgroundColor:"red"
   }
   ,
-  golaColor: {
-    flex: 1.5, justifyContent: "center", alignItems: "center"
+  goalColor: {
+    // flex: 1.5, 
+    justifyContent: "center", alignItems: "center",
+    // backgroundColor:"blue"
   },
   goalTitle: {
     color: "#FFFFFF",
@@ -98,9 +101,9 @@ export default {
     // height: 120
   },
   goalBroadRatioCompleted: {
-    flex: 3.5,
+    // flex: 3.5,
     // backgroundColor: "#999111",
-    flexDirection: "column",
+    
     justifyContent: "flex-end",
     alignItems: "flex-end",
     marginRight: 5
