@@ -34,11 +34,7 @@ export default class TaskDetail extends Component {
         }
     }
 
-    componentDidMount() {
-        // this.setState({
-        //     listGoalWorkingOn: this.getAllGoal("workingon")
-        // })
-    }
+    
     render() {
         console.log(this.state, "STATE")
         return (
@@ -76,7 +72,7 @@ export default class TaskDetail extends Component {
                         <View style={styles.body}>
                             <View style={styles.taskTitleContainer}>
                                 <Text style={styles.taskTitle}>{this.props.navigation.getParam("taskTitle")}</Text>
-                                <Text style={{}}>{this.props.navigation.getParam("startTime")}-{this.props.navigation.getParam("startTime")}</Text>
+                                <Text style={{ fontSize: 12 }}>{this.props.navigation.getParam("isAllDay") ? this.props.navigation.getParam("date") + " All day" : this.props.navigation.getParam("date") + " : " + this.props.navigation.getParam("startTime") + " - " + this.props.navigation.getParam("endTime")}</Text>
                             </View>
                             <ScrollView style={{ flex: 1 }}>
                                 <View style={styles.items}>
@@ -89,30 +85,6 @@ export default class TaskDetail extends Component {
                                         </View>
                                     </View>
                                 </View>
-
-                                {/* <View style={styles.items}>
-                                    <View style={styles.itemsLabel}>
-                                        <View style={styles.icon_label}>
-                                            <Icon name="calendar" size={25} color={"#AAAAAA"} />
-                                        </View>
-                                        <View style={styles.text_label}>
-                                            <Text style={styles.itemLabelText}>Time-bound</Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.itemsInput}>
-                                        <View style={styles.allDay}>
-                                            <Text style={{ marginRight: 15 }} >All day</Text>
-                                            <Switch
-                                                value={this.state.isAllDay}
-                                                onValueChange={value => {
-                                                    this.setState({ isAllDay: value })
-                                                }}
-                                            />
-                                        </View>
-                                    </View>
-                                </View>
-                                {!this.state.isAllDay ? this.renderTimeBound() : null} */}
-
                                 <View style={styles.items}>
                                     <View style={styles.itemsLabel}>
                                         <View style={styles.icon_label}>
@@ -129,11 +101,9 @@ export default class TaskDetail extends Component {
 
                             <View style={{ justifyContent: "flex-end", flexDirection: "row" }}>
                                 <TouchableOpacity
-                                    onPress={() => {
-                                        let task = {
-                                            id: this.props.navigation.getParam("id")
-                                        }
-                                        this.saveTask(task)
+                                    onPress={() => {                                    
+                                        let status = this.props.navigation.getParam("taskStatus") == "workingon" ? "completed" : "workingon"
+                                        this.changeGoalStatus(this.props.navigation.getParam("id"), status)                                        
                                     }}
                                     style={{
                                         width: 50, height: 50, backgroundColor: "#F2994A", borderRadius: 50,
@@ -280,67 +250,24 @@ export default class TaskDetail extends Component {
             );
         });
     }
-    saveTask = (task) => {
-        console.log(task, "???? task");
-        try {
-            this.setState({ isLoading: true, isSuccess: false })
-            db.transaction(async tx => {
-                await tx.executeSql('select * from table_task where id = ?', [task.id],
-                    async (tx, res) => {
-                        if (res.rows.length == 0) {
-                            await tx.executeSql('INSERT INTO table_task (goalId, taskTitle, note, isAllDay, date, startTime, endTime, taskStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                                [task.goalId, task.taskTitle, task.note, task.isAllDay ? 1 : 0, task.date, task.startTime, task.endTime, task.taskStatus], (tx, res) => {
-                                    console.log(res, "insert task success");
-                                    Alert.alert("Saved successfully.")
-                                    this.setState({ isLoading: true, isSuccess: false })
-                                    let timeStamp = new Date().getTime();
-                                    this.props.navigation.navigate("TaskList", {
-                                        timeStamp: timeStamp
-                                    })
-                                },
-                                (tx, err) => {
-                                    console.log(tx)
-                                    Alert.alert("Saved failure.")
-                                    this.setState({ isLoading: false, isSuccess: false })
-                                    let timeStamp = new Date().getTime();
-                                    this.props.navigation.navigate("TaskList", {
-                                        timeStamp: timeStamp
-                                    })
-                                })
-                        } else {
-                            await tx.executeSql('update table_goal set goalTitle = ?, exprirationDate=?, color=? describe=? reward=? goalStatus=? where id = ?',
-                                [task.goalTitle, task.exprirationDate, task.color, task.describe, task.reward, task.goalStatus, task.id], (tx, res) => {
-                                    console.log(res, "insert task success");
-                                    Alert.alert("Update successfully.")
-                                    this.setState({ isLoading: true, isSuccess: false })
-                                    let timeStamp = new Date().getTime();
-                                    this.props.navigation.navigate("TaskList", {
-                                        timeStamp: timeStamp
-                                    })
-                                },
-                                (tx, err) => {
-                                    Alert.alert("Saved failure.")
-                                    this.setState({ isLoading: false, isSuccess: false })
-                                    let timeStamp = new Date().getTime();
-                                    this.props.navigation.navigate("TaskList", {
-                                        timeStamp: timeStamp
-                                    })
-                                })
-                        }
-                    }, (tx, err) => {
-                        Alert.alert("Saved failure.")
-                        this.setState({ isLoading: false, isSuccess: false })
-                        let timeStamp = new Date().getTime();
-                        this.props.navigation.navigate("TaskList", {
-                            timeStamp: timeStamp
-                        })
+    changeGoalStatus = (id, status) => {
+        console.log(id, status, "okkokok")
+        this.setState({ isLoading: true, isSuccess: false })
+        db.transaction(async tx => {
+            await tx.executeSql('update table_task set taskStatus = ? where id = ?',
+                [status, id], (tx, res) => {
+                    console.log(res)
+                    this.setState({ isLoading: false, isSuccess: false })
+                    this.props.navigation.navigate("TaskList", {
+                        timeStamp: new Date().getTime(),
+                        reloadTab: status == "workingon" ? "completed" : "workingon"
                     })
-            })
-        } catch (err) {
-            this.setState({ isLoading: false, isSuccess: false })
-            console.log(err, "err")
-            Alert.alert("Notification", "An error occurred please check again.")
-        }
+                },
+                (tx, err) => {
+                    this.setState({ isLoading: true, isSuccess: false })
+                    console.log(tx)
+                })
+        })
     }
     deleteTask = (id) => {
         console.log(id)
@@ -367,65 +294,5 @@ export default class TaskDetail extends Component {
                 })
         })
     }
-    findGoal = (goalId) => {
-        db.transaction(async tx => {
-            await tx.executeSql('select * from table_goal where id=?',
-                [goalId], (tx, res) => {
-                    console.log(rres.rows.item(0), "goal ")
-                },
-                (tx, err) => { console.log(tx) })
-        })
-    }
 
-    getAllTask = (goalStatus) => {
-        this.setState({ isLoading: true, isSuccess: false })
-        if (goalStatus == "all") {
-            db.transaction(async tx => {
-                await tx.executeSql(
-                    'select * from table_task', [], (tx, res) => {
-                        let temp = [];
-                        for (let i = 0; i < res.rows.length; ++i) {
-                            temp.push(res.rows.item(i));
-                        }
-                        console.log(temp, "all tasks")
-
-                    }, (tx, err) => {
-                        console.log(tx, "err")
-                        this.setState({
-                            isLoading: false, isSuccess: false
-                        });
-                    }
-                );
-            })
-        } else {
-            db.transaction(async tx => {
-                await tx.executeSql(
-                    'select * from table_task where taskStatus = ?', [goalStatus], (tx, res) => {
-                        let temp = [];
-                        for (let i = 0; i < res.rows.length; ++i) {
-                            temp.push(res.rows.item(i));
-                        }
-                        console.log(temp, "all task")
-                        if (goalStatus == "working on") {
-                            this.setState({
-                                isLoading: false, isSuccess: true,
-                                goalListWorkingOn: temp
-                            })
-                        } else if (goalStatus == "completed") {
-                            this.setState({
-                                isLoading: false, isSuccess: true,
-                                goalListCompleted: temp
-                            })
-                        }
-                    }, (tx, err) => {
-                        console.log(tx, "err")
-                        this.setState({
-                            isLoading: false, isSuccess: false
-                        });
-                    }
-                );
-            })
-        }
-
-    }
 }

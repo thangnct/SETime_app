@@ -38,9 +38,10 @@ export default class TaskList extends Component {
     }
     componentDidUpdate(prevProps, prevState) {
         let propsTimeStamp = this.props.navigation.getParam("timeStamp") ? this.props.navigation.getParam("timeStamp") : 0
-        if (prevState.date != this.state.date || propsTimeStamp != this.state.timeStamp) {
+        let reloadTab = this.props.navigation.getParam("reloadTab");
+        if (propsTimeStamp != this.state.timeStamp) {
             this.setState({ timeStamp: propsTimeStamp })
-            this.getAllTask("workingon")
+            this.getAllTask(reloadTab)
         }
     }
     render() {

@@ -10,8 +10,6 @@ import Toast, { DURATION } from 'react-native-easy-toast'
 import DatePicker from 'react-native-datepicker'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FlatList } from 'react-native-gesture-handler';
-const task = <Icon name="tasks" size={25} color={"#AAAAAA"} />;
-import { deleteGoalById } from "../../models/Goal"
 export default class GoalDetail extends Component {
     constructor(props) {
         super(props);
@@ -201,7 +199,8 @@ export default class GoalDetail extends Component {
                             <View style={{ justifyContent: "flex-end", flexDirection: "row" }}>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        this.updateTask(this.props.navigation.getParam("id"))
+                                        let status = this.props.goalStatus == "workingon" ? "completed" : "workingon"
+                                        this.changeGoalStatus(this.props.goalId, status)
                                     }}
                                     style={{
                                         width: 50, height: 50, backgroundColor: "#F2994A", borderRadius: 50,
@@ -210,7 +209,7 @@ export default class GoalDetail extends Component {
                                         bottom: 25, right: 20
                                     }}
                                 >
-                                    <Icon name={"check"} color="#ffffff" size={20} />
+                                    <Icon name={this.props.navigation.getParam("goalStatus") == "workingon" ? "check" : "undo"} color="#ffffff" size={20} />
                                 </TouchableOpacity>
                             </View>
 
@@ -222,7 +221,6 @@ export default class GoalDetail extends Component {
         );
     }
     validate = () => {
-        console.log(this.state, "valo")
         if (this.state.taskTitle.length == 0) {
             this.refs.toast.show("Task title is not null.");
             return false
@@ -230,117 +228,8 @@ export default class GoalDetail extends Component {
             this.refs.toast.show("You must pick a goal.");
             return false
         } else {
-            console.log("kljsdlska")
             return true
         }
-    }
-    handleSaveGoal = () => {
-        if (this.validate() === true) {
-            let task = {
-                goalId: this.state.goalSupport,
-                taskTitle: this.state.taskTitle,
-                note: this.state.note,
-                // isAllDay: this.state.isAllDay == 1 ? today : 0,
-                isAllDay: this.state.isAllDay,
-                startTime: this.state.startTime,
-                endTime: this.state.endTime,
-                taskStatus: "workingon"
-            }
-            this.saveGoal(task);
-        }
-
-    }
-
-
-    renderTimeBound = () => {
-        return <View >
-            <View style={styles.items}>
-                <View style={styles.itemsLabel}>
-
-                </View>
-                <View style={styles.itemsInput}>
-                    <View style={styles.timeStartEndContainer}>
-                        <View style={styles.timeStartEnd}>
-                            <View style={styles.labelStartEndTime}>
-                                <Text>Start: </Text>
-                            </View>
-                            <View style={styles.pickerStartEndTime}>
-                                <DatePicker
-                                    style={styles.textinput_Date}
-                                    date={this.state.startTime}
-                                    mode="time"
-                                    confirmBtnText="OK"
-                                    cancelBtnText="Cancel"
-                                    // minDate={this.state.startTime || ""}
-                                    // maxDate={this.state.endTime || ""}
-                                    placeholder="Pick time"
-                                    format="HH:mm"
-                                    showIcon={false}
-                                    customStyles={{
-                                        dateInput: {
-                                            height: 20,
-                                            borderTopWidth: 0,
-                                            borderLeftWidth: 0,
-                                            borderRightWidth: 0,
-                                            borderBottomWidth: 0,
-                                            marginBottom: 0
-                                        },
-                                    }}
-                                    onDateChange={(time) => {
-                                        console.log(time, "time2")
-                                        this.handleChangeInput("startTime", time)
-                                    }}
-                                />
-                            </View>
-
-                        </View>
-                        <View style={styles.timeStartEnd}>
-                            <View style={styles.labelStartEndTime}>
-                                <Text>Finish: </Text>
-                            </View>
-                            <View style={styles.pickerStartEndTime}>
-                                <DatePicker
-                                    style={styles.textinput_Date}
-                                    date={this.state.endTime}
-                                    mode="time"
-                                    confirmBtnText="OK"
-                                    cancelBtnText="Cancel"
-                                    placeholder="Pick time"
-                                    // minDate={this.state.startTime || ""}
-                                    // maxDate={this.state.endTime || ""}
-                                    format="LT"
-                                    showIcon={false}
-                                    customStyles={{
-                                        dateInput: {
-                                            height: 20,
-                                            borderTopWidth: 0,
-                                            borderLeftWidth: 0,
-                                            borderRightWidth: 0,
-                                            borderBottomWidth: 0,
-                                            marginBottom: 0
-                                        },
-                                    }}
-                                    onDateChange={(time) => {
-                                        console.log(time, "time")
-                                        this.handleChangeInput("endTime", time)
-                                    }}
-                                />
-                            </View>
-
-                        </View>
-
-                    </View>
-                </View>
-            </View>
-        </View>
-    }
-    checkStartEndTime = () => {
-        return this.state.endTime > this.state.startTime
-    }
-    handleChangeInput = (name, value) => {
-        this.setState({
-            [name]: value
-        })
     }
 
     taskOfGoal = (goalId) => {
@@ -359,6 +248,25 @@ export default class GoalDetail extends Component {
                     })
 
 
+                },
+                (tx, err) => {
+                    this.setState({ isLoading: true, isSuccess: false })
+                    console.log(tx)
+                })
+        })
+    }
+
+    changeGoalStatus = (id, status) => {
+        this.setState({ isLoading: true, isSuccess: false })
+        db.transaction(async tx => {
+            await tx.executeSql('update table_goal set goalStatus = ? where id = ?',
+                [status, id], (tx, res) => {
+                    console.log(res)
+                    this.setState({ isLoading: false, isSuccess: false })
+                    this.props.navigation.navigate("GoalList", {
+                        timeStamp: new Date().getTime(),
+                        reloadTab: status == "workingon" ? "completed" : "workingon"
+                    })
                 },
                 (tx, err) => {
                     this.setState({ isLoading: true, isSuccess: false })

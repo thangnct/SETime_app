@@ -31,6 +31,7 @@ export default class TaskListStatus extends Component {
                             this.props.navigation.navigate("TaskDetail", {
                                 taskId: item.taskId,
                                 goalId: item.goalId,
+                                date: item.date,
                                 taskTitle: item.taskTitle,
                                 isAllDay: item.isAllDay,
                                 note: item.note,

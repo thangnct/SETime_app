@@ -27,7 +27,7 @@ export default class AddTask extends Component {
             goalTitle: this.props.goalTitle || "",
             startTime: this.props.startTime || "",
             endTime: this.props.endTime || "",
-            color: this.props.color || "",
+            color: this.props.color || "#ffc107",
             describe: this.props.describe || "",
             reward: this.props.reward || "",
             colorAvaiable: [
