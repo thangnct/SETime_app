@@ -98,7 +98,7 @@ export default {
     marginRight: 10
   },
   text_label: {
-    // flex: 1,
+    flex: 1,
     // backgroundColor: "red",
     flexDirection: "row",
     // justifyContent: "flex-start",

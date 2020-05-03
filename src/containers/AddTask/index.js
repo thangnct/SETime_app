@@ -15,7 +15,8 @@ class AddTaskContainer extends Component {
 
         return (
             <AddTask
-                navigation={this.props.navigation}                                
+                navigation={this.props.navigation}            
+                goalId={this.props.navigation.getParam("goalId")||""}                    
             />
         )
     }

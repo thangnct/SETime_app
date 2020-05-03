@@ -1,4 +1,3 @@
-import ActionButton from 'react-native-action-button';
 import { openDatabase } from 'react-native-sqlite-storage';
 var db = openDatabase({ name: 'timesheetApp.db' });
 import React, { Component } from "react";
@@ -36,9 +35,9 @@ export default class TaskDetail extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            listGoalWorkingOn: this.getAllGoal("workingon")
-        })
+        // this.setState({
+        //     listGoalWorkingOn: this.getAllGoal("workingon")
+        // })
     }
     render() {
         console.log(this.state, "STATE")
@@ -60,15 +59,14 @@ export default class TaskDetail extends Component {
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.taskOption}>
-                                <TouchableOpacity onPress={() => this.handleSaveTask()}>
+                                <TouchableOpacity onPress={() => {
+                                    this.props.navigation.navigate("")
+                                }}>
                                     <Text style={styles.saveText}>Edit</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={async () => {
-                                        let result = await this.deleteTask(this.props.navigation.getParam("id"));
-                                        if (result) {
-                                            this.props.navigation.navigate("TaskList")
-                                        }
+                                        this.deleteTask(this.props.navigation.getParam("id"));
                                     }}
                                 >
                                     <Text style={styles.cancelText}>Remove</Text>
@@ -125,19 +123,17 @@ export default class TaskDetail extends Component {
                                         </View>
                                     </View>
                                 </View>
-
-                                {/* <View style={styles.items}>
-                                    
-                                </View> */}
-                                {/* <Text onPress={() => { this.createTaskTable() }}>createTaskTable</Text>
-                                <Text onPress={() => { this.getAllGoal("workingon") }}>getAllGoal</Text>
+                                {/* <Text onPress={() => { this.createTaskTable() }}>createTaskTable</Text>                                
                                 <Text onPress={() => { this.dropTaskTable() }}>drop</Text> */}
                             </ScrollView>
 
                             <View style={{ justifyContent: "flex-end", flexDirection: "row" }}>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        this.updateTask(this.props.navigation.getParam("id"))
+                                        let task = {
+                                            id: this.props.navigation.getParam("id")
+                                        }
+                                        this.saveTask(task)
                                     }}
                                     style={{
                                         width: 50, height: 50, backgroundColor: "#F2994A", borderRadius: 50,
@@ -146,7 +142,7 @@ export default class TaskDetail extends Component {
                                         bottom: 25, right: 20
                                     }}
                                 >
-                                    <Icon name={"check"} color="#ffffff" size={20} />
+                                    <Icon name={this.props.navigation.getParam("taskStatus") == "workingon" ? "check" : "undo"} color="#ffffff" size={20} />
                                 </TouchableOpacity>
                             </View>
 
@@ -158,7 +154,7 @@ export default class TaskDetail extends Component {
         );
     }
     validate = () => {
-        console.log(this.state, "valo")
+
         if (this.state.taskTitle.length == 0) {
             this.refs.toast.show("Task title is not null.");
             return false
@@ -166,33 +162,9 @@ export default class TaskDetail extends Component {
             this.refs.toast.show("You must pick a goal.");
             return false
         } else {
-            console.log("kljsdlska")
             return true
         }
     }
-    handleSaveTask = () => {
-        if (this.validate() === true) {
-            // let now = new Date();
-            // let date = now.getDate().toString().length == 1 ? "0" + now.getDate() : now.getDate();
-            // let m = now.getMonth() + 1;
-            // let month = m.toString().length == 1 ? "0" + m : m;
-            // let year = now.getFullYear();
-            // let today = "" + date + "-" + month + "-" + year;
-            let task = {
-                goalId: this.state.goalSupport,
-                taskTitle: this.state.taskTitle,
-                note: this.state.note,
-                // isAllDay: this.state.isAllDay == 1 ? today : 0,
-                isAllDay: this.state.isAllDay,
-                startTime: this.state.startTime,
-                endTime: this.state.endTime,
-                taskStatus: "workingon"
-            }
-            this.insertTask(task);
-        }
-
-    }
-
 
     renderTimeBound = () => {
         return <View >
@@ -308,41 +280,68 @@ export default class TaskDetail extends Component {
             );
         });
     }
-    dropTaskTable = () => {
-        db.transaction(async (txn) => {
-            await txn.executeSql('DROP TABLE IF EXISTS table_task', [], function (tx, res) {
-                console.log(res, "drop task table")
-            }, (tx, err) => {
-                console.log(tx)
-            }
-            );
-        });
+    saveTask = (task) => {
+        console.log(task, "???? task");
+        try {
+            this.setState({ isLoading: true, isSuccess: false })
+            db.transaction(async tx => {
+                await tx.executeSql('select * from table_task where id = ?', [task.id],
+                    async (tx, res) => {
+                        if (res.rows.length == 0) {
+                            await tx.executeSql('INSERT INTO table_task (goalId, taskTitle, note, isAllDay, date, startTime, endTime, taskStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                                [task.goalId, task.taskTitle, task.note, task.isAllDay ? 1 : 0, task.date, task.startTime, task.endTime, task.taskStatus], (tx, res) => {
+                                    console.log(res, "insert task success");
+                                    Alert.alert("Saved successfully.")
+                                    this.setState({ isLoading: true, isSuccess: false })
+                                    let timeStamp = new Date().getTime();
+                                    this.props.navigation.navigate("TaskList", {
+                                        timeStamp: timeStamp
+                                    })
+                                },
+                                (tx, err) => {
+                                    console.log(tx)
+                                    Alert.alert("Saved failure.")
+                                    this.setState({ isLoading: false, isSuccess: false })
+                                    let timeStamp = new Date().getTime();
+                                    this.props.navigation.navigate("TaskList", {
+                                        timeStamp: timeStamp
+                                    })
+                                })
+                        } else {
+                            await tx.executeSql('update table_goal set goalTitle = ?, exprirationDate=?, color=? describe=? reward=? goalStatus=? where id = ?',
+                                [task.goalTitle, task.exprirationDate, task.color, task.describe, task.reward, task.goalStatus, task.id], (tx, res) => {
+                                    console.log(res, "insert task success");
+                                    Alert.alert("Update successfully.")
+                                    this.setState({ isLoading: true, isSuccess: false })
+                                    let timeStamp = new Date().getTime();
+                                    this.props.navigation.navigate("TaskList", {
+                                        timeStamp: timeStamp
+                                    })
+                                },
+                                (tx, err) => {
+                                    Alert.alert("Saved failure.")
+                                    this.setState({ isLoading: false, isSuccess: false })
+                                    let timeStamp = new Date().getTime();
+                                    this.props.navigation.navigate("TaskList", {
+                                        timeStamp: timeStamp
+                                    })
+                                })
+                        }
+                    }, (tx, err) => {
+                        Alert.alert("Saved failure.")
+                        this.setState({ isLoading: false, isSuccess: false })
+                        let timeStamp = new Date().getTime();
+                        this.props.navigation.navigate("TaskList", {
+                            timeStamp: timeStamp
+                        })
+                    })
+            })
+        } catch (err) {
+            this.setState({ isLoading: false, isSuccess: false })
+            console.log(err, "err")
+            Alert.alert("Notification", "An error occurred please check again.")
+        }
     }
-
-    insertTask = (task) => {
-        console.log("123")
-        db.transaction(async tx => {
-            await tx.executeSql('INSERT INTO table_task (goalId, taskTitle, note, isAllDay, startTime, endTime, taskStatus) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                [task.goalId, task.taskTitle, task.not, task.isAllDay, task.startTime, task.endTime, task.taskStatus], (tx, res) => {
-                    console.log(res, "insert task success"),
-                        Alert.alert("Success")
-                    this.props.navigation.navigate("TaskList")
-                    this.getAllTask("all");
-                },
-                (tx, err) => { console.log(tx) })
-        })
-    }
-    updateTask = (id) => {
-        db.transaction(async tx => {
-            await tx.executeSql('update table_task set taskStatus=? where id = ?',
-                ["completed", id], (tx, res) => {
-                    console.log(res, "update task success")
-                    Alert.alert("Success")
-                },
-                (tx, err) => { console.log(tx) })
-        })
-    }
-
     deleteTask = (id) => {
         console.log(id)
         this.setState({ isLoading: true, isSuccess: false })
@@ -351,12 +350,20 @@ export default class TaskDetail extends Component {
                 [id], (tx, res) => {
                     this.setState({ isLoading: false, isSuccess: true })
                     console.log(res, "delete task success");
-                    return true
+                    Alert.alert("Delete task success")
+                    let timeStamp = new Date().getTime();
+                    this.props.navigation.navigate("TaskList", {
+                        timeStamp: timeStamp
+                    })
                 },
                 (tx, err) => {
                     this.setState({ isLoading: false, isSuccess: false })
                     console.log(tx)
-                    return false
+                    Alert.alert("Delete task fail")
+                    let timeStamp = new Date().getTime();
+                    this.props.navigation.navigate("TaskList", {
+                        timeStamp: timeStamp
+                    })
                 })
         })
     }
@@ -408,62 +415,6 @@ export default class TaskDetail extends Component {
                             this.setState({
                                 isLoading: false, isSuccess: true,
                                 goalListCompleted: temp
-                            })
-                        }
-                    }, (tx, err) => {
-                        console.log(tx, "err")
-                        this.setState({
-                            isLoading: false, isSuccess: false
-                        });
-                    }
-                );
-            })
-        }
-
-    }
-
-    getAllGoal = (goalStatus) => {
-        this.setState({ isLoading: true, isSuccess: false })
-        if (goalStatus == "all") {
-            db.transaction(async tx => {
-                await tx.executeSql(
-                    'select * from table_goal where goalStatus = ?', [goalStatus], (tx, res) => {
-                        let temp = [];
-                        for (let i = 0; i < res.rows.length; ++i) {
-                            temp.push(res.rows.item(i));
-                        }
-                        console.log(temp, "all goals")
-                        this.setState({
-                            isSuccess: true, isLoading: false,
-
-                        })
-                    }, (tx, err) => {
-                        console.log(tx, "err")
-                        this.setState({
-                            isLoading: false, isSuccess: false
-                        });
-                    }
-                );
-            })
-        } else {
-            db.transaction(async tx => {
-                await tx.executeSql(
-                    'select * from table_goal where goalStatus = ?', [goalStatus], (tx, res) => {
-                        let temp = [];
-                        for (let i = 0; i < res.rows.length; ++i) {
-                            temp.push(res.rows.item(i));
-                        }
-                        if (goalStatus == "workingon") {
-                            console.log(temp, "all goals working on")
-                            this.setState({
-                                isLoading: false, isSuccess: true,
-                                listGoalWorkingOn: temp
-                            })
-                        } else if (goalStatus == "completed") {
-                            console.log(temp, "all goals completed")
-                            this.setState({
-                                isLoading: false, isSuccess: true,
-                                listGoalWorkingOn: temp
                             })
                         }
                     }, (tx, err) => {

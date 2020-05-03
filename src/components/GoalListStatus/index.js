@@ -4,7 +4,6 @@ import {
     Text, View, TouchableOpacity, SafeAreaView,
     FlatList, ActivityIndicator
 } from "react-native";
-import { CheckBox } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ActionButton from 'react-native-action-button';
 
@@ -13,15 +12,11 @@ export default class GoalListStatus extends Component {
         super(props);
         this.state = {
             goalList: this.props.goalList || []
-
         }
-
     }
 
     render() {
         const { isLoading } = this.props
-
-
         return (
             <SafeAreaView style={styles.container}>
                 {isLoading == true ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}><ActivityIndicator size="large" color="#C4C4C4" /></View> : <View style={{ flex: 1 }}>
@@ -31,7 +26,7 @@ export default class GoalListStatus extends Component {
                         data={this.props.goalList}
                         renderItem={({ item }) => <TouchableOpacity
                             onPress={() => {
-                                console.log(item, "itemgoal")
+                                // console.log(item, "itemgoal")
                                 this.props.navigation.navigate("GoalDetail", {
                                     goalId: item.id,
                                     reward: item.reward,
@@ -40,11 +35,11 @@ export default class GoalListStatus extends Component {
                                     describe: item.describe,
                                     goalTitle: item.goalTitle,
                                     goalStatus: item.goalStatus,
-                                    startTime: item.startTime,                                   
+                                    startTime: item.startTime,
                                 })
                             }}
                             style={{
-                                height: 100, borderRadius: 5, flexDirection: "row", justifyContent: "flex-start",
+                                height: 80, borderRadius: 5, flexDirection: "row", justifyContent: "flex-start",
                                 alignItems: "center",
                                 marginTop: 15,
                                 borderWidth: 0.5,
@@ -61,8 +56,8 @@ export default class GoalListStatus extends Component {
 
                             <View style={styles.goal}>
                                 <Text style={styles.goalTitle}>{item.goalTitle}</Text>
-                                <Text style={styles.timeBound}>{item.startTime} - {item.endTime}</Text>
-                                <Text style={styles.ratioStatus}>2 Completed - 1 working on</Text>
+                                <Text style={{ fontSize: 12 }}>{item.startTime} - {item.endTime}</Text>
+                                {/* <Text style={styles.ratioStatus}>2 Completed - 1 working on</Text> */}
                             </View>
                             {/* <View style={styles.ratioCompleted}>
                             <TouchableOpacity style={[styles.ratioButton]}

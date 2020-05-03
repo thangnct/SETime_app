@@ -11,8 +11,7 @@ class GoalDetailContainer extends Component {
 
 
 
-    render() {
-        console.log(this.props.navigation.getParam("goalId"), "????")
+    render() {        
         return (
             <GoalDetail
                 navigation={this.props.navigation}

@@ -1,24 +1,17 @@
-import ActionButton from 'react-native-action-button';
 import { openDatabase } from 'react-native-sqlite-storage';
 var db = openDatabase({ name: 'timesheetApp.db' });
 import React, { Component } from "react";
 import styles from "./styles";
 import {
     Text, View, TouchableOpacity, SafeAreaView,
-    ScrollView,
-    TextInput,
-    Switch, ActivityIndicator,
-    Alert
+    ScrollView, ActivityIndicator, Alert,
 } from "react-native";
-import {
-    Picker,
-} from "native-base";
 import Toast, { DURATION } from 'react-native-easy-toast'
 import DatePicker from 'react-native-datepicker'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import AsyncStorage from "@react-native-community/async-storage";
 import { FlatList } from 'react-native-gesture-handler';
 const task = <Icon name="tasks" size={25} color={"#AAAAAA"} />;
+import { deleteGoalById } from "../../models/Goal"
 export default class GoalDetail extends Component {
     constructor(props) {
         super(props);
@@ -56,15 +49,55 @@ export default class GoalDetail extends Component {
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.taskOption}>
-                                <TouchableOpacity onPress={() => this.handleSaveTask()}>
+                                <TouchableOpacity onPress={() => {
+                                    // console.log(this.props.goalTitle, "128908")
+                                    this.props.navigation.navigate("AddGoal", {
+                                        goalId: this.props.goalId,
+                                        goalTitle: this.props.goalTitle,
+                                        startTime: this.props.startTime,
+                                        endTime: this.props.endTime,
+                                        color: this.props.color,
+                                        describe: this.props.describe,
+                                        reward: this.props.reward,
+                                        goalStatus: this.props.goalStatus,
+                                    })
+                                }}>
                                     <Text style={styles.saveText}>Edit</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    onPress={async () => {
-                                        let result = await this.deleteTask(this.props.navigation.getParam("id"));
-                                        if (result) {
-                                            this.props.navigation.navigate("TaskList")
-                                        }
+                                    onPress={() => {
+                                        this.setState({ isLoading: true, isSuccess: false })
+                                        let id = this.props.navigation.getParam("goalId");
+                                        console.log(id)
+                                        db.transaction(async tx => {
+                                            await tx.executeSql('delete from table_goal where id = ?',
+                                                [id], async (tx, res) => {
+                                                    console.log(res, "excuted success");
+                                                    if (res.rowsAffected > 0) {
+                                                        this.setState({ isLoading: false, isSuccess: true })
+                                                        Alert.alert("Delete successfully.")
+                                                        this.props.navigation.navigate("GoalList", {
+                                                            timeStamp: new Date().getTime()
+                                                        })
+                                                    } else {
+                                                        this.setState({ isLoading: false, isSuccess: true })
+                                                        Alert.alert("Delete failure.")
+                                                        this.props.navigation.navigate("GoalList", {
+                                                            timeStamp: new Date().getTime()
+                                                        })
+
+                                                    }
+
+                                                },
+                                                async (tx, err) => {
+                                                    console.log(tx, "excuted false");
+                                                    this.setState({ isLoading: false, isSuccess: true })
+                                                    Alert.alert("Delete failure.")
+                                                    this.props.navigation.navigate("GoalList", {
+                                                        timeStamp: new Date().getTime()
+                                                    })
+                                                })
+                                        })
                                     }}
                                 >
                                     <Text style={styles.cancelText}>Remove</Text>
@@ -94,14 +127,14 @@ export default class GoalDetail extends Component {
                                         <View style={styles.icon_label}>
                                             <Icon name="list" size={25} color={"#AAAAAA"} />
                                         </View>
-                                        <View style={styles.text_label}>
+                                        <View style={[styles.text_label, { flexDirection: "column" }]}>
                                             <FlatList
                                                 data={this.state.tasksOfGoal}
                                                 renderItem={({ item }) => <TouchableOpacity
                                                     onPress={() => {
                                                         this.props.navigation.navigate("TaskDetail", {
                                                             taskId: item.taskId,
-                                                            goalId: item.goalId,                                                            
+                                                            goalId: item.goalId,
                                                             taskTitle: item.taskTitle,
                                                             isAllDay: item.isAllDay,
                                                             note: item.note,
@@ -118,6 +151,19 @@ export default class GoalDetail extends Component {
                                                     <Text style={{ fontSize: 11, fontWeight: "bold", color: item.taskStatus == "completed" ? "#0088D4" : "#F2994A" }}>{item.taskStatus}</Text>
                                                 </TouchableOpacity>}
                                             />
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    this.props.navigation.navigate("AddTask", {
+                                                        goalId: this.props.goalId
+                                                    })
+                                                }}
+                                                style={{
+                                                    height: 40, width: 80, backgroundColor: "#F2994A",
+                                                    borderRadius: 5, justifyContent: "center", alignItems: "center"
+                                                }}
+                                            >
+                                                <Text style={{ color: "white", fontWeight: "bold" }}> Add task</Text>
+                                            </TouchableOpacity>
                                         </View>
                                     </View>
                                 </View>
@@ -129,7 +175,6 @@ export default class GoalDetail extends Component {
                                         <View style={styles.text_label}>
                                             <Text style={styles.contentItem}>{this.props.describe}
                                             </Text>
-                                            {/* <Text style={styles.itemLabelText}>{this.props.navigation.getParam("note")} </Text> */}
                                         </View>
                                     </View>
                                 </View>
@@ -141,7 +186,6 @@ export default class GoalDetail extends Component {
                                         <View style={styles.text_label}>
                                             <Text style={styles.contentItem}>{this.props.reward}
                                             </Text>
-                                            {/* <Text style={styles.itemLabelText}>{this.props.navigation.getParam("note")} </Text> */}
                                         </View>
                                     </View>
                                 </View>
@@ -190,14 +234,8 @@ export default class GoalDetail extends Component {
             return true
         }
     }
-    handleSaveTask = () => {
+    handleSaveGoal = () => {
         if (this.validate() === true) {
-            // let now = new Date();
-            // let date = now.getDate().toString().length == 1 ? "0" + now.getDate() : now.getDate();
-            // let m = now.getMonth() + 1;
-            // let month = m.toString().length == 1 ? "0" + m : m;
-            // let year = now.getFullYear();
-            // let today = "" + date + "-" + month + "-" + year;
             let task = {
                 goalId: this.state.goalSupport,
                 taskTitle: this.state.taskTitle,
@@ -208,7 +246,7 @@ export default class GoalDetail extends Component {
                 endTime: this.state.endTime,
                 taskStatus: "workingon"
             }
-            this.insertTask(task);
+            this.saveGoal(task);
         }
 
     }
@@ -308,7 +346,6 @@ export default class GoalDetail extends Component {
     taskOfGoal = (goalId) => {
         this.setState({ isLoading: true, isSuccess: false })
         db.transaction(async tx => {
-            // await tx.executeSql('select * from table_goal inner join table_task on table_goal.id = table_task.goalId where table_goal.id = ?',
             await tx.executeSql('select table_task.id as "taskid", goalTitle, table_goal.id as "goalId", taskTitle, isAllday, table_task.startTime, table_task.endTime, taskStatus, note, color from table_goal inner join table_task on table_goal.id = table_task.goalId where table_goal.id = ?',
                 [goalId], (tx, res) => {
                     let temp = [];

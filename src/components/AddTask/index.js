@@ -20,11 +20,15 @@ const task = <Icon name="tasks" size={25} color={"#AAAAAA"} />;
 export default class AddTask extends Component {
     constructor(props) {
         super(props);
+        let now = new Date()
+        let currentMonth = now.getMonth() + 1; let currentYear = now.getFullYear(); let currentDate = now.getDate();
+        let today = "" + currentYear + "-" + (currentMonth.toString().length == 1 ? "0" + currentMonth : currentMonth) + "-" + (currentDate.toString().length == 1 ? "0" + currentDate : currentDate);
         this.state = {
             taskTitle: "",
             note: "",
-            goalSupport: "",
+            goalSupport: this.props.goalId || "",
             isAllDay: true,
+            date: today,
             startTime: "",
             endTime: "",
             previousScreen: "",
@@ -119,6 +123,62 @@ export default class AddTask extends Component {
                                         </View>
                                     </View>
                                     <View style={styles.itemsInput}>
+                                        {/* <View style={styles.allDay}>
+                                            <Text style={{ marginRight: 15 }} >All day</Text>
+                                            <Switch
+                                                value={this.state.isAllDay}
+                                                onValueChange={value => {
+                                                    this.setState({ isAllDay: value })
+                                                }}
+                                            />
+                                        </View> */}
+                                    </View>
+                                </View>
+                                <View style={styles.items}>
+                                    <View style={styles.itemsLabel}>
+                                        {/* <View style={styles.icon_label}>
+                                            <Icon name="calendar" size={25} color={"#AAAAAA"} />
+                                        </View> */}
+                                        {/* <View style={styles.text_label}>
+                                            <Text style={styles.itemLabelText}>Time-bound</Text>
+                                        </View> */}
+
+                                        <View style={styles.timeStartEnd}>
+
+                                            <View style={styles.pickerStartEndTime}>
+                                                <DatePicker
+                                                    style={styles.textinput_Date}
+
+                                                    date={this.state.date}
+                                                    mode="date"
+                                                    confirmBtnText="OK"
+                                                    cancelBtnText="Cancel"
+                                                    // minDate={this.state.startTime || ""}
+                                                    // maxDate={this.state.endTime || ""}
+                                                    placeholder="Pick time"
+                                                    format="YYYY-MM-DD"
+                                                    showIcon={false}
+                                                    customStyles={{
+                                                        dateInput: {
+                                                            height: 20,
+                                                            borderTopWidth: 0,
+                                                            borderLeftWidth: 0,
+                                                            borderRightWidth: 0,
+                                                            borderBottomWidth: 0,
+                                                            marginBottom: 0
+                                                        },
+                                                    }}
+                                                    onDateChange={(time) => {
+                                                        console.log(time, "time2")
+                                                        this.handleChangeInput("date", time)
+                                                    }}
+                                                />
+                                            </View>
+
+                                        </View>
+
+                                    </View>
+                                    <View style={styles.itemsInput}>
                                         <View style={styles.allDay}>
                                             <Text style={{ marginRight: 15 }} >All day</Text>
                                             <Switch
@@ -166,6 +226,9 @@ export default class AddTask extends Component {
                                 {/* <Text onPress={() => { this.createTaskTable() }}>createTaskTable</Text>
                                 <Text onPress={() => { this.getAllGoal("workingon") }}>getAllGoal</Text>
                                 <Text onPress={() => { this.dropTaskTable() }}>drop</Text> */}
+                                <Text onPress={() => { this.dropTaskTable() }}>drop</Text>
+                                <Text onPress={() => { this.getAllTask() }}>getAllTask</Text>
+                                <Text onPress={() => { this.createTaskTable() }}>createTaskTable</Text>
                             </ScrollView>
 
 
@@ -192,25 +255,18 @@ export default class AddTask extends Component {
     }
     handleSaveTask = () => {
         if (this.validate() === true) {
-            // let now = new Date();
-            // let date = now.getDate().toString().length == 1 ? "0" + now.getDate() : now.getDate();
-            // let m = now.getMonth() + 1;
-            // let month = m.toString().length == 1 ? "0" + m : m;
-            // let year = now.getFullYear();
-            // let today = "" + date + "-" + month + "-" + year;
             let task = {
                 goalId: this.state.goalSupport,
                 taskTitle: this.state.taskTitle,
                 note: this.state.note,
-                // isAllDay: this.state.isAllDay == 1 ? today : 0,
                 isAllDay: this.state.isAllDay,
+                date: this.state.date,
                 startTime: this.state.startTime,
                 endTime: this.state.endTime,
                 taskStatus: "workingon"
             }
-            this.insertTask(task);
+            this.saveTask(task)
         }
-
     }
     renderTimeBound = () => {
         return <View >
@@ -268,7 +324,7 @@ export default class AddTask extends Component {
                                     placeholder="Pick time"
                                     // minDate={this.state.startTime || ""}
                                     // maxDate={this.state.endTime || ""}
-                                    format="LT"
+                                    format="HH:mm"
                                     showIcon={false}
                                     customStyles={{
                                         dateInput: {
@@ -316,7 +372,7 @@ export default class AddTask extends Component {
                             // Alert.alert(res);
                         });
                         txn.executeSql(
-                            'CREATE TABLE IF NOT EXISTS table_task(id INTEGER PRIMARY KEY AUTOINCREMENT, goalId int FOREIGNKEY REFERENCES table_goal(id), taskTitle VARCHAR(255), note Text(1000), isAllDay bit, startTime VARCHAR(255), endTime VARCHAR(255), taskStatus VARCHAR(255))',
+                            'CREATE TABLE IF NOT EXISTS table_task(id INTEGER PRIMARY KEY AUTOINCREMENT, goalId int FOREIGNKEY REFERENCES table_goal(id), taskTitle VARCHAR(255), note Text(1000), isAllDay bit, date VARCHAR(255), startTime VARCHAR(255), endTime VARCHAR(255), taskStatus VARCHAR(255))',
                             [], (tx, res) => {
                                 console.log(res, "create table task success")
                             }, (tx, err) => { console.log(tx) }
@@ -329,6 +385,7 @@ export default class AddTask extends Component {
     dropTaskTable = () => {
         db.transaction(async (txn) => {
             await txn.executeSql('DROP TABLE IF EXISTS table_task', [], function (tx, res) {
+                console.log(res.rows.length, "itme")
                 console.log(res, "drop task table")
             }, (tx, err) => {
                 console.log(tx)
@@ -337,29 +394,68 @@ export default class AddTask extends Component {
         });
     }
 
-    insertTask = (task) => {
-        console.log("123")
-        db.transaction(async tx => {
-            await tx.executeSql('INSERT INTO table_task (goalId, taskTitle, note, isAllDay, startTime, endTime, taskStatus) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                [task.goalId, task.taskTitle, task.note, task.isAllDay, task.startTime, task.endTime, task.taskStatus], (tx, res) => {
-                    console.log(res, "insert task success"),
-                        Alert.alert("Success")
-                    this.props.navigation.navigate("TaskList")
-                    this.getAllTask("all");
-                },
-                (tx, err) => { console.log(tx) })
-        })
+    saveTask = (task) => {
+        console.log(task, "???? task");
+        try {
+            this.setState({ isLoading: true, isSuccess: false })
+            db.transaction(async tx => {
+                await tx.executeSql('select * from table_task where id = ?', [task.id],
+                    async (tx, res) => {
+                        if (res.rows.length == 0) {
+                            await tx.executeSql('INSERT INTO table_task (goalId, taskTitle, note, isAllDay, date, startTime, endTime, taskStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                                [task.goalId, task.taskTitle, task.note, task.isAllDay ? 1 : 0, task.date, task.startTime, task.endTime, task.taskStatus], (tx, res) => {
+                                    console.log(res, "insert task success");
+                                    Alert.alert("Saved successfully.")
+                                    this.setState({ isLoading: true, isSuccess: false })
+                                    let timeStamp = new Date().getTime();
+                                    this.props.navigation.navigate("TaskList", {
+                                        timeStamp: timeStamp
+                                    })
+                                },
+                                (tx, err) => {
+                                    console.log(tx)
+                                    Alert.alert("Saved failure.")
+                                    this.setState({ isLoading: false, isSuccess: false })
+                                    let timeStamp = new Date().getTime();
+                                    this.props.navigation.navigate("TaskList", {
+                                        timeStamp: timeStamp
+                                    })
+                                })
+                        } else {
+                            await tx.executeSql('update table_goal set goalTitle = ?, exprirationDate=?, color=? describe=? reward=? goalStatus=? where id = ?',
+                                [goal.goalTitle, goal.exprirationDate, goal.color, goal.describe, goal.reward, goal.goalStatus, goal.id], (tx, res) => {
+                                    console.log(res, "insert task success");
+                                    Alert.alert("Update successfully.")
+                                    this.setState({ isLoading: true, isSuccess: false })
+                                    let timeStamp = new Date().getTime();
+                                    this.props.navigation.navigate("TaskList", {
+                                        timeStamp: timeStamp
+                                    })
+                                },
+                                (tx, err) => {
+                                    Alert.alert("Saved failure.")
+                                    this.setState({ isLoading: false, isSuccess: false })
+                                    let timeStamp = new Date().getTime();
+                                    this.props.navigation.navigate("TaskList", {
+                                        timeStamp: timeStamp
+                                    })
+                                })
+                        }
+                    }, (tx, err) => {
+                        Alert.alert("Saved failure.")
+                        this.setState({ isLoading: false, isSuccess: false })
+                        let timeStamp = new Date().getTime();
+                        this.props.navigation.navigate("TaskList", {
+                            timeStamp: timeStamp
+                        })
+                    })
+            })
+        } catch (err) {
+            this.setState({ isLoading: false, isSuccess: false })
+            console.log(err, "err")
+            Alert.alert("Notification", "An error occurred please check again.")
+        }
     }
-    updateGoal = (goal) => {
-        db.transaction(async tx => {
-            await tx.executeSql('update table_goal set goalTitle = ?, exprirationDate=?, color=? describe=? reward=? goalStatus=? where id = ?',
-                [goal.goalTitle, goal.exprirationDate, goal.color, goal.describe, goal.reward, goal.goalStatus, goal.id], (tx, res) => {
-                    console.log(res, "update goal success")
-                },
-                (tx, err) => { console.log(tx) })
-        })
-    }
-
     deleteGoal = (goalId) => {
         db.transaction(async tx => {
             await tx.executeSql('delete from table_goal where id=?',

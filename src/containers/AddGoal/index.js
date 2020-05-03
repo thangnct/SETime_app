@@ -1,34 +1,24 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import AddGoal from "../../components/AddGoal";
-import { add_goal } from "../../actions";
 
-class AddGoalContainer extends Component {
+
+export default class AddGoalContainer extends Component {
     constructor(props) {
         super(props);
     }
-    render() {
+    render() {               
         return (
             <AddGoal
                 navigation={this.props.navigation}
-                dispatchAddGoal={this.props.dispatchAddGoal}
-                work={this.props.work}
-                auth={this.props.auth}
+                goalId={this.props.navigation.getParam("goalId") || ""}
+                endTime={this.props.navigation.getParam("endTime") || ""}
+                reward={this.props.navigation.getParam("reward") || ""}
+                color={this.props.navigation.getParam("color") || ""}
+                describe={this.props.navigation.getParam("describe") || ""}
+                goalTitle={this.props.navigation.getParam("goalTitle") || ""}
+                goalStatus={this.props.navigation.getParam("goalStatus") || ""}
+                startTime={this.props.navigation.getParam("startTime") || ""}
             />
         )
     }
 }
-
-const mapStateToProps = state => ({
-    auth: state.auth,
-    work: state.work
-});
-
-const mapDispatchToProps = dispatch => ({
-    dispatchAddGoal: (data) => dispatch(add_goal(data))
-});
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AddGoalContainer)

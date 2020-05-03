@@ -178,7 +178,7 @@ export default {
     justifyContent: "center",
     alignItems: "center"
   },
-  taskTitle: {
+  title: {
     multiline: true,
     height: 50,
     borderBottomColor: '#AAAAAA',

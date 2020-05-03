@@ -38,6 +38,7 @@ export default class TaskListStatus extends Component {
                                 endTime: item.endTime,
                                 color: item.color,
                                 goalTitle: item.goalTitle,
+                                taskStatus: item.taskStatus,
                                 id: item.id
                             })
                         }}
@@ -58,7 +59,7 @@ export default class TaskListStatus extends Component {
                         </View>
                         <View style={styles.task}>
                             <Text style={styles.weekday}>{item.taskTitle}</Text>
-                            <Text style={styles.timeBound}>{item.startTime}-{item.endTime}</Text>
+                            <Text style={{ fontSize: 12 }}>{item.isAllDay ? item.date + " All day" : item.date + " : " + item.startTime + " - " + item.endTime}</Text>
                         </View>
                         <View style={styles.color}>
                             <Icon name="circle" color={item.color} size={25} />

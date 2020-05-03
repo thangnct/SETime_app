@@ -1,17 +1,8 @@
 import React, { Component } from "react";
-import { Container, } from "native-base";
 import styles from "./styles";
 import {
-    Text, View, TouchableOpacity, SafeAreaView,
-    ScrollView,
-    FlatList, Dimensions,
-    ActivityIndicator
+    Text, View, SafeAreaView,
 } from "react-native";
-import AsyncStorage from '@react-native-community/async-storage';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { getDatetime, getTimeUseTimezone } from "../../commons";
-import ActionButton from 'react-native-action-button';
-import DatePicker from 'react-native-datepicker';
 import {
     Tabs,
     Tab,
@@ -27,29 +18,25 @@ export default class GoalList extends Component {
         this.state = {
             number: 0,
             goalListWorkingOn: [
-                // {
-                //     tasks: [],
-                //     _id: "5e606e5d38409702596ca907",
-                //     userId: "5e5ff70098d84103f8acab2f",
-                //     goalTitle: "Đọc xong cuốn Amazon phát triển thần tốc.",
-                //     startTime: "2020-03-05 10:13",
-                //     endTime: "2020-03-20 10:13",
-                //     color: "blue",
-                //     describe: "",
-                //     reward: "Đọc ",
-                //     goalStatus: "completed",
-                //     createdAt: "2020-03-05T03:13:33.487Z",
-                //     updatedAt: "2020-03-05T03:13:33.487Z",
-
-                // }
             ],
             goalListCompleted: [
 
             ],
             isLoading: false,
-            isSuccess: false
+            isSuccess: false,
+            timeStamp: 0
         }
 
+    }
+    componentDidMount() {
+        this.createGoalTable();
+    }
+    componentDidUpdate(prevProps, prevState) {
+        let propsTimeStamp = this.props.navigation.getParam("timeStamp") ? this.props.navigation.getParam("timeStamp") : 0
+        if (prevState.date != this.state.date || propsTimeStamp != this.state.timeStamp) {
+            this.setState({ timeStamp: propsTimeStamp })
+            this.getAllGoal("workingon")
+        }
     }
 
     render() {
@@ -65,24 +52,6 @@ export default class GoalList extends Component {
                     </View>
                 </View>
                 <View style={styles.body}>
-                    {/* <Text onPress={() => { this.createGoalTable() }}>create table</Text>
-                    <Text onPress={() => {
-                        let goal = {
-                            goalTitle: "Đạt 60kg",
-                            exprirationDate: "01-06-2020",
-                            color: "#123456",
-                            describe: "Đạt 60kg trong 2 tháng, có body đẹp.",
-                            reward: "Đi phượt, tán gái",
-                            goalStatus: "workingon",
-                        }
-                        console.log(goal, "xxx")
-                        this.insertGoal(goal)
-                    }}>insertGoal</Text>
-
-                    <Text onPress={() => { this.deleteGoal(3) }}>deleteGoal</Text>
-                    <Text onPress={() => { this.updateGoal(7) }}>updateGoal</Text>
-                    <Text onPress={() => { this.findGoal() }}>findGoal</Text>
-                    <Text onPress={() => { this.getAllGoal("all") }}>getAllGoal</Text> */}
                     <Tabs
                         tabBarUnderlineStyle={{ backgroundColor: "#F2994A" }}
                         locked
@@ -109,7 +78,6 @@ export default class GoalList extends Component {
                                 navigation={this.props.navigation}
                                 isLoading={isLoading}
                             />
-                            {/* <Paid //data={dataListOrder} navigation={this.props.navigation} /> */}
                         </Tab>
                         <Tab
                             heading="Completed"
@@ -159,48 +127,6 @@ export default class GoalList extends Component {
         });
     }
 
-    insertGoal = (goal) => {
-        console.log(goal, "jldkjaslkdjs")
-        db.transaction(async tx => {
-            await tx.executeSql('INSERT INTO table_goal (goalTitle, exprirationDate, color, describe, reward, goalStatus) VALUES (?, ?, ?, ?, ?, ?)',
-                [goal.goalTitle, goal.exprirationDate, goal.color, goal.describe, goal.reward, goal.goalStatus], (tx, res) => {
-                    console.log(res, "insert goal success")
-                    this.getAllGoal("all")
-                },
-                (tx, err) => { console.log(tx) })
-        })
-    }
-    updateGoal = (id) => {
-        db.transaction(async tx => {
-            // await tx.executeSql('update table_goal set goalTitle = ?, exprirationDate=?, color=? describe=? reward=? goalStatus=? where id = ?',
-            //     [goal.goalTitle, goal.exprirationDate, goal.color, goal.describe, goal.reward, goal.goalStatus, goal.id], (tx, res) => {
-            await tx.executeSql('update table_goal set goalStatus=? where id = ?',
-                ["completed", id], (tx, res) => {
-                    console.log(res, "update goal success")
-                },
-                (tx, err) => { console.log(tx) })
-        })
-    }
-
-    deleteGoal = (goalId) => {
-        db.transaction(async tx => {
-            await tx.executeSql('delete from table_goal where id=?',
-                [goalId], (tx, res) => {
-                    console.log(res, "delete goal success")
-                },
-                (tx, err) => { console.log(tx) })
-        })
-    }
-    findGoal = (goalId) => {
-        db.transaction(async tx => {
-            await tx.executeSql('select * from table_goal where id=?',
-                [goalId], (tx, res) => {
-                    console.log(rres.rows.item(0), "goal ")
-                },
-                (tx, err) => { console.log(tx) })
-        })
-    }
-
     getAllGoal = (goalStatus) => {
         this.setState({ isLoading: true, isSuccess: false })
         if (goalStatus == "all") {
@@ -238,7 +164,6 @@ export default class GoalList extends Component {
                                 goalListWorkingOn: temp
                             })
                         } else if (goalStatus == "completed") {
-                            console.log("????111")
                             this.setState({
                                 isLoading: false, isSuccess: true,
                                 goalListCompleted: temp
