@@ -32,8 +32,7 @@ export default class GoalList extends Component {
         this.createGoalTable();
     }
     componentDidUpdate(prevProps, prevState) {
-        let propsTimeStamp = this.props.navigation.getParam("timeStamp") ? this.props.navigation.getParam("timeStamp") : 0
-        // let reloadTab = this.props.navigation.getParam("reloadTab") ? this.props.navigation.getParam("reloadTab") : "workingon"
+        let propsTimeStamp = this.props.navigation.getParam("timeStamp") ? this.props.navigation.getParam("timeStamp") : 0        
         let reloadTab = this.props.navigation.getParam("reloadTab");        
         if (propsTimeStamp != this.state.timeStamp) {
             this.setState({ timeStamp: propsTimeStamp })
