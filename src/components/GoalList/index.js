@@ -32,10 +32,11 @@ export default class GoalList extends Component {
         this.createGoalTable();
     }
     componentDidUpdate(prevProps, prevState) {
-        let propsTimeStamp = this.props.navigation.getParam("timeStamp") ? this.props.navigation.getParam("timeStamp") : 0        
-        let reloadTab = this.props.navigation.getParam("reloadTab");        
+        let propsTimeStamp = this.props.navigation.getParam("timeStamp") ? this.props.navigation.getParam("timeStamp") : 0
+        let reloadTab = this.props.navigation.getParam("reloadTab");
         if (propsTimeStamp != this.state.timeStamp) {
             this.setState({ timeStamp: propsTimeStamp })
+            this.getAllGoal("completed")
             this.getAllGoal(reloadTab)
         }
     }
@@ -57,7 +58,7 @@ export default class GoalList extends Component {
                         tabBarUnderlineStyle={{ backgroundColor: "#F2994A" }}
                         locked
                         onChangeTab={({ ref }) => {
-                            console.log("lalalla: ", ref.props.heading)
+                            // console.log("lalalla: ", ref.props.heading)
                             if (ref.props.heading == "Working on") {
                                 this.getAllGoal("workingon")
                             } else if (ref.props.heading == "Completed") {
@@ -128,7 +129,8 @@ export default class GoalList extends Component {
         });
     }
 
-    getAllGoal = (goalStatus) => {
+    getAllGoal = (goalStatus = "workingon") => {
+        console.log("zooooo: ", goalStatus)
         this.setState({ isLoading: true, isSuccess: false })
         if (goalStatus == "all") {
             db.transaction(async tx => {
@@ -157,7 +159,7 @@ export default class GoalList extends Component {
                         for (let i = 0; i < res.rows.length; ++i) {
                             temp.push(res.rows.item(i));
                         }
-                        console.log(temp, "all goals")
+                        // console.log(temp, "all goals")
                         if (goalStatus == "workingon") {
                             console.log(temp, "workingon")
                             this.setState({

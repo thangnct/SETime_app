@@ -24,9 +24,8 @@ export default class AddTask extends Component {
         super(props);
         this.state = {
 
-            goalTitle: this.props.goalTitle || "",
-            startTime: this.props.startTime || "",
-            endTime: this.props.endTime || "",
+            goalTitle: this.props.goalTitle || "",            
+            exprirationDate: this.props.navigation.getParam("exprirationDate"),
             color: this.props.color || "#ffc107",
             describe: this.props.describe || "",
             reward: this.props.reward || "",
@@ -45,7 +44,7 @@ export default class AddTask extends Component {
         }
     }
     componentDidMount() {
-        this.createGoalTable();
+        // this.createGoalTable();
     }
     render() {
 
@@ -103,41 +102,7 @@ export default class AddTask extends Component {
                                     </View>
                                 </View>
                                 <View style={styles.items}>
-                                    <View style={styles.timeStartEndContainer}>
-                                        <View style={styles.timeStartEnd}>
-                                            <View style={styles.labelStartEndTime}>
-                                                <Text>Start: </Text>
-                                            </View>
-                                            <View style={styles.pickerStartEndTime}>
-                                                <DatePicker
-                                                    style={styles.textinput_Date}
-                                                    date={this.state.startTime}
-                                                    mode="date"
-                                                    confirmBtnText="OK"
-                                                    cancelBtnText="Cancel"
-                                                    // minDate={this.state.startTime || ""}
-                                                    // maxDate={this.state.endTime || ""}
-                                                    placeholder="Pick time"
-                                                    format="YYYY-MM-DD"
-                                                    showIcon={false}
-                                                    customStyles={{
-                                                        dateInput: {
-                                                            height: 20,
-                                                            borderTopWidth: 0,
-                                                            borderLeftWidth: 0,
-                                                            borderRightWidth: 0,
-                                                            borderBottomWidth: 0,
-                                                            marginBottom: 0
-                                                        },
-                                                    }}
-                                                    onDateChange={(date) => {
-                                                        console.log(date, "ahihi")
-                                                        this.handleChangeInput("startTime", date)
-                                                    }}
-                                                />
-                                            </View>
-
-                                        </View>
+                                    <View style={styles.timeStartEndContainer}>                                       
                                         <View style={styles.timeStartEnd}>
                                             <View style={styles.labelStartEndTime}>
                                                 <Text>Finish: </Text>
@@ -145,13 +110,11 @@ export default class AddTask extends Component {
                                             <View style={styles.pickerStartEndTime}>
                                                 <DatePicker
                                                     style={styles.textinput_Date}
-                                                    date={this.state.endTime}
+                                                    date={this.state.exprirationDate}
                                                     mode="date"
                                                     confirmBtnText="OK"
                                                     cancelBtnText="Cancel"
-                                                    placeholder="Pick time"
-                                                    // minDate={this.state.startTime || ""}
-                                                    // maxDate={this.state.endTime || ""}
+                                                    placeholder="Pick time"                                                    
                                                     format="YYYY-MM-DD"
                                                     showIcon={false}
                                                     customStyles={{
@@ -165,8 +128,8 @@ export default class AddTask extends Component {
                                                         },
                                                     }}
                                                     onDateChange={(date) => {
-                                                        console.log(date, "ahwi")
-                                                        this.handleChangeInput("endTime", date)
+                                                        
+                                                        this.handleChangeInput("exprirationDate", date)
                                                     }}
                                                 />
                                             </View>
@@ -198,7 +161,7 @@ export default class AddTask extends Component {
                                                     label={color.name} value={color.code} />
                                             })}
                                         </Picker>
-                                        
+
                                     </View>
                                 </View>
 
@@ -235,7 +198,7 @@ export default class AddTask extends Component {
                                         numberOfLines={2}
                                     />
                                 </View>
-                                <View style={styles.items}>
+                                {/* <View style={styles.items}>
                                     <View style={styles.itemsLabel}>
                                         <View style={styles.icon_label}>
                                             <Icon name="trophy" size={25} color={"#AAAAAA"} />
@@ -247,8 +210,8 @@ export default class AddTask extends Component {
                                     <View style={styles.itemsInput}>
 
                                     </View>
-                                </View>
-                                <View style={styles.items}>
+                                </View> */}
+                                {/* <View style={styles.items}>
                                     <TextInput
                                         style={{
 
@@ -266,9 +229,7 @@ export default class AddTask extends Component {
                                         multiline={true}
                                         numberOfLines={5}
                                     />
-                                </View>
-                                {/* <Text onPress={() => { this.dropGoalTable() }}> drop</Text>
-                                <Text onPress={() => { this.createGoalTable() }}> createGoalTable</Text> */}
+                                </View> */}                                
                             </ScrollView>
                         </View>
                     </View>}
@@ -281,16 +242,10 @@ export default class AddTask extends Component {
     validate = () => {
         if (this.state.goalTitle.length == 0) {
             this.refs.toast.show("Goal title is not null.");
-            return false;
-        } else if (this.state.startTime.length == 0) {
-            this.refs.toast.show("You must pick start time.");
-            return false;
-        } else if (this.state.endTime.length == 0) {
-            this.refs.toast.show("You must pick end time.");
-            return false;
-        } else if (this.state.startTime > this.state.endTime) {
-            this.refs.toast.show("Endtime must larger startTime.");
-            return false;
+            return false;            
+        // } else if (this.state.exprirationDate.length == 0) {
+        //     this.refs.toast.show("You must pick end time.");
+        //     return false;        
         } else {
             return true;
         }
@@ -299,12 +254,11 @@ export default class AddTask extends Component {
         if (this.validate() === true) {
             let goal = {
                 goalId: this.props.goalId,
-                goalTitle: this.state.goalTitle,
-                startTime: this.state.startTime,
-                endTime: this.state.endTime,
+                goalTitle: this.state.goalTitle,                                
+                exprirationDate: this.state.exprirationDate,
                 color: this.state.color,
                 describe: this.state.describe,
-                reward: this.state.reward,
+                // reward: this.state.reward,
                 goalStatus: this.props.goalStatus || "workingon",
             }
 
@@ -315,15 +269,15 @@ export default class AddTask extends Component {
     saveGoal = (goal) => {
         console.log(goal, "goal");
         try {
-            this.setState({ isLoading: true, isSuccess: false })
+            // this.setState({ isLoading: true, isSuccess: false })
             db.transaction(async tx => {
                 await tx.executeSql('select * from table_goal where id = ?', [goal.goalId],
                     async (tx, res) => {
                         if (res.rows.length == 0) {
-                            await tx.executeSql('INSERT INTO table_goal (goalTitle, color, startTime, endTime, describe, reward, goalStatus) VALUES ( ?, ?, ?, ?, ?, ?, ?)',
-                                [goal.goalTitle, goal.color, goal.startTime, goal.endTime, goal.describe, goal.reward, goal.goalStatus], (tx, res) => {
+                            await tx.executeSql('INSERT INTO table_goal (goalTitle, color, exprirationDate , describe, reward, goalStatus) VALUES ( ?, ?, ?, ?, ?, ?)',
+                                [goal.goalTitle, goal.color, goal.exprirationDate, goal.describe, "", goal.goalStatus], (tx, res) => {
                                     Alert.alert("Saved successfully.")
-                                    this.setState({ isLoading: true, isSuccess: false })
+                                    this.setState({ isLoading: false, isSuccess: true })
                                     let timeStamp = new Date().getTime();
                                     this.props.navigation.navigate("GoalList", {
                                         timeStamp: timeStamp
@@ -340,8 +294,8 @@ export default class AddTask extends Component {
                                 })
                         } else {
                             console.log(goal, ">>>>")
-                            await tx.executeSql('update table_goal set goalTitle = ?, color = ?, startTime = ?, endTime = ?, describe = ?, reward = ?, goalStatus = ? where id = ?',
-                                [goal.goalTitle, goal.color, goal.startTime, goal.endTime, goal.describe, goal.reward, goal.goalStatus, goal.goalId], (tx, res) => {
+                            await tx.executeSql('update table_goal set goalTitle = ?, color = ?,  exprirationDate = ?, describe = ?, reward = ?, goalStatus = ? where id = ?',
+                                [goal.goalTitle, goal.color,  goal.exprirationDate, goal.describe, goal.reward, goal.goalStatus, goal.goalId], (tx, res) => {
                                     // await tx.executeSql('update table_goal set goalTitle = ? where id = ?',
                                     // [goal.goalTitle,  goal.goalId], (tx, res) => {
                                     console.log(res, "res");
@@ -377,9 +331,7 @@ export default class AddTask extends Component {
             Alert.alert("Notification", "An error occurred please check again.")
         }
     }
-    checkStartEndTime = () => {
-        return this.state.endTime > this.state.startTime
-    }
+    
     handleChangeInput = (name, value) => {
         this.setState({
             [name]: value
@@ -390,12 +342,15 @@ export default class AddTask extends Component {
         db.transaction(function (txn) {
             txn.executeSql(
                 "SELECT name FROM sqlite_master WHERE type='table' AND name='table_goal'",
-                [], function (tx, res) {
+                [],
+                function (tx, res) {
+                    console.log('item:', res.rows.length);
                     if (res.rows.length == 0) {
                         txn.executeSql('DROP TABLE IF EXISTS table_goal', [], function (tx, res) {
+                            // Alert.alert(res);
                         });
                         txn.executeSql(
-                            'CREATE TABLE IF NOT EXISTS table_goal(id INTEGER PRIMARY KEY AUTOINCREMENT, goalTitle VARCHAR(255), startTime VARCHAR(255), endTime VARCHAR(255),color VARCHAR(255), describe TEXT(100), reward VARCHAR(255), goalStatus VARCHAR(255))',
+                            'CREATE TABLE IF NOT EXISTS table_goal(id INTEGER PRIMARY KEY AUTOINCREMENT, goalTitle VARCHAR(255), exprirationDate VARCHAR(255), color VARCHAR(255), describe TEXT(100), reward VARCHAR(255), goalStatus VARCHAR(255))',
                             [], (tx, res) => {
                                 console.log(res, "create table goal success")
                             }, (tx, err) => { console.log(tx) }

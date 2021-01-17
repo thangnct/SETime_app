@@ -26,12 +26,12 @@ export default class GoalListStatus extends Component {
                         data={this.props.goalList}
                         renderItem={({ item }) => <TouchableOpacity
                             onPress={() => {
-                                // console.log(item, "itemgoal")
+                                console.log(item.exprirationDate, "itemgoal111")
                                 this.props.navigation.navigate("GoalDetail", {
                                     goalId: item.id,
                                     reward: item.reward,
                                     color: item.color,
-                                    endTime: item.endTime,
+                                    exprirationDate: item.exprirationDate ,                                    
                                     describe: item.describe,
                                     goalTitle: item.goalTitle,
                                     goalStatus: item.goalStatus,
@@ -56,7 +56,7 @@ export default class GoalListStatus extends Component {
 
                             <View style={styles.goal}>
                                 <Text style={styles.goalTitle}>{item.goalTitle}</Text>
-                                <Text style={{ fontSize: 12 }}>{item.startTime} - {item.endTime}</Text>
+                                <Text style={{ fontSize: 12 }}>{item.exprirationDate }</Text>
                                 {/* <Text style={styles.ratioStatus}>2 Completed - 1 working on</Text> */}
                             </View>
                             {/* <View style={styles.ratioCompleted}>
@@ -72,9 +72,6 @@ export default class GoalListStatus extends Component {
                     <ActionButton buttonColor="#F2994A">
                         <ActionButton.Item buttonColor='#FFFFFF' title="Add goal" onPress={() => this.props.navigation.navigate("AddGoal")}>
                             <Icon name="circle" color="#F2994A" size={20} />
-                        </ActionButton.Item>
-                        <ActionButton.Item buttonColor='#FFFFFF' title="Add task" onPress={() => { this.props.navigation.navigate("AddTask") }}>
-                            <Icon name="tasks" color="#F2994A" size={20} />
                         </ActionButton.Item>
                     </ActionButton>
                 </View>}

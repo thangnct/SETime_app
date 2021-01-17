@@ -103,8 +103,10 @@ export default class Home extends Component {
             </TouchableOpacity> */}
             <Image source={require("../../../assets/img/man.png")} style={{ width: 45, height: 45 }} />
             <View style={styles.info}>
-              <Text style={styles.name}>{this.props.auth.fullName}</Text>
-              <Text style={styles.phone}>{this.props.auth.phone}</Text>
+              <Text style={styles.name}>Nguyen Cong Thang</Text>
+              <Text style={styles.phone}>"Phone"</Text>
+              {/* <Text style={styles.name}>{this.props.auth.fullName}</Text>
+              <Text style={styles.phone}>{this.props.auth.phone}</Text> */}
             </View>
           </View>
           <View style={styles.broad}>

@@ -19,13 +19,14 @@ export default class GoalDetail extends Component {
             isSuccess: false,
             goalId: this.props.goalId ? this.props.goalId : 0,
             goalTitle: "",
-            tasksOfGoal: []
+            tasksOfGoal: [],
+            exprirationDate: this.props.exprirationDate ? this.props.exprirationDate : "111"
 
         }
     }
 
     componentDidMount() {
-        this.taskOfGoal(this.state.goalId);
+        // this.taskOfGoal(this.state.goalId);
     }
     render() {
         console.log(this.state, "STATE")
@@ -52,8 +53,7 @@ export default class GoalDetail extends Component {
                                     this.props.navigation.navigate("AddGoal", {
                                         goalId: this.props.goalId,
                                         goalTitle: this.props.goalTitle,
-                                        startTime: this.props.startTime,
-                                        endTime: this.props.endTime,
+                                        exprirationDate: this.props.navigation.getParam("exprirationDate"),
                                         color: this.props.color,
                                         describe: this.props.describe,
                                         reward: this.props.reward,
@@ -115,56 +115,12 @@ export default class GoalDetail extends Component {
                                         borderBottomWidth: 1,
                                         fontSize: 12,
                                         color: "#3E3D3D"
-                                    }}>{this.props.startTime} - {this.props.endTime}</Text>
+                                    }}> {this.props.navigation.getParam("exprirationDate")}</Text>
                                 </View>
                             </View>
 
                             <ScrollView style={{ flex: 1 }}>
-                                <View style={styles.items}>
-                                    <View style={styles.itemsLabel}>
-                                        <View style={styles.icon_label}>
-                                            <Icon name="list" size={25} color={"#AAAAAA"} />
-                                        </View>
-                                        <View style={[styles.text_label, { flexDirection: "column" }]}>
-                                            <FlatList
-                                                data={this.state.tasksOfGoal}
-                                                renderItem={({ item }) => <TouchableOpacity
-                                                    onPress={() => {
-                                                        this.props.navigation.navigate("TaskDetail", {
-                                                            taskId: item.taskId,
-                                                            goalId: item.goalId,
-                                                            taskTitle: item.taskTitle,
-                                                            isAllDay: item.isAllDay,
-                                                            note: item.note,
-                                                            startTime: item.startTime,
-                                                            endTime: item.endTime,
-                                                            color: item.color,
-                                                            goalTitle: item.goalTitle,
-                                                            id: item.id
-                                                        })
-                                                    }}
-                                                    style={{ marginBottom: 8 }}>
-                                                    <Text style={{ fontSize: 13, fontWeight: "600" }}>{item.taskTitle}</Text>
-                                                    <Text style={{ fontSize: 10 }}>{item.isAllDay ? "All day" : item.startTime + "-" + item.endTime}</Text>
-                                                    <Text style={{ fontSize: 11, fontWeight: "bold", color: item.taskStatus == "completed" ? "#0088D4" : "#F2994A" }}>{item.taskStatus}</Text>
-                                                </TouchableOpacity>}
-                                            />
-                                            <TouchableOpacity
-                                                onPress={() => {
-                                                    this.props.navigation.navigate("AddTask", {
-                                                        goalId: this.props.goalId
-                                                    })
-                                                }}
-                                                style={{
-                                                    height: 40, width: 80, backgroundColor: "#F2994A",
-                                                    borderRadius: 5, justifyContent: "center", alignItems: "center"
-                                                }}
-                                            >
-                                                <Text style={{ color: "white", fontWeight: "bold" }}> Add task</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                </View>
+
                                 <View style={styles.items}>
                                     <View style={styles.itemsLabel}>
                                         <View style={styles.icon_label}>
@@ -176,7 +132,7 @@ export default class GoalDetail extends Component {
                                         </View>
                                     </View>
                                 </View>
-                                <View style={styles.items}>
+                                {/* <View style={styles.items}>
                                     <View style={styles.itemsLabel}>
                                         <View style={styles.icon_label}>
                                             <Icon name="trophy" size={25} color={"#AAAAAA"} />
@@ -186,7 +142,7 @@ export default class GoalDetail extends Component {
                                             </Text>
                                         </View>
                                     </View>
-                                </View>
+                                </View> */}
 
                                 {/* <View style={styles.items}>
                                     

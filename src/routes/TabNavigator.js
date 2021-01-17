@@ -13,14 +13,14 @@ const cog = <Icon name="cog" size={25} color="#AAAAAA" />;
 import { createBottomTabNavigator } from "react-navigation-tabs";
 export default (MainScreenNavigator = createBottomTabNavigator(
   {
-    TaskList: { screen: TaskList, navigationOptions: { tabBarIcon: () => { return task } } },
-    Home: { screen: Home, navigationOptions: { tabBarIcon: () => { return home } } },
+    // TaskList: { screen: TaskList, navigationOptions: { tabBarIcon: () => { return task } } },
+    // Home: { screen: Home, navigationOptions: { tabBarIcon: () => { return home } } },
     GoalList: { screen: GoalList, navigationOptions: { tabBarIcon: () => { return goal } } },
-    Option: { screen: Option, navigationOptions: { tabBarIcon: () => { return cog } } },
+    // Option: { screen: Option, navigationOptions: { tabBarIcon: () => { return cog } } },
     // Drawer: { screen: Drawer },
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "GoalList"
     
     // tabBarPosition: "bottom",
     // tabBarComponent: props => <Footer {...props} />

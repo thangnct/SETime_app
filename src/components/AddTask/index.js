@@ -44,7 +44,7 @@ export default class AddTask extends Component {
         })
     }
     render() {
-        console.log(this.state, "STATE")
+        // console.log(this.state, "STATE")
         return (
             <SafeAreaView style={styles.container}>
                 {this.state.isLoading == true ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

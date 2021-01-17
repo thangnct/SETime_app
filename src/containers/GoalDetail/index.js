@@ -16,7 +16,7 @@ class GoalDetailContainer extends Component {
             <GoalDetail
                 navigation={this.props.navigation}
                 goalId={this.props.navigation.getParam("goalId")}
-                endTime={this.props.navigation.getParam("endTime")}
+                exprirationDate ={this.props.navigation.getParam("exprirationDate ")}
                 reward={this.props.navigation.getParam("reward")}
                 color={this.props.navigation.getParam("color")}
                 describe={this.props.navigation.getParam("describe")}
