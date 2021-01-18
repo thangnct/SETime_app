@@ -82,7 +82,7 @@ export default class AddTask extends Component {
                                     style={styles.title}
                                     onChangeText={text => this.handleChangeInput("goalTitle", text)}
                                     value={this.state.goalTitle}
-                                    placeholder="Goal title"
+                                    placeholder="Title"
                                 />
                             </View>
                             <ScrollView

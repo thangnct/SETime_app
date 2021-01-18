@@ -49,7 +49,7 @@ export default class GoalList extends Component {
                 <View style={styles.header} >
                     <View style={styles.top} >
                         <View style={styles.info}>
-                            <Text style={styles.name}>Goals List</Text>
+                            <Text style={styles.name}>Todos</Text>
                         </View>
                     </View>
                 </View>

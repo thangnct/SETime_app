@@ -70,7 +70,7 @@ export default class GoalListStatus extends Component {
                         </TouchableOpacity>}
                     />
                     <ActionButton buttonColor="#F2994A">
-                        <ActionButton.Item buttonColor='#FFFFFF' title="Add goal" onPress={() => this.props.navigation.navigate("AddGoal")}>
+                        <ActionButton.Item buttonColor='#FFFFFF' title="Add todo" onPress={() => this.props.navigation.navigate("AddGoal")}>
                             <Icon name="circle" color="#F2994A" size={20} />
                         </ActionButton.Item>
                     </ActionButton>
